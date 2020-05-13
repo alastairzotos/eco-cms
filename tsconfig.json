@@ -1,0 +1,18 @@
+{
+	"exclude": [
+		"build"
+	],
+	"include": [
+		"src"
+	],
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "es5",
+		"noImplicitAny": false,
+		"sourceMap": false,
+		"declaration": false,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true
+	}
+}
