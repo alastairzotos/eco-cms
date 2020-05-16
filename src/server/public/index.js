@@ -292,6 +292,20 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) *
 
 /***/ }),
 
+/***/ "./node_modules/@babel/runtime/helpers/extends.js":
+/***/ (function(module, exports) {
+
+eval("function _extends() {\n  module.exports = _extends = Object.assign || function (target) {\n    for (var i = 1; i < arguments.length; i++) {\n      var source = arguments[i];\n\n      for (var key in source) {\n        if (Object.prototype.hasOwnProperty.call(source, key)) {\n          target[key] = source[key];\n        }\n      }\n    }\n\n    return target;\n  };\n\n  return _extends.apply(this, arguments);\n}\n\nmodule.exports = _extends;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/extends.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js":
+/***/ (function(module, exports) {
+
+eval("function _interopRequireDefault(obj) {\n  return obj && obj.__esModule ? obj : {\n    \"default\": obj\n  };\n}\n\nmodule.exports = _interopRequireDefault;\n\n//# sourceURL=webpack:///./node_modules/@babel/runtime/helpers/interopRequireDefault.js?");
+
+/***/ }),
+
 /***/ "./node_modules/@loadable/component/dist/loadable.esm.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3009,6 +3023,62 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _wit
 
 "use strict";
 eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isWidthUp\", function() { return isWidthUp; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isWidthDown\", function() { return isWidthDown; });\n/* harmony import */ var _babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(\"./node_modules/@babel/runtime/helpers/esm/toConsumableArray.js\");\n/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(\"./node_modules/@babel/runtime/helpers/esm/extends.js\");\n/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(\"./node_modules/@babel/runtime/helpers/esm/objectWithoutProperties.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(\"./node_modules/react/index.js\");\n/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(\"./node_modules/prop-types/index.js\");\n/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_4__);\n/* harmony import */ var _material_ui_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(\"./node_modules/@material-ui/utils/esm/index.js\");\n/* harmony import */ var _material_ui_styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(\"./node_modules/@material-ui/styles/esm/index.js\");\n/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(\"./node_modules/hoist-non-react-statics/dist/hoist-non-react-statics.cjs.js\");\n/* harmony import */ var hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_7__);\n/* harmony import */ var _styles_useTheme__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/useTheme.js\");\n/* harmony import */ var _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/createBreakpoints.js\");\n/* harmony import */ var _useMediaQuery__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(\"./node_modules/@material-ui/core/esm/useMediaQuery/index.js\");\n\n\n\n\n\n\n\n\n\n\n // By default, returns true if screen width is the same or greater than the given breakpoint.\n\nvar isWidthUp = function isWidthUp(breakpoint, width) {\n  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;\n\n  if (inclusive) {\n    return _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(breakpoint) <= _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(width);\n  }\n\n  return _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(breakpoint) < _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(width);\n}; // By default, returns true if screen width is the same or less than the given breakpoint.\n\nvar isWidthDown = function isWidthDown(breakpoint, width) {\n  var inclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;\n\n  if (inclusive) {\n    return _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(width) <= _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(breakpoint);\n  }\n\n  return _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(width) < _styles_createBreakpoints__WEBPACK_IMPORTED_MODULE_9__[\"keys\"].indexOf(breakpoint);\n};\nvar useEnhancedEffect = typeof window === 'undefined' ? react__WEBPACK_IMPORTED_MODULE_3__[\"useEffect\"] : react__WEBPACK_IMPORTED_MODULE_3__[\"useLayoutEffect\"];\n\nvar withWidth = function withWidth() {\n  var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n  return function (Component) {\n    var _options$withTheme = options.withTheme,\n        withThemeOption = _options$withTheme === void 0 ? false : _options$withTheme,\n        _options$noSSR = options.noSSR,\n        noSSR = _options$noSSR === void 0 ? false : _options$noSSR,\n        initialWidthOption = options.initialWidth;\n\n    function WithWidth(props) {\n      var contextTheme = Object(_styles_useTheme__WEBPACK_IMPORTED_MODULE_8__[\"default\"])();\n      var theme = props.theme || contextTheme;\n\n      var _getThemeProps = Object(_material_ui_styles__WEBPACK_IMPORTED_MODULE_6__[\"getThemeProps\"])({\n        theme: theme,\n        name: 'MuiWithWidth',\n        props: Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({}, props)\n      }),\n          initialWidth = _getThemeProps.initialWidth,\n          width = _getThemeProps.width,\n          other = Object(_babel_runtime_helpers_esm_objectWithoutProperties__WEBPACK_IMPORTED_MODULE_2__[\"default\"])(_getThemeProps, [\"initialWidth\", \"width\"]);\n\n      var _React$useState = react__WEBPACK_IMPORTED_MODULE_3__[\"useState\"](false),\n          mountedState = _React$useState[0],\n          setMountedState = _React$useState[1];\n\n      useEnhancedEffect(function () {\n        setMountedState(true);\n      }, []);\n      /**\n       * innerWidth |xs      sm      md      lg      xl\n       *            |-------|-------|-------|-------|------>\n       * width      |  xs   |  sm   |  md   |  lg   |  xl\n       */\n\n      var keys = Object(_babel_runtime_helpers_esm_toConsumableArray__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(theme.breakpoints.keys).reverse();\n\n      var widthComputed = keys.reduce(function (output, key) {\n        // eslint-disable-next-line react-hooks/rules-of-hooks\n        var matches = Object(_useMediaQuery__WEBPACK_IMPORTED_MODULE_10__[\"default\"])(theme.breakpoints.up(key));\n        return !output && matches ? key : output;\n      }, null);\n\n      var more = Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(Object(_babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_1__[\"default\"])({\n        width: width || (mountedState || noSSR ? widthComputed : undefined) || initialWidth || initialWidthOption\n      }, withThemeOption ? {\n        theme: theme\n      } : {}), other); // When rendering the component on the server,\n      // we have no idea about the client browser screen width.\n      // In order to prevent blinks and help the reconciliation of the React tree\n      // we are not rendering the child component.\n      //\n      // An alternative is to use the `initialWidth` property.\n\n\n      if (more.width === undefined) {\n        return null;\n      }\n\n      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_3__[\"createElement\"](Component, more);\n    }\n\n     true ? WithWidth.propTypes = {\n      /**\n       * As `window.innerWidth` is unavailable on the server,\n       * we default to rendering an empty component during the first mount.\n       * You might want to use an heuristic to approximate\n       * the screen width of the client browser screen width.\n       *\n       * For instance, you could be using the user-agent or the client-hints.\n       * https://caniuse.com/#search=client%20hint\n       */\n      initialWidth: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(['xs', 'sm', 'md', 'lg', 'xl']),\n\n      /**\n       * @ignore\n       */\n      theme: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.object,\n\n      /**\n       * Bypass the width calculation logic.\n       */\n      width: prop_types__WEBPACK_IMPORTED_MODULE_4___default.a.oneOf(['xs', 'sm', 'md', 'lg', 'xl'])\n    } : undefined;\n\n    if (true) {\n      WithWidth.displayName = \"WithWidth(\".concat(Object(_material_ui_utils__WEBPACK_IMPORTED_MODULE_5__[\"getDisplayName\"])(Component), \")\");\n    }\n\n    hoist_non_react_statics__WEBPACK_IMPORTED_MODULE_7___default()(WithWidth, Component);\n    return WithWidth;\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (withWidth);\n\n//# sourceURL=webpack:///./node_modules/@material-ui/core/esm/withWidth/withWidth.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/Brightness2.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M10 2c-1.82 0-3.53.5-5 1.35C7.99 5.08 10 8.3 10 12s-2.01 6.92-5 8.65C6.47 21.5 8.18 22 10 22c5.52 0 10-4.48 10-10S15.52 2 10 2z\"\n}), 'Brightness2');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/Brightness2.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/BrightnessHigh.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12 20 8.69zM12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6 6 2.69 6 6-2.69 6-6 6zm0-10c-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4z\"\n}), 'BrightnessHigh');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/BrightnessHigh.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/ChevronLeft.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z\"\n}), 'ChevronLeft');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/ChevronLeft.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/Dashboard.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z\"\n}), 'Dashboard');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/Dashboard.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/InsertDriveFile.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z\"\n}), 'InsertDriveFile');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/InsertDriveFile.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/Menu.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = void 0;\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _createSvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/icons/utils/createSvgIcon.js\"));\n\nvar _default = (0, _createSvgIcon.default)(_react.default.createElement(\"path\", {\n  d: \"M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z\"\n}), 'Menu');\n\nexports.default = _default;\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/Menu.js?");
+
+/***/ }),
+
+/***/ "./node_modules/@material-ui/icons/utils/createSvgIcon.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\nvar _interopRequireDefault = __webpack_require__(\"./node_modules/@babel/runtime/helpers/interopRequireDefault.js\");\n\nObject.defineProperty(exports, \"__esModule\", {\n  value: true\n});\nexports.default = createSvgIcon;\n\nvar _extends2 = _interopRequireDefault(__webpack_require__(\"./node_modules/@babel/runtime/helpers/extends.js\"));\n\nvar _react = _interopRequireDefault(__webpack_require__(\"./node_modules/react/index.js\"));\n\nvar _SvgIcon = _interopRequireDefault(__webpack_require__(\"./node_modules/@material-ui/core/esm/SvgIcon/index.js\"));\n\nfunction createSvgIcon(path, displayName) {\n  var Component = _react.default.memo(_react.default.forwardRef(function (props, ref) {\n    return _react.default.createElement(_SvgIcon.default, (0, _extends2.default)({\n      ref: ref\n    }, props), path);\n  }));\n\n  if (true) {\n    Component.displayName = \"\".concat(displayName, \"Icon\");\n  }\n\n  Component.muiName = _SvgIcon.default.muiName;\n  return Component;\n}\n\n//# sourceURL=webpack:///./node_modules/@material-ui/icons/utils/createSvgIcon.js?");
 
 /***/ }),
 
@@ -5825,6 +5895,30 @@ eval("__webpack_require__.r(__webpack_exports__);\nfunction valueOf(obj) {\n  re
 
 /***/ }),
 
+/***/ "./src/atomic/organisms/AdminLayout/AdminLayout.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar core_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/index.js\");\nvar Brightness2_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/Brightness2.js\"));\nvar BrightnessHigh_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/BrightnessHigh.js\"));\nvar ChevronLeft_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/ChevronLeft.js\"));\nvar Menu_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/Menu.js\"));\nvar clsx_1 = __importDefault(__webpack_require__(\"./node_modules/clsx/dist/clsx.m.js\"));\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar react_router_dom_1 = __webpack_require__(\"./node_modules/react-router-dom/esm/react-router-dom.js\");\nvar styles_1 = __webpack_require__(\"./src/atomic/organisms/AdminLayout/styles.ts\");\nexports.AdminLayout = function (_a) {\n    var _b, _c, _d, _e;\n    var pages = _a.pages, currentTheme = _a.currentTheme, onToggleTheme = _a.onToggleTheme, _f = _a.loading, loading = _f === void 0 ? false : _f;\n    var classes = styles_1.useStyles();\n    var pathname = react_router_dom_1.useLocation().pathname;\n    var _g = React.useState(false), open = _g[0], setOpen = _g[1];\n    var currentPage = pages.find(function (page) { return page.path === pathname; });\n    var CurrentComponent = currentPage ? currentPage.component : null;\n    return (React.createElement(\"div\", { className: classes.root },\n        React.createElement(core_1.CssBaseline, null),\n        React.createElement(core_1.AppBar, { position: \"fixed\", className: clsx_1.default(classes.appBar, (_b = {},\n                _b[classes.appBarShift] = open,\n                _b)) },\n            React.createElement(core_1.Toolbar, null,\n                React.createElement(core_1.IconButton, { color: \"inherit\", \"aria-label\": \"open drawer\", onClick: function () { return setOpen(true); }, edge: \"start\", className: clsx_1.default(classes.menuButton, (_c = {},\n                        _c[classes.hide] = open,\n                        _c)) },\n                    React.createElement(Menu_1.default, null)),\n                React.createElement(core_1.Typography, { variant: \"h6\", style: { flexGrow: 1 } }, currentPage\n                    ? currentPage.title\n                    : 'Not found'),\n                React.createElement(core_1.Button, { onClick: function () {\n                        onToggleTheme();\n                    } }, currentTheme === 'light'\n                    ? React.createElement(Brightness2_1.default, null)\n                    : React.createElement(BrightnessHigh_1.default, null))),\n            React.createElement(core_1.Divider, null)),\n        React.createElement(core_1.Drawer, { variant: \"permanent\", className: clsx_1.default(classes.drawer, (_d = {},\n                _d[classes.drawerOpen] = open,\n                _d[classes.drawerClose] = !open,\n                _d)), classes: {\n                paper: clsx_1.default((_e = {},\n                    _e[classes.drawerOpen] = open,\n                    _e[classes.drawerClose] = !open,\n                    _e)),\n            } },\n            React.createElement(\"div\", { className: classes.titleBar },\n                React.createElement(core_1.IconButton, { onClick: function () { return setOpen(false); }, style: { justifySelf: 'flex-end' } },\n                    React.createElement(ChevronLeft_1.default, { fontSize: 'small' }))),\n            React.createElement(core_1.Divider, null),\n            React.createElement(core_1.List, null, pages.map(function (page) {\n                var Icon = page.icon;\n                return (React.createElement(react_router_dom_1.Link, { key: page.path, to: page.path, style: { textDecoration: 'none', color: 'inherit' } },\n                    React.createElement(core_1.ListItem, { button: true, selected: currentPage && page.path === currentPage.path },\n                        React.createElement(core_1.ListItemIcon, null,\n                            React.createElement(Icon, null)),\n                        React.createElement(core_1.ListItemText, { primary: page.title }))));\n            }))),\n        React.createElement(\"main\", { className: classes.content },\n            React.createElement(\"div\", { className: classes.toolbar }),\n            loading && React.createElement(core_1.LinearProgress, { color: \"secondary\" }),\n            React.createElement(\"div\", { className: classes.innerContent }, currentPage\n                ? React.createElement(CurrentComponent, null)\n                : React.createElement(\"p\", null, \"Page not found\"))),\n        React.createElement(core_1.AppBar, { className: classes.bottomAppbar }),\n        React.createElement(react_router_dom_1.Switch, null, pages.map(function (page) { return (React.createElement(react_router_dom_1.Route, { key: page.path, path: page.path, exact: true })); }))));\n};\n\n\n//# sourceURL=webpack:///./src/atomic/organisms/AdminLayout/AdminLayout.tsx?");
+
+/***/ }),
+
+/***/ "./src/atomic/organisms/AdminLayout/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar AdminLayout_1 = __webpack_require__(\"./src/atomic/organisms/AdminLayout/AdminLayout.tsx\");\n__export(__webpack_require__(\"./src/atomic/organisms/AdminLayout/AdminLayout.tsx\"));\nexports.default = AdminLayout_1.AdminLayout;\n\n\n//# sourceURL=webpack:///./src/atomic/organisms/AdminLayout/index.ts?");
+
+/***/ }),
+
+/***/ "./src/atomic/organisms/AdminLayout/styles.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __assign = (this && this.__assign) || function () {\n    __assign = Object.assign || function(t) {\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\n            s = arguments[i];\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\n                t[p] = s[p];\n        }\n        return t;\n    };\n    return __assign.apply(this, arguments);\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar drawerWidth = 240;\nvar bottomToolbarHeight = 25;\nexports.useStyles = styles_1.makeStyles(function (theme) {\n    var _a;\n    return ({\n        root: {\n            display: 'flex',\n            alignItems: 'stretch',\n            height: '100vh'\n        },\n        appBar: {\n            width: '100%',\n            marginLeft: drawerWidth,\n            flexGrow: 1,\n            zIndex: theme.zIndex.drawer + 1,\n            transition: theme.transitions.create(['width', 'margin'], {\n                easing: theme.transitions.easing.sharp,\n                duration: theme.transitions.duration.leavingScreen,\n            }),\n        },\n        appBarShift: {\n            marginLeft: drawerWidth,\n            width: \"calc(100% - \" + drawerWidth + \"px)\",\n            transition: theme.transitions.create(['width', 'margin'], {\n                easing: theme.transitions.easing.sharp,\n                duration: theme.transitions.duration.enteringScreen,\n            }),\n        },\n        menuButton: {\n            marginRight: 36,\n        },\n        hide: {\n            display: 'none',\n        },\n        drawer: {\n            width: drawerWidth,\n            flexShrink: 0,\n            whiteSpace: 'nowrap',\n        },\n        drawerOpen: {\n            width: drawerWidth,\n            transition: theme.transitions.create('width', {\n                easing: theme.transitions.easing.sharp,\n                duration: theme.transitions.duration.enteringScreen,\n            }),\n        },\n        drawerClose: (_a = {\n                transition: theme.transitions.create('width', {\n                    easing: theme.transitions.easing.sharp,\n                    duration: theme.transitions.duration.leavingScreen,\n                }),\n                overflowX: 'hidden',\n                width: theme.spacing(7) + 1\n            },\n            _a[theme.breakpoints.up('sm')] = {\n                width: theme.spacing(9) + 1,\n            },\n            _a),\n        titleBar: __assign({ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', padding: theme.spacing(0, 1) }, theme.mixins.toolbar),\n        toolbar: theme.mixins.toolbar,\n        content: {\n            flexGrow: 1,\n            alignItems: 'stretch',\n            backgroundColor: theme.palette.background.default,\n            padding: theme.spacing(0),\n        },\n        innerContent: {\n            flexGrow: 1,\n            alignItems: 'stretch',\n            padding: 0,\n            height: \"calc(100% - \" + (theme.mixins.toolbar.minHeight + bottomToolbarHeight) + \"px)\"\n        },\n        bottomAppbar: {\n            flexGrow: 1,\n            zIndex: theme.zIndex.drawer + 1,\n            top: 'auto',\n            bottom: 0,\n            height: bottomToolbarHeight,\n            backgroundColor: theme.palette.background.paper,\n            borderTop: \"1px solid \" + theme.palette.divider\n        },\n        bottomToolbar: {\n            backgroundColor: 'transparent',\n            height: bottomToolbarHeight,\n        }\n    });\n});\n\n\n//# sourceURL=webpack:///./src/atomic/organisms/AdminLayout/styles.ts?");
+
+/***/ }),
+
 /***/ "./src/core/Root.tsx":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5901,7 +5995,87 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexport
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar core_1 = __webpack_require__(\"./src/core/index.ts\");\nvar modules_1 = __webpack_require__(\"./src/modules/index.ts\");\ncore_1.applyModules([\n    modules_1.authModule\n]);\n\n\n//# sourceURL=webpack:///./src/index.ts?");
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar core_1 = __webpack_require__(\"./src/core/index.ts\");\nvar modules_1 = __webpack_require__(\"./src/modules/index.ts\");\ncore_1.applyModules([\n    modules_1.authModule,\n    modules_1.adminModule\n]);\n\n\n//# sourceURL=webpack:///./src/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/actions/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/admin/actions/theme.ts\"));\n\n\n//# sourceURL=webpack:///./src/modules/admin/actions/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/actions/theme.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar core_1 = __webpack_require__(\"./src/core/index.ts\");\nvar IThemeActionTypes;\n(function (IThemeActionTypes) {\n    IThemeActionTypes[\"ToggleTheme\"] = \"admin/theme/TOGGLE_THEME\";\n})(IThemeActionTypes = exports.IThemeActionTypes || (exports.IThemeActionTypes = {}));\nexports.toggleTheme = function () {\n    return core_1.createAction(IThemeActionTypes.ToggleTheme);\n};\n\n\n//# sourceURL=webpack:///./src/modules/admin/actions/theme.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\n// import epic from './epics';\nvar pages_1 = __importDefault(__webpack_require__(\"./src/modules/admin/pages/index.ts\"));\nvar reducers_1 = __importDefault(__webpack_require__(\"./src/modules/admin/reducers/index.ts\"));\n// export * from './actions';\n__export(__webpack_require__(\"./src/modules/admin/reducers/index.ts\"));\nexports.adminModule = {\n    name: 'admin',\n    epic: null,\n    reducer: reducers_1.default,\n    pages: pages_1.default\n};\n\n\n//# sourceURL=webpack:///./src/modules/admin/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/AdminPage/AdminPage.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar Dashboard_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/Dashboard.js\"));\nvar InsertDriveFile_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/InsertDriveFile.js\"));\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar react_redux_1 = __webpack_require__(\"./node_modules/react-redux/es/index.js\");\nvar AdminLayout_1 = __importDefault(__webpack_require__(\"./src/atomic/organisms/AdminLayout/index.ts\"));\nvar actions_1 = __webpack_require__(\"./src/modules/admin/actions/index.ts\");\nvar selectors_1 = __webpack_require__(\"./src/modules/admin/selectors/index.ts\");\nvar theme_1 = __importDefault(__webpack_require__(\"./src/modules/theme/index.ts\"));\nexports.tabs = [\n    {\n        title: 'Dashboard',\n        path: '/admin/dashboard',\n        component: function () { return React.createElement(\"p\", null, \"dashboard\"); },\n        icon: Dashboard_1.default\n    },\n    {\n        title: 'Pages',\n        path: '/admin/pages',\n        component: function () { return React.createElement(\"p\", null, \"pages\"); },\n        icon: InsertDriveFile_1.default\n    }\n];\nvar AdminPage = function () {\n    var dispatch = react_redux_1.useDispatch();\n    var theme = react_redux_1.useSelector(selectors_1.getTheme);\n    return (React.createElement(styles_1.MuiThemeProvider, { theme: theme === 'light'\n            ? theme_1.default.light\n            : theme_1.default.dark },\n        React.createElement(AdminLayout_1.default, { currentTheme: theme, onToggleTheme: function () { return dispatch(actions_1.toggleTheme()); }, pages: exports.tabs })));\n};\nexports.default = AdminPage;\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/AdminPage/AdminPage.tsx?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/AdminPage/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/admin/pages/AdminPage/AdminPage.tsx\"));\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/AdminPage/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\n    return new (P || (P = Promise))(function (resolve, reject) {\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\n        function rejected(value) { try { step(generator[\"throw\"](value)); } catch (e) { reject(e); } }\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\n    });\n};\nvar __generator = (this && this.__generator) || function (thisArg, body) {\n    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;\n    return g = { next: verb(0), \"throw\": verb(1), \"return\": verb(2) }, typeof Symbol === \"function\" && (g[Symbol.iterator] = function() { return this; }), g;\n    function verb(n) { return function (v) { return step([n, v]); }; }\n    function step(op) {\n        if (f) throw new TypeError(\"Generator is already executing.\");\n        while (_) try {\n            if (f = 1, y && (t = op[0] & 2 ? y[\"return\"] : op[0] ? y[\"throw\"] || ((t = y[\"return\"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;\n            if (y = 0, t) op = [op[0] & 2, t.value];\n            switch (op[0]) {\n                case 0: case 1: t = op; break;\n                case 4: _.label++; return { value: op[1], done: false };\n                case 5: _.label++; y = op[1]; op = [0]; continue;\n                case 7: op = _.ops.pop(); _.trys.pop(); continue;\n                default:\n                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }\n                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }\n                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }\n                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }\n                    if (t[2]) _.ops.pop();\n                    _.trys.pop(); continue;\n            }\n            op = body.call(thisArg, _);\n        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }\n        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };\n    }\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar component_1 = __importDefault(__webpack_require__(\"./node_modules/@loadable/component/dist/loadable.esm.js\"));\nexports.default = {\n    '/admin/:tab': component_1.default(function () { return __awaiter(void 0, void 0, void 0, function () { return __generator(this, function (_a) {\n        return [2 /*return*/, Promise.resolve().then(function () { return __importStar(__webpack_require__(\"./src/modules/admin/pages/AdminPage/index.ts\")); })];\n    }); }); }),\n};\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/reducers/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar redux_1 = __webpack_require__(\"./node_modules/redux/es/redux.js\");\nvar themeReducer_1 = __webpack_require__(\"./src/modules/admin/reducers/themeReducer.ts\");\nexports.default = redux_1.combineReducers({\n    theme: themeReducer_1.themeReducer\n});\n\n\n//# sourceURL=webpack:///./src/modules/admin/reducers/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/reducers/themeReducer.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __assign = (this && this.__assign) || function () {\n    __assign = Object.assign || function(t) {\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\n            s = arguments[i];\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\n                t[p] = s[p];\n        }\n        return t;\n    };\n    return __assign.apply(this, arguments);\n};\nvar _a;\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar toolkit_1 = __webpack_require__(\"./node_modules/@reduxjs/toolkit/dist/redux-toolkit.esm.js\");\nvar actions_1 = __webpack_require__(\"./src/modules/admin/actions/index.ts\");\nvar INITIAL_STATE = {\n    theme: 'light'\n};\nexports.themeReducer = toolkit_1.createReducer(INITIAL_STATE, (_a = {},\n    _a[actions_1.IThemeActionTypes.ToggleTheme] = function (state) { return (__assign(__assign({}, state), { theme: state.theme === 'light' ? 'dark' : 'light' })); },\n    _a));\n\n\n//# sourceURL=webpack:///./src/modules/admin/reducers/themeReducer.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/selectors/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/admin/selectors/theme.ts\"));\n\n\n//# sourceURL=webpack:///./src/modules/admin/selectors/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/selectors/theme.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar reselect_1 = __webpack_require__(\"./node_modules/reselect/es/index.js\");\nvar getState = function (state) { return state.admin.theme; };\nexports.getTheme = reselect_1.createSelector(getState, function (state) { return state.theme; });\n\n\n//# sourceURL=webpack:///./src/modules/admin/selectors/theme.ts?");
 
 /***/ }),
 
@@ -6053,7 +6227,39 @@ eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar re
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/auth/index.ts\"));\n\n\n//# sourceURL=webpack:///./src/modules/index.ts?");
+eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/auth/index.ts\"));\n__export(__webpack_require__(\"./src/modules/admin/index.ts\"));\n\n\n//# sourceURL=webpack:///./src/modules/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/theme/common.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.common = {\n    toolbar: {\n        minHeight: 48\n    }\n};\n\n\n//# sourceURL=webpack:///./src/modules/theme/common.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/theme/dark.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __assign = (this && this.__assign) || function () {\n    __assign = Object.assign || function(t) {\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\n            s = arguments[i];\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\n                t[p] = s[p];\n        }\n        return t;\n    };\n    return __assign.apply(this, arguments);\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar colors_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/colors/index.js\");\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar common_1 = __webpack_require__(\"./src/modules/theme/common.ts\");\nexports.dark = styles_1.createMuiTheme({\n    palette: {\n        type: 'dark',\n        primary: colors_1.cyan,\n        background: {\n            default: '#150015',\n            paper: '#110011'\n        },\n        divider: colors_1.red[400],\n        text: {\n            primary: '#ffffff'\n        },\n        action: {\n            hover: colors_1.cyan[900],\n            selected: colors_1.cyan.A700\n        }\n    },\n    typography: {\n        // fontFamily: 'Monaco, \"Courier New\", Courier, monospace'\n        fontFamily: 'Menlo, Monaco, \"Courier New\", monospace'\n    },\n    mixins: {\n        toolbar: __assign(__assign({}, common_1.common.toolbar), { color: '#cceeff', backgroundColor: colors_1.cyan[800] // '#660066', // teal.A700,\n         })\n    }\n});\n\n\n//# sourceURL=webpack:///./src/modules/theme/dark.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/theme/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar dark_1 = __webpack_require__(\"./src/modules/theme/dark.ts\");\nvar light_1 = __webpack_require__(\"./src/modules/theme/light.ts\");\nexports.default = {\n    light: light_1.light,\n    dark: dark_1.dark\n};\n\n\n//# sourceURL=webpack:///./src/modules/theme/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/theme/light.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __assign = (this && this.__assign) || function () {\n    __assign = Object.assign || function(t) {\n        for (var s, i = 1, n = arguments.length; i < n; i++) {\n            s = arguments[i];\n            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))\n                t[p] = s[p];\n        }\n        return t;\n    };\n    return __assign.apply(this, arguments);\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar colors_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/colors/index.js\");\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar common_1 = __webpack_require__(\"./src/modules/theme/common.ts\");\nexports.light = styles_1.createMuiTheme({\n    palette: {\n        type: 'light',\n        primary: colors_1.amber,\n        action: {\n            hover: colors_1.orange[100],\n            selected: colors_1.orange[300]\n        }\n    },\n    mixins: {\n        toolbar: __assign({}, common_1.common.toolbar)\n    }\n});\n\n\n//# sourceURL=webpack:///./src/modules/theme/light.ts?");
 
 /***/ })
 

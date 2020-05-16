@@ -1,9 +1,10 @@
+import { IAuthPayload } from '@common*';
 import { NextFunction, Request, Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import config from '~/config';
 import { catchAsync } from '~/core/routes';
 
-import { IAuthPayload, users } from '../models';
+import { users } from '../models';
 
 const getTokenFromHeaders = (req: Request): string | null => {
     const { headers: { authorization } } = req;
