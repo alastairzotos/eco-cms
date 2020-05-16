@@ -1,0 +1,22 @@
+
+------------------------------------------------
+Features:
+------------------------------------------------
+
+Pages:
+    - Add pages in hierarchy
+    - Edit ecoML for each page and head tag data
+    - Preview
+    - Publish
+    - View pages
+    - Multiple pages for multi-armed bandit algo
+
+
+------------------------------------------------
+Sprints:
+------------------------------------------------
+
+Sprint 1:
+    - Register and log in
+    - Back office skeleton
+    - Add and edit pages
