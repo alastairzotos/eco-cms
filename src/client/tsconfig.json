@@ -1,0 +1,22 @@
+{
+	"extends": "../../tsconfig",
+	"exclude": [
+		"build"
+	],
+	"include": [
+		"src"
+	],
+	"compilerOptions": {
+		"moduleResolution": "node",
+		"target": "es5",
+		"sourceMap": true,
+		"jsx": "react",
+		"rootDir": "src",
+		"outDir": "build",
+		"baseUrl": "src",
+		"paths": {
+			"@common*": ["../../common", "../../common/*"],
+			"~/*": ["*"]
+		}
+	},
+}

@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import * as path from 'path';
 import xss from 'xss-clean';
 import config from '~/config';
 
@@ -46,9 +47,15 @@ export const startApp = async (modules: IModule[]) => {
         app.use(mod.router);
     });
 
-    app.all('*', () => {
-        throw new AppError('Endpoint not found', 404);
+    app.use(express.static(path.resolve(__dirname, '..', '..', 'public')));
+
+    app.get('*', (_, res) => {
+        res.sendFile(path.resolve(__dirname, '..', '..', 'public', 'index.html'));
     });
+
+    // app.all('*', () => {
+    //     throw new AppError('Endpoint not found', 404);
+    // });
 
     const errorHandler: ErrorRequestHandler = (error: AppError, req, res, next) => {
         const statusCode = error.statusCode || 500;

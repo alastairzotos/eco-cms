@@ -1,30 +1,33 @@
+import { IAuthResponse } from '@common';
 import { Router } from 'express';
 import { catchAsync } from '~/core/routes';
 
-import { IAuthResponse, IUser, users } from '../models';
+import { IUserRecord, users } from '../models';
 
 export const authRouter = Router({
     caseSensitive: true,
     strict: true
 });
 
-authRouter.post('/login', catchAsync<any, IAuthResponse, { user: IUser }>(async (req, res) => {
-    const { email, password } = req.body.user;
+authRouter.post('/login', catchAsync<any, IAuthResponse, IUserRecord>(async (req, res) => {
+    const { email, password } = req.body;
     const user = await users.model.findOne({ email }).select('+password');
 
     if (!user || !users.validatePassword(user, password)) {
         return res.sendStatus(400);
     }
 
-    res.json(await users.toAuthResponse(user));
+    const authResponse = await users.toAuthResponse(user);
+    res.cookie('ecotoken', authResponse.token).json(authResponse);
 }));
 
-authRouter.post('/register', catchAsync<any, IAuthResponse, { user: IUser }>(async (req, res) => {
-    const userData = req.body.user;
+authRouter.post('/register', catchAsync<any, IAuthResponse, IUserRecord>(async (req, res) => {
+    const userData = req.body;
     const user = await users.model.create(userData);
 
     users.setPassword(user, userData.password);
-
     await user.save();
-    res.json(await users.toAuthResponse(user));
+
+    const authResponse = await users.toAuthResponse(user);
+    res.cookie('ecotoken', authResponse.token).json(authResponse);
 }));
