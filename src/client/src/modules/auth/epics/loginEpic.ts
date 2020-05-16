@@ -1,4 +1,5 @@
 import { IAuthResponse, IUserLoginPayload } from '@common';
+import cookies from 'cookiesjs';
 import { Epic } from 'redux-observable';
 import { of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -19,7 +20,10 @@ export const loginEpic: Epic = action$ =>
                 url: '/login',
                 body: action.payload
             }).pipe(
-                switchMap((res: IResponse<IAuthResponse>) => of(setUserLoggedIn(res.body))),
+                switchMap((res: IResponse<IAuthResponse>) => {
+                    cookies({ ecotoken: res.body.token });
+                    return of(setUserLoggedIn(res.body));
+                }),
                 catchError(e => {
                     if (e.status === 401 || e.status === 404) {
                         return of(setLoginError({ statusCode: e.status }));
