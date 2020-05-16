@@ -6027,7 +6027,7 @@ eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar Dashboard_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/Dashboard.js\"));\nvar InsertDriveFile_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/InsertDriveFile.js\"));\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar react_redux_1 = __webpack_require__(\"./node_modules/react-redux/es/index.js\");\nvar AdminLayout_1 = __importDefault(__webpack_require__(\"./src/atomic/organisms/AdminLayout/index.ts\"));\nvar actions_1 = __webpack_require__(\"./src/modules/admin/actions/index.ts\");\nvar selectors_1 = __webpack_require__(\"./src/modules/admin/selectors/index.ts\");\nvar theme_1 = __importDefault(__webpack_require__(\"./src/modules/theme/index.ts\"));\nexports.tabs = [\n    {\n        title: 'Dashboard',\n        path: '/admin/dashboard',\n        component: function () { return React.createElement(\"p\", null, \"dashboard\"); },\n        icon: Dashboard_1.default\n    },\n    {\n        title: 'Pages',\n        path: '/admin/pages',\n        component: function () { return React.createElement(\"p\", null, \"pages\"); },\n        icon: InsertDriveFile_1.default\n    }\n];\nvar AdminPage = function () {\n    var dispatch = react_redux_1.useDispatch();\n    var theme = react_redux_1.useSelector(selectors_1.getTheme);\n    return (React.createElement(styles_1.MuiThemeProvider, { theme: theme === 'light'\n            ? theme_1.default.light\n            : theme_1.default.dark },\n        React.createElement(AdminLayout_1.default, { currentTheme: theme, onToggleTheme: function () { return dispatch(actions_1.toggleTheme()); }, pages: exports.tabs })));\n};\nexports.default = AdminPage;\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/AdminPage/AdminPage.tsx?");
+eval("\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar styles_1 = __webpack_require__(\"./node_modules/@material-ui/core/esm/styles/index.js\");\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar react_redux_1 = __webpack_require__(\"./node_modules/react-redux/es/index.js\");\nvar AdminLayout_1 = __importDefault(__webpack_require__(\"./src/atomic/organisms/AdminLayout/index.ts\"));\nvar actions_1 = __webpack_require__(\"./src/modules/admin/actions/index.ts\");\nvar selectors_1 = __webpack_require__(\"./src/modules/admin/selectors/index.ts\");\nvar theme_1 = __importDefault(__webpack_require__(\"./src/modules/theme/index.ts\"));\nvar apps_1 = __webpack_require__(\"./src/modules/admin/pages/apps/index.ts\");\nvar AdminPage = function () {\n    var dispatch = react_redux_1.useDispatch();\n    var theme = react_redux_1.useSelector(selectors_1.getTheme);\n    return (React.createElement(styles_1.MuiThemeProvider, { theme: theme === 'light'\n            ? theme_1.default.light\n            : theme_1.default.dark },\n        React.createElement(AdminLayout_1.default, { currentTheme: theme, onToggleTheme: function () { return dispatch(actions_1.toggleTheme()); }, pages: apps_1.apps })));\n};\nexports.default = AdminPage;\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/AdminPage/AdminPage.tsx?");
 
 /***/ }),
 
@@ -6036,6 +6036,30 @@ eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {
 
 "use strict";
 eval("\nfunction __export(m) {\n    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];\n}\nObject.defineProperty(exports, \"__esModule\", { value: true });\n__export(__webpack_require__(\"./src/modules/admin/pages/AdminPage/AdminPage.tsx\"));\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/AdminPage/index.ts?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/apps/Dashboard.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Dashboard_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/Dashboard.js\"));\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar Dashboard = function () {\n    return React.createElement(\"p\", null, \"dashboard!!!\");\n};\nexports.dashboardPage = {\n    title: 'Dashboard',\n    path: '/admin/dashboard',\n    component: Dashboard,\n    icon: Dashboard_1.default\n};\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/apps/Dashboard.tsx?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/apps/PageEditor.tsx":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nvar __importDefault = (this && this.__importDefault) || function (mod) {\n    return (mod && mod.__esModule) ? mod : { \"default\": mod };\n};\nvar __importStar = (this && this.__importStar) || function (mod) {\n    if (mod && mod.__esModule) return mod;\n    var result = {};\n    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];\n    result[\"default\"] = mod;\n    return result;\n};\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar InsertDriveFile_1 = __importDefault(__webpack_require__(\"./node_modules/@material-ui/icons/InsertDriveFile.js\"));\nvar React = __importStar(__webpack_require__(\"./node_modules/react/index.js\"));\nvar PageEditor = function () {\n    return React.createElement(\"p\", null, \"page editor\");\n};\nexports.pageEditorPage = {\n    title: 'Pages',\n    path: '/admin/pages',\n    component: PageEditor,\n    icon: InsertDriveFile_1.default\n};\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/apps/PageEditor.tsx?");
+
+/***/ }),
+
+/***/ "./src/modules/admin/pages/apps/index.ts":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar Dashboard_1 = __webpack_require__(\"./src/modules/admin/pages/apps/Dashboard.tsx\");\nvar PageEditor_1 = __webpack_require__(\"./src/modules/admin/pages/apps/PageEditor.tsx\");\nexports.apps = [\n    Dashboard_1.dashboardPage,\n    PageEditor_1.pageEditorPage\n];\n\n\n//# sourceURL=webpack:///./src/modules/admin/pages/apps/index.ts?");
 
 /***/ }),
 
