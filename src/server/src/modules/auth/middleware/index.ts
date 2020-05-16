@@ -23,17 +23,15 @@ export const authenticate = catchAsync(async (req: Request, res: Response, next:
     }
 
     const authPayload: IAuthPayload = jwt.verify(token, config.authkey) as any;
-
     if (!authPayload) {
         return res.sendStatus(401);
     }
 
     const user = await users.model.findById(authPayload.id);
-    req.loggedInUser = user;
-
-    if (user) {
-        return next();
+    if (!user) {
+        return res.sendStatus(401);
     }
 
-    res.sendStatus(401);
+    req.loggedInUser = user;
+    next();
 });
