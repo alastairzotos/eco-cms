@@ -1,4 +1,4 @@
-import { IAuthResponse, IUser } from '@common';
+import { IAuthResponse, IUserLoginPayload } from '@common';
 import { Epic } from 'redux-observable';
 import { of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ import {
 
 export const loginEpic: Epic = action$ =>
     action$.ofType(IAuthActionTypes.LoginUser).pipe(
-        switchMap((action: IAction<IAuthActionTypes, IUser>) => {
+        switchMap((action: IAction<IAuthActionTypes, IUserLoginPayload>) => {
             return fetch$({
                 method: 'POST',
                 url: '/login',

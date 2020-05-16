@@ -2,7 +2,8 @@
 import 'module-alias/register';
 import { startApp } from '~/core/app';
 import {
-    authModule
+    authModule,
+    adminModule
 } from '~/modules';
 
 process.stdout.write('\x1Bc');
@@ -13,5 +14,6 @@ SendGrid for prod
 */
 
 startApp([
-    authModule
+    authModule,
+    adminModule
 ]).catch(e => console.log(e));

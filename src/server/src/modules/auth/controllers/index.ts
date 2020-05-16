@@ -1,13 +1,9 @@
 import { IAuthResponse } from '@common';
-import { Router } from 'express';
-import { catchAsync } from '~/core/routes';
+import { catchAsync, createRouter } from '~/core/routes';
 
 import { IUserRecord, users } from '../models';
 
-export const authRouter = Router({
-    caseSensitive: true,
-    strict: true
-});
+export const authRouter = createRouter();
 
 authRouter.post('/login', catchAsync<any, IAuthResponse, IUserRecord>(async (req, res) => {
     const { email, password } = req.body;
@@ -31,3 +27,7 @@ authRouter.post('/register', catchAsync<any, IAuthResponse, IUserRecord>(async (
     const authResponse = await users.toAuthResponse(user);
     res.cookie('ecotoken', authResponse.token).json(authResponse);
 }));
+
+authRouter.get('/ping', (req, res) => {
+    res.send(req.query.text);
+});

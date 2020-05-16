@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "tslint -c tslint.json './**/*.ts{x,}'",
     "lint-fix": "tslint -c tslint.json './**/*.ts{x,}' --fix",
-    "pre-commit": "npm run lint"
+    "pre-commit": "npm run lint",
+    "start": "webpack-dev-server --port 5998 --targetType dev-server"
   },
   "repository": {
     "type": "git",
@@ -29,7 +30,9 @@
     "@types/react-redux": "^7.1.7",
     "css-loader": "^3.5.1",
     "dotenv": "^8.2.0",
-    "findup-sync": "^4.0.0"
+    "findup-sync": "^4.0.0",
+    "style-loader": "^1.2.1",
+    "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
     "@loadable/component": "^5.11.0",
@@ -48,6 +51,7 @@
     "react-dom": "^16.12.0",
     "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
+    "react-split-pane": "^0.1.91",
     "redux": "^4.0.4",
     "redux-observable": "^1.2.0",
     "reselect": "^4.0.0",

@@ -1,8 +1,8 @@
 import { createAction } from '~/core';
 
-export enum IThemeActionTypes {
+export enum IAdminThemeActionType {
     ToggleTheme = 'admin/theme/TOGGLE_THEME'
 }
 
 export const toggleTheme = () =>
-    createAction(IThemeActionTypes.ToggleTheme);
+    createAction(IAdminThemeActionType.ToggleTheme);

@@ -1,5 +1,12 @@
-import { RequestHandler } from 'express';
+import { RequestHandler, Router } from 'express';
 import * as core from 'express-serve-static-core';
+
+export const createRouter = () =>
+    Router({
+        caseSensitive: true,
+        mergeParams: true,
+        strict: true
+    });
 
 export const catchAsync = <P extends core.Params = core.ParamsDictionary, ResBody = any, ReqBody = any, Q = core.Query>(
     controller: RequestHandler<P, ResBody, ReqBody, Q>

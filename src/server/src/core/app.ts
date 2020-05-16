@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import express, { ErrorRequestHandler } from 'express';
 import mongoSanitize from 'express-mongo-sanitize';
 import rateLimit from 'express-rate-limit';
@@ -13,6 +14,7 @@ import config from '~/config';
 
 import { AppError } from './error';
 import { IModule } from './module';
+import { createRouter } from './routes';
 
 export const startApp = async (modules: IModule[]) => {
     console.log('Connecting to database...');
@@ -35,6 +37,7 @@ export const startApp = async (modules: IModule[]) => {
 
     app.use(bodyParser());
     app.use(cookieParser());
+    app.use(cors());
     app.use(mongoSanitize());
     app.use(xss());
     app.use(helmet());
@@ -42,10 +45,18 @@ export const startApp = async (modules: IModule[]) => {
     app.use(passport.initialize());
     app.use('*', rateLimiter);
 
+    const api = createRouter();
     modules.forEach(mod => {
-        mod.service.onStart();
-        app.use(mod.router);
+        if (mod.service) {
+            mod.service.onStart();
+        }
+        api.use(mod.router);
     });
+    api.use('*', req => {
+        throw new AppError(`Endpoint not found: ${req.path}`, 404);
+    });
+
+    app.use('/api', api);
 
     app.use(express.static(path.resolve(__dirname, '..', '..', 'public')));
 

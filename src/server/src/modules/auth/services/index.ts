@@ -8,27 +8,25 @@ class AuthService extends Service {
     }
 
     onStart = async () => {
+        // passport.use(new LocalStrategy({
+        //     usernameField: 'user[email]',
+        //     passwordField: 'user[password]',
+        // }, (email, password, done) => {
+        //     userModel.findOne({ email })
+        //         .select('+password')
+        //         .then(user => {
+        //             const validPassword = user.validatePassword(password);
+
+        //             if (!user || !validPassword) {
+        //                 return done(null, false, { message: 'Invalid username or password' });
+        //             }
+
+        //             return done(null, user);
+        //         }).catch(done);
+        // }));
+
         console.log('started auth service');
     }
 }
 
 export const authService = new AuthService();
-
-export const onStart = () => {
-    // passport.use(new LocalStrategy({
-    //     usernameField: 'user[email]',
-    //     passwordField: 'user[password]',
-    // }, (email, password, done) => {
-    //     userModel.findOne({ email })
-    //         .select('+password')
-    //         .then(user => {
-    //             const validPassword = user.validatePassword(password);
-
-    //             if (!user || !validPassword) {
-    //                 return done(null, false, { message: 'Invalid username or password' });
-    //             }
-
-    //             return done(null, user);
-    //         }).catch(done);
-    // }));
-};

@@ -36,6 +36,10 @@ module.exports = {
         index: path.resolve(__dirname, 'src/index.ts'),
     },
 
+    devServer: {
+        historyApiFallback: true,
+    },
+
     module: {
         rules: [
             {

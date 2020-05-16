@@ -1,18 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { IAdminTheme } from '~/atomic/organisms/AdminLayout';
 
-import { IThemeActionTypes } from '../actions';
+import { IAdminThemeActionType } from '../actions';
 
-export interface IThemeState {
+export interface IAdminThemeState {
     theme: IAdminTheme;
 }
 
-const INITIAL_STATE: IThemeState = {
+const INITIAL_STATE: IAdminThemeState = {
     theme: 'light'
 };
 
-export const themeReducer = createReducer<IThemeState>(INITIAL_STATE, {
-    [IThemeActionTypes.ToggleTheme]: state => ({
+export const themeReducer = createReducer<IAdminThemeState>(INITIAL_STATE, {
+    [IAdminThemeActionType.ToggleTheme]: state => ({
         ...state,
         theme: state.theme === 'light' ? 'dark' : 'light'
     })

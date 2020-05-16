@@ -19,4 +19,5 @@ Sprints:
 Sprint 1:
     - [DONE] Register and log in
     - [DONE] Back office skeleton
-    - Add and edit pages
+    - [DONE] Add and load pages
+    - Edit pages

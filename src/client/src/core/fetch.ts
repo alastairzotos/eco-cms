@@ -50,7 +50,10 @@ const performFetch = <T = any>(req: IRequest): Promise<IResponse<T>> =>
                 authHeaders.Authorization = `Bearer ${token}`;
             }
 
-            const response = await window.fetch(req.url, {
+            const domain = 'http://localhost:5999';
+            const apiRoute = '/api';
+
+            const response = await window.fetch(domain + apiRoute + req.url, {
                 method: req.method,
                 headers: {
                     'Accept': 'application/json',

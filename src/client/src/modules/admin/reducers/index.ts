@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 
-import { IThemeState, themeReducer } from './themeReducer';
+import { IAdminPagesState, pagesReducer } from './pagesReducer';
+import { IAdminThemeState, themeReducer } from './themeReducer';
 
 export interface IAdminState {
-    theme: IThemeState;
+    theme: IAdminThemeState;
+    pages: IAdminPagesState;
 }
 
 export default combineReducers({
-    theme: themeReducer
+    theme: themeReducer,
+    pages: pagesReducer
 });
