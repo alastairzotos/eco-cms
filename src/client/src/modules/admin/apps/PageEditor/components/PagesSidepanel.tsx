@@ -28,8 +28,10 @@ export const PagesSidePanel: React.FC = () => {
     const getPagesStatus = useSelector(getGetPagesStatus);
 
     React.useEffect(() => {
-        dispatch(beginGetPages());
-    }, []);
+        if (pages.length === 0) {
+            dispatch(beginGetPages());
+        }
+    }, [pages]);
 
     const onClickNew = () => {
         dispatch(beginAddPage({

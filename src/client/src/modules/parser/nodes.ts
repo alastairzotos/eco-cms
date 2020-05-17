@@ -1,5 +1,6 @@
 import { Dictionary } from '@reduxjs/toolkit';
 
+import { HtmlElement } from './html';
 import { IOperatorType, ITokenType } from './lexer';
 import { Runtime } from './runtime';
 
@@ -37,7 +38,15 @@ export class HTMLNode extends ParseNode {
     attributes: Dictionary<ParseNode> = {};
     isSelfClosing: boolean;
 
-    evaluate = (runtime: Runtime) => runtime.renderNode(this);
+    evaluate = (runtime: Runtime) =>
+        new HtmlElement(
+            this.tagName,
+            Object.keys(this.attributes).reduce((cur, key) => ({
+                ...cur,
+                [key]: this.attributes[key].evaluate(runtime)
+            }), {}),
+            this.childNodes.map(child => child.evaluate(runtime))
+        )
 
     evaluateAttributes = (runtime: Runtime, key?: any) =>
         Object.keys(this.attributes).reduce((cur, attr) => ({
@@ -178,25 +187,25 @@ export class BinaryOpNode extends ParseNode {
 
     evaluate = (runtime: Runtime) => {
         switch (this.opType) {
-            case '&&': return runtime.evaluateNode(this.left) && runtime.evaluateNode(this.right);
-            case '||': return runtime.evaluateNode(this.left) || runtime.evaluateNode(this.right);
+            case '&&': return this.left.evaluate(runtime) && this.right.evaluate(runtime);
+            case '||': return this.left.evaluate(runtime) || this.right.evaluate(runtime);
 
-            case '===': return runtime.evaluateNode(this.left) === runtime.evaluateNode(this.right);
-            case '==': return runtime.evaluateNode(this.left) == runtime.evaluateNode(this.right); // tslint:disable-line
+            case '===': return this.left.evaluate(runtime) === this.right.evaluate(runtime);
+            case '==': return this.left.evaluate(runtime) == this.right.evaluate(runtime); // tslint:disable-line
 
-            case '!==': return runtime.evaluateNode(this.left) !== runtime.evaluateNode(this.right); // tslint:disable-line
-            case '!=': return runtime.evaluateNode(this.left) != runtime.evaluateNode(this.right); // tslint:disable-line
+            case '!==': return this.left.evaluate(runtime) !== this.right.evaluate(runtime);
+            case '!=': return this.left.evaluate(runtime) != this.right.evaluate(runtime); // tslint:disable-line
 
-            case '>': return runtime.evaluateNode(this.left) > runtime.evaluateNode(this.right);
-            case '>=': return runtime.evaluateNode(this.left) >= runtime.evaluateNode(this.right);
-            case '<': return runtime.evaluateNode(this.left) < runtime.evaluateNode(this.right);
-            case '<=': return runtime.evaluateNode(this.left) <= runtime.evaluateNode(this.right);
+            case '>=': return this.left.evaluate(runtime) >= this.right.evaluate(runtime);
+            case '>': return this.left.evaluate(runtime) > this.right.evaluate(runtime);
+            case '<=': return this.left.evaluate(runtime) <= this.right.evaluate(runtime);
+            case '<': return this.left.evaluate(runtime) < this.right.evaluate(runtime);
 
-            case '*': return runtime.evaluateNode(this.left) * runtime.evaluateNode(this.right);
-            case '/': return runtime.evaluateNode(this.left) / runtime.evaluateNode(this.right);
-
-            case '+': return runtime.evaluateNode(this.left) + runtime.evaluateNode(this.right);
-            case '-': return runtime.evaluateNode(this.left) - runtime.evaluateNode(this.right);
+            case '+': return this.left.evaluate(runtime) + this.right.evaluate(runtime);
+            case '-': return this.left.evaluate(runtime) - this.right.evaluate(runtime);
+            case '*': return this.left.evaluate(runtime) * this.right.evaluate(runtime);
+            case '/': return this.left.evaluate(runtime) / this.right.evaluate(runtime);
+            case '%': return this.left.evaluate(runtime) % this.right.evaluate(runtime);
         }
     }
 }
@@ -208,8 +217,8 @@ export class UnaryOpNode extends ParseNode {
 
     evaluate = (runtime: Runtime) => {
         switch (this.opType) {
-            case '!': return !runtime.evaluateNode(this.expr);
-            case '-': return -runtime.evaluateNode(this.expr);
+            case '!': return !this.expr.evaluate(runtime);
+            case '-': return -this.expr.evaluate(runtime);
         }
     }
 }
@@ -223,7 +232,7 @@ export class TernaryOpNode extends ParseNode {
     elseExpr: ParseNode;
 
     evaluate = (runtime: Runtime) =>
-        runtime.evaluateNode(this.condition)
-            ? runtime.evaluateNode(this.thenExpr)
-            : runtime.evaluateNode(this.elseExpr)
+        this.condition.evaluate(runtime)
+            ? this.thenExpr.evaluate(runtime)
+            : this.elseExpr.evaluate(runtime)
 }

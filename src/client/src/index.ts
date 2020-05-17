@@ -1,12 +1,6 @@
-import { applyModules } from './core';
-import {
-    adminModule,
-    authModule,
-    pagesModule
-} from './modules';
+import { start } from '~/modules/start';
+import * as components from '~/staticComponents';
 
-applyModules([
-    authModule,
-    adminModule,
-    pagesModule
-]);
+import { myModule } from './testapp';
+
+start(components, [myModule]);

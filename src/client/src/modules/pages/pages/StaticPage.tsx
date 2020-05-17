@@ -3,8 +3,8 @@ import * as qs from 'qs';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { ReactRuntime } from '~/modules/parser';
-import * as staticComponents from '~/staticComponents';
+import { moduleManager } from '~/core';
+import { Runtime } from '~/modules/parser';
 
 import { beginGetPage } from '../actions';
 import { getPage, getPageError, getPageFetchStatus } from '../selectors';
@@ -13,7 +13,7 @@ const StaticPage: React.FC<RouteComponentProps> = ({
     location
 }) => {
     const dispatch = useDispatch();
-    const fetchStatus = useSelector(getPageFetchStatus);
+    const fetchPageStatus = useSelector(getPageFetchStatus);
     const page = useSelector(getPage);
     const error = useSelector(getPageError);
 
@@ -29,18 +29,18 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         return <p>there was an unexpected error</p>;
     }
 
-    if (fetchStatus === 'fetching' || !page) {
+    if (fetchPageStatus === 'fetching' || !page) {
         return <LinearProgress />;
     }
 
-    const runtime = new ReactRuntime(
-        staticComponents as any,
+    const runtime = new Runtime(
+        moduleManager.components,
         {
             query: qs.parse(location.search, { ignoreQueryPrefix: true })
         }
     );
 
-    return runtime.run(page.content);
+    return <>{runtime.run(page.content)}</>;
 };
 
 export default StaticPage;

@@ -2,7 +2,7 @@ import PagesIcon from '@material-ui/icons/InsertDriveFile';
 import * as React from 'react';
 import { Panel } from '~/atomic/atoms/Panel';
 import SplitPanel from '~/atomic/atoms/SplitPanel';
-import { IAdminPage } from '~/atomic/organisms/AdminLayout';
+import { IAdminApp } from '~/core';
 
 import { PageCodeEditor } from './components/PageCodeEditor';
 import { PagesSidePanel } from './components/PagesSidepanel';
@@ -18,9 +18,9 @@ const PageEditor: React.FC = () => {
     );
 };
 
-export const pageEditorPage: IAdminPage = {
+export const pageEditorApp: IAdminApp = {
     title: 'Pages',
-    path: '/admin/pages',
+    path: '/pages',
     component: PageEditor,
     icon: PagesIcon
 };

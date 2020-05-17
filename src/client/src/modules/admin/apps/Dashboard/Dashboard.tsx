@@ -1,14 +1,14 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import * as React from 'react';
-import { IAdminPage } from '~/atomic/organisms/AdminLayout';
+import { IAdminApp } from '~/core';
 
 const Dashboard: React.FC = () => {
     return <p>dashboard</p>;
 };
 
-export const dashboardPage: IAdminPage = {
+export const dashboardApp: IAdminApp = {
     title: 'Dashboard',
-    path: '/admin/dashboard',
+    path: '/dashboard',
     component: Dashboard,
     icon: DashboardIcon
 };

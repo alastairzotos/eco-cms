@@ -12,20 +12,20 @@ export const dark = createMuiTheme({
             default: '#150015',
             paper: '#110011'
         },
-        divider: red[400],
-        text: {
-            primary: '#ffffff'
-        },
+        // divider: red[400],
+        // text: {
+        //     primary: '#ffffff'
+        // },
 
-        action: {
-            hover: main[900],
-            selected: main.A700
-        }
+        // action: {
+        //     hover: main[900],
+        //     selected: main.A700
+        // }
     },
 
     typography: {
         // fontFamily: 'Monaco, "Courier New", Courier, monospace'
-        fontFamily: 'Menlo, Monaco, "Courier New", monospace'
+        // fontFamily: 'Menlo, Monaco, "Courier New", monospace'
     },
 
     mixins: {
@@ -33,7 +33,7 @@ export const dark = createMuiTheme({
             ...common.toolbar,
 
             color: '#cceeff',
-            backgroundColor: main[800] // '#660066', // teal.A700,
+            backgroundColor: main[500] // '#660066', // teal.A700,
         }
     }
 });

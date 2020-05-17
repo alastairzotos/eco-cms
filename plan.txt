@@ -21,7 +21,9 @@ Sprint 1:
     - [DONE] Add and load pages
     - [DONE] Edit pages
     - [DONE] View rendered pages
-    - Evaluate html to internal html class, use react renderer on that
+    - [DONE] Evaluate html to internal html class, use react renderer on that
+    - [DONE] Supply components. Plugin modules on front-end
+    - Plugin modules on back-end
 
 Sprint 2:
     - Preview pages

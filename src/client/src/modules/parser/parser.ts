@@ -108,7 +108,7 @@ export class Parser {
     private parseGeometric = (): BinaryOpNode | ParseNode =>
         this.parseBinaryExpression({
             parseSubExpression: () => this.parseUnary(),
-            validOperators: ['*', '/']
+            validOperators: ['*', '/', '%']
         })
 
     private parseUnary = (): UnaryOpNode | ParseNode => {

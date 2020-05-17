@@ -1,6 +1,8 @@
 import { Dictionary } from 'lodash';
 import * as React from 'react';
+import { isArray } from 'util';
 
+import { HtmlElement } from './html';
 import { HTMLNode, ParseNode } from './nodes';
 import { Parser } from './parser';
 
@@ -12,12 +14,16 @@ export class Runtime {
         this.scope = [scope];
     }
 
+    private elemCount: number = 0;
     private scope: Array<Dictionary<any>> = [];
 
-    render = (input: string) => null;
-    renderNode = (node: HTMLNode) => null;
-
-    evaluateNode = (node: ParseNode) => node.evaluate(this);
+    run = (input: string): any[] => {
+        this.elemCount = 0;
+        return this.renderChildren(
+            this.parse(input)
+            .map(node => node.evaluate(this))
+        );
+    }
 
     pushScope = (values: Dictionary<any>) => this.scope.push(values || {});
     popScope = () => this.scope.pop();
@@ -34,34 +40,21 @@ export class Runtime {
         const parser = new Parser(input);
         return parser.parse();
     }
-}
 
-export class ReactRuntime extends Runtime {
-    constructor(
-        customNodes: Dictionary<React.FC<any>>,
-        scope: Dictionary<any>
-    ) {
-        super(customNodes, scope);
-    }
+    private renderChildren = (values: any[]) =>
+        values.map(value => (
+            value instanceof HtmlElement
+                ? this.renderNode(value)
+                : isArray(value)
+                    ? this.renderChildren(value)
+                    : value
+        ))
 
-    private elemCount: number = 0;
+    private renderNode = (node: HtmlElement): React.ReactElement => {
+        const children = this.renderChildren(node.children);
 
-    run = (input: string) => {
-        this.elemCount = 0;
-        const nodes = this.parse(input);
-
-        return (
-            <>
-            {
-                nodes.map(node => node.evaluate(this))
-            }
-            </>
-        );
-    }
-
-    renderNode = (node: HTMLNode): React.ReactElement => {
         if (!node.tagName) {
-            return <React.Fragment key={this.generateKey()}>{node.evaluateChildren(this)}</React.Fragment>;
+            return <React.Fragment key={this.generateKey()}>{children}</React.Fragment>;
         }
 
         if (node.tagName in this.customNodes) {
@@ -69,10 +62,10 @@ export class ReactRuntime extends Runtime {
 
             return (
                 <CustomNode
-                    {...node.evaluateAttributes(this)}
                     key={this.generateKey()}
+                    {...node.attributes}
                 >
-                    {node.evaluateChildren(this)}
+                    {children}
                 </CustomNode>
             );
         }
@@ -80,11 +73,12 @@ export class ReactRuntime extends Runtime {
         return React.createElement(
             node.tagName,
             {
-                ...node.evaluateAttributes(this),
+                ...node.attributes,
                 key: this.generateKey()
             },
-            ...node.evaluateChildren(this)
+            ...children
         );
     }
+
     private generateKey = () => `elem-${this.elemCount++}`;
 }

@@ -1,4 +1,5 @@
 import { IPage } from '@common';
+import { Dictionary } from 'lodash';
 import { createAction } from '~/core';
 
 export enum IPagesActions {

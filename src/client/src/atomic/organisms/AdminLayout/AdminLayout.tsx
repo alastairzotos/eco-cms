@@ -20,20 +20,14 @@ import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import * as React from 'react';
 import { Link, Route, Switch, useLocation } from 'react-router-dom';
+import { IAdminApp } from '~/core';
 
 import { useStyles } from './styles';
 
 export type IAdminTheme = 'light' | 'dark';
 
-export interface IAdminPage {
-    title: string;
-    path: string;
-    component: React.FC<any>;
-    icon: React.FC<any>;
-}
-
 export interface IAdminLayoutProps {
-    pages: IAdminPage[];
+    pages: IAdminApp[];
 
     currentTheme: IAdminTheme;
     onToggleTheme: () => void;
@@ -53,7 +47,9 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
     const { pathname } = useLocation();
     const [open, setOpen] = React.useState(false);
 
-    const currentPage = pages.find(page => page.path === pathname);
+    const getFullPath = (page: IAdminApp) => `/admin${page.path}`;
+
+    const currentPage = pages.find(page => getFullPath(page) === pathname);
 
     const CurrentComponent = currentPage ? currentPage.component : null;
 
@@ -132,7 +128,7 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
                             return (
                                 <Link
                                     key={page.path}
-                                    to={page.path}
+                                    to={getFullPath(page)}
                                     style={{ textDecoration: 'none', color: 'inherit' }}
                                 >
                                     <ListItem

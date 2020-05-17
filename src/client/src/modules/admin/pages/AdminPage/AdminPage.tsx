@@ -2,12 +2,10 @@ import { MuiThemeProvider } from '@material-ui/core/styles';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AdminLayout from '~/atomic/organisms/AdminLayout';
-import { setTheme } from '~/core';
+import { moduleManager, setTheme } from '~/core';
 import { toggleTheme } from '~/modules/admin/actions';
 import { getTheme } from '~/modules/admin/selectors';
 import mainTheme from '~/modules/theme';
-
-import { apps } from '../apps';
 
 const AdminPage: React.FC = () => {
     const dispatch = useDispatch();
@@ -27,7 +25,7 @@ const AdminPage: React.FC = () => {
                     setTheme(theme === 'light' ? 'dark' : 'light');
                     dispatch(toggleTheme());
                 }}
-                pages={apps}
+                pages={moduleManager.getApps()}
             />
         </MuiThemeProvider>
     );
