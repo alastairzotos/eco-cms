@@ -1,10 +1,12 @@
 import { applyModules } from './core';
 import {
     adminModule,
-    authModule
+    authModule,
+    pagesModule
 } from './modules';
 
 applyModules([
     authModule,
-    adminModule
+    adminModule,
+    pagesModule
 ]);

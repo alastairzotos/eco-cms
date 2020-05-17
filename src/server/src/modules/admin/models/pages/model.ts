@@ -20,6 +20,9 @@ export class PagesModel extends Model<IPageRecord> {
 
     savePage = async (page: IPage) =>
         this.model.updateOne({ _id: page._id }, page)
+
+    getPageByPath = async (path: string): Promise<IPageRecord> =>
+        this.model.findOne({ path })
 }
 
 export const pagesModel = new PagesModel();

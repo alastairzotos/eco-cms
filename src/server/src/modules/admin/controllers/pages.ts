@@ -24,3 +24,13 @@ pagesRouter.post('/pages/save', authenticate, catchAsync<any, IPageRecord, IPage
 
     res.sendStatus(200);
 }));
+
+pagesRouter.get('/pages/get-page', catchAsync<any, IPageRecord, any, { path: string }>(async (req, res) => {
+    const page = await adminService.pages.getPageByPath(req.query.path);
+
+    if (!page) {
+        return res.sendStatus(404);
+    }
+
+    res.json(page);
+}));
