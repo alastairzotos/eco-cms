@@ -5,18 +5,17 @@ import { Panel } from '~/atomic/atoms/Panel';
 import { beginAddPage, beginGetPages } from '~/modules/admin/actions';
 import { getAddPageStatus, getGetPagesStatus, getPages } from '~/modules/admin/selectors/pages';
 
+import { PagesView } from './PagesView';
+
 const useStyles = makeStyles(theme => ({
     main: {
-        padding: theme.spacing(1),
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between'
+        padding: theme.spacing(1)
     },
     view: {
-        justifyContent: 'normal'
+        marginBottom: theme.spacing(1)
     },
     addBtn: {
-        // alignSelf: 'flex-end'
+        marginTop: theme.spacing(1)
     }
 }));
 
@@ -49,8 +48,10 @@ export const PagesSidePanel: React.FC = () => {
                 )}
 
                 <div className={classes.view}>
-                    <p>{JSON.stringify(pages)}</p>
+                    <PagesView />
                 </div>
+
+                <Divider />
 
                 <Fab
                     className={classes.addBtn}

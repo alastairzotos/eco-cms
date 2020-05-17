@@ -39,7 +39,7 @@ export const startApp = async (modules: IModule[]) => {
     app.use(cookieParser());
     app.use(cors());
     app.use(mongoSanitize());
-    app.use(xss());
+    // app.use(xss());
     app.use(helmet());
     app.use(compression());
     app.use(passport.initialize());

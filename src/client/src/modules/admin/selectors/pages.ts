@@ -17,3 +17,18 @@ export const getPages = createSelector(
     getState,
     state => state.pages
 );
+
+export const getSelectedPageId = createSelector(
+    getState,
+    state => state.selectedPageId
+);
+
+export const getSelectedPage = createSelector(
+    getState,
+    state => state.pages && state.pages.find(page => page._id === state.selectedPageId)
+);
+
+export const getSavePageStatus = createSelector(
+    getState,
+    state => state.savePageStatus
+);

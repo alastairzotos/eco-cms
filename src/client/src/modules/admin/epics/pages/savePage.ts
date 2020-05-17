@@ -6,21 +6,21 @@ import { fetch$, IAction } from '~/core';
 import { IResponse } from '~/core/fetch';
 
 import {
-    addPage,
     IAdminPagesActionType,
-    setAddPageError
+    setPageSaved,
+    setSavePageError
 } from '../../actions';
 
-export const addPageEpic: Epic = action$ =>
-    action$.ofType(IAdminPagesActionType.BeginAddPage).pipe(
+export const savePageEpic: Epic = action$ =>
+    action$.ofType(IAdminPagesActionType.BeginSavePage).pipe(
         switchMap((action: IAction<IAdminPagesActionType, IPage>) => {
             return fetch$({
                 method: 'POST',
-                url: '/admin/pages/add',
+                url: '/admin/pages/save',
                 body: action.payload
             }).pipe(
-                switchMap((res: IResponse<IPage>) => of(addPage(res.body))),
-                catchError(() => of(setAddPageError())),
+                switchMap(() => of(setPageSaved(action.payload))),
+                catchError(e => of(setSavePageError(e))),
             );
         }),
     );

@@ -16,7 +16,7 @@ export const getPagesEpic: Epic = action$ =>
         switchMap(() => {
             return fetch$({
                 method: 'GET',
-                url: '/admin/pages'
+                url: '/admin/pages/get'
             }).pipe(
                 switchMap((res: IResponse<IPage[]>) => of(setPages(res.body))),
                 catchError(() => of(setGetPagesError())),

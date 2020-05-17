@@ -1,4 +1,3 @@
-
 ------------------------------------------------
 Features:
 ------------------------------------------------
@@ -20,4 +19,5 @@ Sprint 1:
     - [DONE] Register and log in
     - [DONE] Back office skeleton
     - [DONE] Add and load pages
-    - Edit pages
+    - [DONE] Edit pages
+    - View rendered pages

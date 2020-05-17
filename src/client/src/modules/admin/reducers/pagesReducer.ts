@@ -3,17 +3,40 @@ import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { ICallStatus } from '~/core';
 
 import { IAdminPagesActionType } from '../actions';
+import { IPageInfo } from '../models';
 
 export interface IAdminPagesState {
     addPageStatus: ICallStatus | null;
     getPagesStatus: ICallStatus | null;
+    savePageStatus: ICallStatus | null;
     pages: IPage[];
+    selectedPageId: string | null;
+    currentError: string | null;
 }
 
 const INITIAL_STATE: IAdminPagesState = {
     addPageStatus: null,
     getPagesStatus: null,
-    pages: []
+    savePageStatus: null,
+    pages: [],
+    selectedPageId: null,
+    currentError: null
+};
+
+const updatePages = (pages: IPageInfo[], page: IPageInfo): IPageInfo[] => {
+    const pageId = pages.findIndex(p => p._id === page._id);
+
+    if (pageId > -1) {
+        const newPages = [...pages];
+        newPages[pageId] = {
+            ...pages[pageId],
+            ...page
+        };
+
+        return newPages;
+    }
+
+    return pages;
 };
 
 export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
@@ -43,5 +66,31 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
     [IAdminPagesActionType.SetGetPagesError]: state => ({
         ...state,
         getPagesStatus: 'error'
+    }),
+
+    [IAdminPagesActionType.SelectCurrentPage]: (state, action: PayloadAction<string>) => ({
+        ...state,
+        selectedPageId: action.payload
+    }),
+    [IAdminPagesActionType.SetPageData]: (state, action: PayloadAction<IPageInfo>) => ({
+        ...state,
+        pages: updatePages(state.pages, action.payload)
+    }),
+
+    [IAdminPagesActionType.BeginSavePage]: state => ({
+        ...state,
+        savePageStatus: 'fetching'
+    }),
+
+    [IAdminPagesActionType.SetPageSaved]: (state, action: PayloadAction<IPageInfo>) => ({
+        ...state,
+        savePageStatus: 'success',
+        pages: updatePages(state.pages, action.payload)
+    }),
+
+    [IAdminPagesActionType.SetSavePageError]: (state, action: PayloadAction<string>) => ({
+        ...state,
+        savePageStatus: 'error',
+        currentError: action.payload
     })
 });

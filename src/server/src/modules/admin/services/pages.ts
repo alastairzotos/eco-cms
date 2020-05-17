@@ -8,15 +8,14 @@ export class PagesService extends Service {
         // tslint:disable-line
     }
 
-    getPages = async () => {
-        const pages = await pagesModel.getPages();
+    getPages = async () =>
+        pagesModel.getPages()
 
-        return pages;
-    }
+    addPage = async (page: IPage) =>
+        pagesModel.addPage(page)
 
-    addPage = async (page: IPage) => {
-        return pagesModel.addPage(page);
-    }
+    savePage = async (page: IPage) =>
+        pagesModel.savePage(page)
 }
 
 export const pagesService = new PagesService();

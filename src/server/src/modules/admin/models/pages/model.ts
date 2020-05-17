@@ -9,17 +9,17 @@ export class PagesModel extends Model<IPageRecord> {
         super('pages', pageSchema);
     }
 
-    getPages = async () => {
-        const pages = await this.model.find();
-
-        return pages;
-    }
+    getPages = async () =>
+        this.model.find()
 
     addPage = async (page: IPage) => {
         const record = await this.model.create(page);
 
         return record.save();
     }
+
+    savePage = async (page: IPage) =>
+        this.model.updateOne({ _id: page._id }, page)
 }
 
 export const pagesModel = new PagesModel();
