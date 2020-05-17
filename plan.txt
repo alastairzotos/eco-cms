@@ -3,7 +3,7 @@ Features:
 ------------------------------------------------
 
 Pages:
-    - Add pages in hierarchy
+    - Add pages
     - Edit ecoML for each page and head tag data
     - Preview
     - Publish
@@ -20,4 +20,11 @@ Sprint 1:
     - [DONE] Back office skeleton
     - [DONE] Add and load pages
     - [DONE] Edit pages
-    - View rendered pages
+    - [DONE] View rendered pages
+    - Evaluate html to internal html class, use react renderer on that
+
+Sprint 2:
+    - Preview pages
+    - Publish pages
+    - Multi-armed bandit
+    - Head tag data

@@ -1,14 +1,13 @@
 import { LinearProgress } from '@material-ui/core';
+import * as qs from 'qs';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
-import { ReactRenderer } from '~/modules/parser';
+import { ReactRuntime } from '~/modules/parser';
 import * as staticComponents from '~/staticComponents';
 
 import { beginGetPage } from '../actions';
 import { getPage, getPageError, getPageFetchStatus } from '../selectors';
-
-const renderer = new ReactRenderer(staticComponents as any);
 
 const StaticPage: React.FC<RouteComponentProps> = ({
     location
@@ -34,7 +33,14 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         return <LinearProgress />;
     }
 
-    return renderer.render(page.content);
+    const runtime = new ReactRuntime(
+        staticComponents as any,
+        {
+            query: qs.parse(location.search, { ignoreQueryPrefix: true })
+        }
+    );
+
+    return runtime.run(page.content);
 };
 
 export default StaticPage;
