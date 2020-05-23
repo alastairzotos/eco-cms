@@ -1,5 +1,13 @@
 import { IPage } from '@common';
-import { AppBar, Dialog, IconButton, makeStyles, Slide, Toolbar, Typography } from '@material-ui/core';
+import {
+    AppBar,
+    Dialog,
+    IconButton,
+    makeStyles,
+    Slide,
+    Toolbar,
+    Typography
+} from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import CloseIcon from '@material-ui/icons/Close';
 import * as qs from 'qs';

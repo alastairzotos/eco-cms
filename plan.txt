@@ -28,6 +28,6 @@ Sprint 1:
 Sprint 2:
     - [DONE] Multi-armed bandit
     - [DONE] Preview pages
-    - Publish pages
+    - Publish pages. Confirm save unsaved changes first
     - Head tag data
     - redux-persist
