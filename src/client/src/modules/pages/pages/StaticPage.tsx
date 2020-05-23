@@ -33,14 +33,16 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         return <LinearProgress />;
     }
 
+    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+
     const runtime = new Runtime(
         moduleManager.components,
         {
-            query: qs.parse(location.search, { ignoreQueryPrefix: true })
+            query
         }
     );
 
-    return <>{runtime.run(page.content)}</>;
+    return <>{runtime.run(page.staging[(parseInt(query.v as string, 10) - 1) || 0])}</>;
 };
 
 export default StaticPage;

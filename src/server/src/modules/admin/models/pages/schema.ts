@@ -8,7 +8,10 @@ export const pageSchema = new Schema({
     title: {
         type: String
     },
-    content: {
+    staging: [{
         type: String
-    }
+    }],
+    production: [{
+        type: String
+    }]
 });

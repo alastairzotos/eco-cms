@@ -28,16 +28,19 @@ export const PagesSidePanel: React.FC = () => {
     const getPagesStatus = useSelector(getGetPagesStatus);
 
     React.useEffect(() => {
-        if (pages.length === 0) {
+        if (pages.length === 0 && !getPagesStatus) {
             dispatch(beginGetPages());
         }
-    }, [pages]);
+    }, [pages, getPagesStatus]);
 
     const onClickNew = () => {
         dispatch(beginAddPage({
             path: `/page-${pages.length + 1}`,
             title: 'New page',
-            content: '<p>New page</p>'
+            staging: [
+                '<p>New page</p>'
+            ],
+            production: []
         }));
     };
 

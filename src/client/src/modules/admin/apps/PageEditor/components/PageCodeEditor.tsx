@@ -1,4 +1,14 @@
-import { InputAdornment, TextField } from '@material-ui/core';
+import {
+    FormControl,
+    IconButton,
+    InputAdornment,
+    InputLabel,
+    makeStyles,
+    MenuItem,
+    Select,
+    TextField
+} from '@material-ui/core';
+import Add from '@material-ui/icons/Add';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CodeEditor } from '~/atomic/molecules/CodeEditor';
@@ -8,7 +18,19 @@ import { getTheme } from '~/modules/admin/selectors';
 import { getPages, getSavePageStatus, getSelectedPage } from '~/modules/admin/selectors/pages';
 import { isValidUrl } from '~/modules/admin/utils';
 
+const useStyles = makeStyles(theme => ({
+    versionSelector: {
+        minWidth: 200,
+        display: 'inline-block'
+    },
+    versionSelectorDropdown: {
+        width: 150
+    }
+}));
+
 export const PageCodeEditor: React.FC = () => {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
     const pages = useSelector(getPages);
     const selectedPage = useSelector(getSelectedPage);
@@ -16,6 +38,7 @@ export const PageCodeEditor: React.FC = () => {
     const saveStatus = useSelector(getSavePageStatus);
 
     const pageRef = React.useRef<IPageInfo>(null);
+    const [version, setVersion] = React.useState(0);
 
     if (!selectedPage) {
         return <></>;
@@ -39,7 +62,12 @@ export const PageCodeEditor: React.FC = () => {
     const handleChange = (value: string) => {
         dispatch(setPageData({
             ...pageRef.current,
-            content: value
+            staging: pageRef.current.staging
+                .map((current, index) =>
+                    index === version
+                    ? value
+                    : current
+                )
         }));
     };
 
@@ -57,11 +85,23 @@ export const PageCodeEditor: React.FC = () => {
         }));
     };
 
+    const handleCreateVersion = () => {
+        dispatch(setPageData({
+            ...pageRef.current,
+            staging: [
+                ...pageRef.current.staging,
+                pageRef.current.staging[pageRef.current.staging.length - 1]
+            ]
+        }));
+
+        setVersion(pageRef.current.staging.length);
+    };
+
     return (
         <CodeEditor
             id={selectedPage._id}
             theme={theme}
-            content={selectedPage.content}
+            content={selectedPage.staging[version]}
             scroll={pageRef.current.scroll}
             saving={saveStatus === 'fetching'}
 
@@ -90,7 +130,29 @@ export const PageCodeEditor: React.FC = () => {
                     InputProps={{
                         startAdornment: <InputAdornment position="start">title</InputAdornment>
                     }}
-                />
+                />,
+
+                <FormControl className={classes.versionSelector}>
+                    <InputLabel id="version-label">Version</InputLabel>
+                    <Select
+                        className={classes.versionSelectorDropdown}
+                        labelId="version-label"
+                        value={version}
+                        onChange={(event: React.ChangeEvent<{value: number}>) => setVersion(event.target.value)}
+                    >
+                    {
+                        Array.from(Array(pageRef.current.staging.length).keys()).map(vn =>
+                            <MenuItem key={vn} value={vn}>{vn + 1}</MenuItem>
+                        )
+                    }
+                    </Select>
+                    <IconButton
+                        size="small"
+                        onClick={handleCreateVersion}
+                    >
+                        <Add />
+                    </IconButton>
+                </FormControl>
             ]}
         />
     );

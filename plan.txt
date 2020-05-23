@@ -23,10 +23,11 @@ Sprint 1:
     - [DONE] View rendered pages
     - [DONE] Evaluate html to internal html class, use react renderer on that
     - [DONE] Supply components. Plugin modules on front-end
-    - Plugin modules on back-end
+    - [DONE] Plugin modules on back-end
 
 Sprint 2:
+    - [DONE] Multi-armed bandit
     - Preview pages
     - Publish pages
-    - Multi-armed bandit
     - Head tag data
+    - redux-persist
