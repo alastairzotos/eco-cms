@@ -32,3 +32,8 @@ export const getSavePageStatus = createSelector(
     getState,
     state => state.savePageStatus
 );
+
+export const getSelectedVersion = createSelector(
+    getState,
+    state => state.selectedVersion
+);

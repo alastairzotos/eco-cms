@@ -12,6 +12,7 @@ export interface IAdminPagesState {
     pages: IPage[];
     selectedPageId: string | null;
     currentError: string | null;
+    selectedVersion: number;
 }
 
 const INITIAL_STATE: IAdminPagesState = {
@@ -20,7 +21,8 @@ const INITIAL_STATE: IAdminPagesState = {
     savePageStatus: null,
     pages: [],
     selectedPageId: null,
-    currentError: null
+    currentError: null,
+    selectedVersion: 0
 };
 
 const updatePages = (pages: IPageInfo[], page: IPageInfo): IPageInfo[] => {
@@ -92,5 +94,33 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
         ...state,
         savePageStatus: 'error',
         currentError: action.payload
+    }),
+
+    [IAdminPagesActionType.SetPageVersion]: (state, action: PayloadAction<number>) => ({
+        ...state,
+        selectedVersion: action.payload
+    }),
+
+    [IAdminPagesActionType.AddPageVersion]: (state, action: PayloadAction<IPage>) => ({
+        ...state,
+        pages: updatePages(state.pages, {
+            ...action.payload,
+            staging: [
+                ...action.payload.staging,
+                action.payload.staging[action.payload.staging.length - 1]
+            ]
+        }),
+        selectedVersion: action.payload.staging.length
+    }),
+
+    [IAdminPagesActionType.DeletePageVersion]: (state, action: PayloadAction<{ page: IPage, version: number }>) => ({
+        ...state,
+        pages: updatePages(state.pages, {
+            ...action.payload.page,
+            staging: action.payload.page.staging.filter(
+                (_, index) => index !== action.payload.version
+            )
+        }),
+        selectedVersion: state.selectedVersion - 1
     })
 });
