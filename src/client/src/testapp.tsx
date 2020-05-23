@@ -2,8 +2,10 @@ import Icon from '@material-ui/icons/Adjust';
 import { createReducer, createSelector } from '@reduxjs/toolkit';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
-import { IModule } from './core';
+import { fetch$, IModule } from './core';
 
 interface ITestState {
     count: number;
@@ -23,6 +25,19 @@ export const myModule: IModule = {
             count: state.count + 1
         })
     }),
+    epic: action$ => action$.ofType('inc_count').pipe(
+        switchMap(action =>
+            fetch$({
+                method: 'GET',
+                url: '/test'
+            }).pipe(
+                switchMap(res => {
+                    console.log(res);
+                    return of({ type: 'nothing' });
+                })
+            )
+        )
+    ),
     adminPages: [
         {
             title: 'My App',

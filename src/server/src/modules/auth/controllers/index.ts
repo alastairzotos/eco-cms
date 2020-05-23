@@ -27,7 +27,3 @@ authRouter.post('/register', catchAsync<any, IAuthResponse, IUserRecord>(async (
     const authResponse = await users.toAuthResponse(user);
     res.cookie('ecotoken', authResponse.token).json(authResponse);
 }));
-
-authRouter.get('/ping', (req, res) => {
-    res.send(req.query.text);
-});

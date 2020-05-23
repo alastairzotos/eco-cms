@@ -14,9 +14,10 @@ import config from '~/config';
 
 import { AppError } from './error';
 import { IModule } from './module';
+import { coreModules } from './modules';
 import { createRouter } from './routes';
 
-export const startApp = async (modules: IModule[]) => {
+const startApp = async (modules: IModule[]) => {
     console.log('Connecting to database...');
     await mongoose.connect(
         config.db.connectionString.replace('%PASSWORD%', config.db.password),
@@ -77,7 +78,7 @@ export const startApp = async (modules: IModule[]) => {
     app.use(errorHandler);
 
     const server = app.listen(config.port, () => {
-        console.log('Listening...');
+        console.log(`Server running on port ${config.port}`);
     });
 
     process.on('unhandledRejection', (error: any) => {
@@ -100,3 +101,6 @@ export const startApp = async (modules: IModule[]) => {
         });
     });
 };
+
+export const start = (modules: IModule[], onError: (e: any) => void) =>
+    startApp([...coreModules, ...modules]).catch(onError);

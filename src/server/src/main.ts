@@ -1,10 +1,8 @@
 /* tslint:disable:ordered-imports */
 import 'module-alias/register';
-import { startApp } from '~/core/app';
-import {
-    authModule,
-    adminModule
-} from '~/modules';
+import { start } from '~/core/app';
+
+import { testModule } from './testmodule';
 
 process.stdout.write('\x1Bc');
 
@@ -13,7 +11,8 @@ Mailtrap for dev -> https://mailtrap.io/
 SendGrid for prod
 */
 
-startApp([
-    authModule,
-    adminModule
-]).catch(e => console.log(e));
+start([
+    testModule
+], e => {
+    console.log(e);
+});
