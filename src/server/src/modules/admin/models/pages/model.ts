@@ -21,6 +21,9 @@ export class PagesModel extends Model<IPageRecord> {
     savePage = async (page: IPage) =>
         this.model.updateOne({ _id: page._id }, page)
 
+    deletePage = async (page: IPage) =>
+        this.model.findByIdAndDelete(page._id)
+
     getPageByPath = async (path: string): Promise<IPageRecord> =>
         this.model.findOne({ path })
 }

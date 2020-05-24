@@ -17,6 +17,9 @@ export class PagesService extends Service {
     savePage = async (page: IPage) =>
         pagesModel.savePage(page)
 
+    deletePage = async (page: IPage) =>
+        pagesModel.deletePage(page)
+
     getPageByPath = async (path: string): Promise<IPageRecord> => {
         const pathWithoutQs = path.includes('?') ? path.split('?')[0] : path;
 

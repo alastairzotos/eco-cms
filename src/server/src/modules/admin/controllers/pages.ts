@@ -19,6 +19,12 @@ pagesRouter.post('/pages/add', authenticate, catchAsync<any, IPageRecord, IPage>
     res.json(page);
 }));
 
+pagesRouter.post('/pages/delete', authenticate, catchAsync<any, any, IPage>(async (req, res) => {
+    await adminService.pages.deletePage(req.body);
+
+    res.sendStatus(200);
+}));
+
 pagesRouter.post('/pages/save', authenticate, catchAsync<any, IPageRecord, IPage>(async (req, res) => {
     await adminService.pages.savePage(req.body);
 

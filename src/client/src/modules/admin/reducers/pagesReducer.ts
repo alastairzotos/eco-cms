@@ -9,6 +9,7 @@ export interface IAdminPagesState {
     addPageStatus: ICallStatus | null;
     getPagesStatus: ICallStatus | null;
     savePageStatus: ICallStatus | null;
+    deletePageStatus: ICallStatus | null;
     pages: IPage[];
     selectedPageId: string | null;
     currentError: string | null;
@@ -20,6 +21,7 @@ const INITIAL_STATE: IAdminPagesState = {
     addPageStatus: null,
     getPagesStatus: null,
     savePageStatus: null,
+    deletePageStatus: null,
     pages: [],
     selectedPageId: null,
     currentError: null,
@@ -131,5 +133,21 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
         }),
         selectedVariation: state.selectedVariation - 1,
         dirty: true
+    }),
+
+    [IAdminPagesActionType.BeginDeletePage]: state => ({
+        ...state,
+        deletePageStatus: 'fetching'
+    }),
+    [IAdminPagesActionType.SetPageDeleted]: (state, action: PayloadAction<IPage>) => ({
+        ...state,
+        deletePageStatus: 'success',
+        pages: state.pages.filter(page => page._id !== action.payload._id),
+        selectedPageId: null,
+        selectedVariation: 0
+    }),
+    [IAdminPagesActionType.SetDeletePageError]: state => ({
+        ...state,
+        deletePageStatus: 'error'
     })
 });

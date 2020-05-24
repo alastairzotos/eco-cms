@@ -42,3 +42,8 @@ export const isDirty = createSelector(
     getState,
     state => state.dirty
 );
+
+export const getDeletePageStatus = createSelector(
+    getState,
+    state => state.deletePageStatus
+);

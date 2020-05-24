@@ -1,5 +1,7 @@
 import {
+    Backdrop,
     Button,
+    CircularProgress,
     DialogContentText,
     FormControlLabel,
     IconButton,
@@ -7,15 +9,23 @@ import {
     makeStyles,
     TextField
 } from '@material-ui/core';
+import Delete from '@material-ui/icons/Delete';
 import Edit from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CodeEditor } from '~/atomic/molecules/CodeEditor';
 import { Confirm } from '~/atomic/molecules/Confirm';
-import { beginSavePage, setPageData } from '~/modules/admin/actions';
+import { beginDeletePage, beginSavePage, setPageData } from '~/modules/admin/actions';
 import { IPageInfo } from '~/modules/admin/models';
 import { getTheme } from '~/modules/admin/selectors';
-import { getPages, getSavePageStatus, getSelectedPage, getSelectedVariation, isDirty } from '~/modules/admin/selectors/pages';
+import {
+    getDeletePageStatus,
+    getPages,
+    getSavePageStatus,
+    getSelectedPage,
+    getSelectedVariation,
+    isDirty
+} from '~/modules/admin/selectors/pages';
 import { isValidUrl } from '~/modules/admin/utils';
 
 import { PagePreview } from './PagePreview';
@@ -24,6 +34,10 @@ import { VariationSelector } from './VariationSelector';
 const useStyles = makeStyles(theme => ({
     descTextField: {
         width: 500
+    },
+    backdrop: {
+        zIndex: theme.zIndex.drawer + 1,
+        color: '#fff'
     }
 }));
 
@@ -37,12 +51,14 @@ export const PageCodeEditor: React.FC = () => {
     const saveStatus = useSelector(getSavePageStatus);
     const variation = useSelector(getSelectedVariation);
     const dirty = useSelector(isDirty);
+    const deleteStatus = useSelector(getDeletePageStatus);
 
     const pageRef = React.useRef<IPageInfo>(null);
     const [previewing, setPreviewing] = React.useState(false);
     const [savePromptOpen, setSavePromptOpen] = React.useState(false);
     const [publishPromptOpen, setPublishPromptOpen] = React.useState(false);
     const [descPromptOpen, setDescPromptOpen] = React.useState(false);
+    const [deletePromptOpen, setDeletePromptOpen] = React.useState(false);
 
     if (!selectedPage) {
         return <></>;
@@ -178,7 +194,14 @@ export const PageCodeEditor: React.FC = () => {
                         disabled={saveStatus === 'fetching'}
                     >
                         Publish
-                    </Button>
+                    </Button>,
+
+                    <IconButton
+                        disabled={saveStatus === 'fetching'}
+                        onClick={() => setDeletePromptOpen(true)}
+                    >
+                        <Delete />
+                    </IconButton>
                 ]}
             />
 
@@ -227,6 +250,26 @@ export const PageCodeEditor: React.FC = () => {
                     onChange={e => handleDescriptionChange(e.target.value)}
                 />
             </Confirm>
+
+            <Confirm
+                title="Delete page"
+                open={deletePromptOpen}
+                onCancel={() => setDeletePromptOpen(false)}
+                onConfirm={() => {
+                    setDeletePromptOpen(false);
+                    dispatch(beginDeletePage(pageRef.current));
+                }}
+                confirmPrompt="Delete"
+            >
+                <DialogContentText>Are you sure you want to delete the page?</DialogContentText>
+            </Confirm>
+
+            <Backdrop
+                className={classes.backdrop}
+                open={deleteStatus === 'fetching'}
+            >
+                <CircularProgress />
+            </Backdrop>
         </>
     );
 };
