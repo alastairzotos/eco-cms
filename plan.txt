@@ -31,3 +31,8 @@ Sprint 2:
     - [DONE] Publish pages. Confirm save unsaved changes first
     - Head tag data
     - redux-persist
+
+Sprint 3:
+    - Rearrange pages
+    - 404 page
+    - Themes

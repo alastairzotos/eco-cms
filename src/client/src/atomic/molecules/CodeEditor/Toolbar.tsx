@@ -47,6 +47,10 @@ const useStyles = makeStyles(theme => ({
         borderBottom: `1px solid ${theme.palette.divider}`,
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    toolbarItemContainer: {
+        borderLeft: `1px solid ${theme.palette.divider}`,
+        paddingLeft: theme.spacing(2)
     }
 }));
 
@@ -72,7 +76,14 @@ export const CodeEditorToolbar: React.FC<ICodeEditorToolbarProps> = ({
                     />
                 )
             }
-            {items.map((item, index) => ({ ...(item as any), key: index }))}
+            {/* {items.map((item, index) => ({ ...(item as any), key: index }))} */}
+            {
+                items.map((item, index) => (
+                    <div className={classes.toolbarItemContainer} key={index}>
+                        { ...(item as any) }
+                    </div>
+                ))
+            }
         </Toolbar>
     );
 };

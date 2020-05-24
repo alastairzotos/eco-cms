@@ -19,9 +19,9 @@ export enum IAdminPagesActionType {
     SetPageSaved = 'admin/pages/SET_PAGE_SAVED',
     SetSavePageError = 'admin/page/SET_SAVE_PAGE_ERROR',
 
-    SetPageVersion = 'admin/pages/SET_PAGE_VERSION',
-    AddPageVersion = 'admin/pages/ADD_PAGE_VERSION',
-    DeletePageVersion = 'admin/pages/DELETE_PAGE_VERSION'
+    SetPageVariation = 'admin/pages/SET_PAGE_VARIATION',
+    AddPageVariation = 'admin/pages/ADD_PAGE_VARIATION',
+    DeletePageVariation = 'admin/pages/DELETE_PAGE_VARIATION'
 }
 
 export const beginAddPage = (page: IPage) =>
@@ -57,11 +57,11 @@ export const setPageSaved = (data: IPageInfo) =>
 export const setSavePageError = (error: string) =>
     createAction(IAdminPagesActionType.SetSavePageError, error);
 
-export const setPageVersion = (version: number) =>
-    createAction(IAdminPagesActionType.SetPageVersion, version);
+export const setPageVariation = (variation: number) =>
+    createAction(IAdminPagesActionType.SetPageVariation, variation);
 
-export const addPageVersion = (page: IPage) =>
-    createAction(IAdminPagesActionType.AddPageVersion, page);
+export const addPageVariation = (page: IPage) =>
+    createAction(IAdminPagesActionType.AddPageVariation, page);
 
-export const deletePageVersion = (page: IPage, version: number) =>
-    createAction(IAdminPagesActionType.DeletePageVersion, { page, version });
+export const deletePageVariation = (page: IPage, variation: number) =>
+    createAction(IAdminPagesActionType.DeletePageVariation, { page, variation });

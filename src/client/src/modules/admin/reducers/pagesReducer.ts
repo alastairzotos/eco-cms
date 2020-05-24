@@ -12,7 +12,7 @@ export interface IAdminPagesState {
     pages: IPage[];
     selectedPageId: string | null;
     currentError: string | null;
-    selectedVersion: number;
+    selectedVariation: number;
     dirty: boolean;
 }
 
@@ -23,7 +23,7 @@ const INITIAL_STATE: IAdminPagesState = {
     pages: [],
     selectedPageId: null,
     currentError: null,
-    selectedVersion: 0,
+    selectedVariation: 0,
     dirty: false
 };
 
@@ -100,33 +100,36 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
         currentError: action.payload
     }),
 
-    [IAdminPagesActionType.SetPageVersion]: (state, action: PayloadAction<number>) => ({
+    [IAdminPagesActionType.SetPageVariation]: (state, action: PayloadAction<number>) => ({
         ...state,
-        selectedVersion: action.payload
+        selectedVariation: action.payload
     }),
 
-    [IAdminPagesActionType.AddPageVersion]: (state, action: PayloadAction<IPage>) => ({
+    [IAdminPagesActionType.AddPageVariation]: (state, action: PayloadAction<IPage>) => ({
         ...state,
         pages: updatePages(state.pages, {
             ...action.payload,
             staging: [
                 ...action.payload.staging,
-                action.payload.staging[action.payload.staging.length - 1]
+                action.payload.staging[state.selectedVariation]
             ]
         }),
-        selectedVersion: action.payload.staging.length,
+        selectedVariation: action.payload.staging.length,
         dirty: true
     }),
 
-    [IAdminPagesActionType.DeletePageVersion]: (state, action: PayloadAction<{ page: IPage, version: number }>) => ({
+    [IAdminPagesActionType.DeletePageVariation]: (
+        state,
+        action: PayloadAction<{ page: IPage, variation: number }>
+    ) => ({
         ...state,
         pages: updatePages(state.pages, {
             ...action.payload.page,
             staging: action.payload.page.staging.filter(
-                (_, index) => index !== action.payload.version
+                (_, index) => index !== action.payload.variation
             )
         }),
-        selectedVersion: state.selectedVersion - 1,
+        selectedVariation: state.selectedVariation - 1,
         dirty: true
     })
 });

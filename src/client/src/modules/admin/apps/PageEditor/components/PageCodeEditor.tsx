@@ -11,11 +11,11 @@ import { Confirm } from '~/atomic/molecules/Confirm';
 import { beginSavePage, setPageData } from '~/modules/admin/actions';
 import { IPageInfo } from '~/modules/admin/models';
 import { getTheme } from '~/modules/admin/selectors';
-import { getPages, getSavePageStatus, getSelectedPage, getSelectedVersion, isDirty } from '~/modules/admin/selectors/pages';
+import { getPages, getSavePageStatus, getSelectedPage, getSelectedVariation, isDirty } from '~/modules/admin/selectors/pages';
 import { isValidUrl } from '~/modules/admin/utils';
 
 import { PagePreview } from './PagePreview';
-import { VersionSelector } from './VersionSelector';
+import { VariationSelector } from './VariationSelector';
 
 export const PageCodeEditor: React.FC = () => {
     const dispatch = useDispatch();
@@ -23,7 +23,7 @@ export const PageCodeEditor: React.FC = () => {
     const selectedPage = useSelector(getSelectedPage);
     const theme = useSelector(getTheme);
     const saveStatus = useSelector(getSavePageStatus);
-    const version = useSelector(getSelectedVersion);
+    const variation = useSelector(getSelectedVariation);
     const dirty = useSelector(isDirty);
 
     const pageRef = React.useRef<IPageInfo>(null);
@@ -62,7 +62,7 @@ export const PageCodeEditor: React.FC = () => {
             ...pageRef.current,
             staging: pageRef.current.staging
                 .map((current, index) =>
-                    index === version
+                    index === variation
                     ? value
                     : current
                 )
@@ -96,7 +96,7 @@ export const PageCodeEditor: React.FC = () => {
             <CodeEditor
                 id={selectedPage._id}
                 theme={theme}
-                content={selectedPage.staging[version]}
+                content={selectedPage.staging[variation]}
                 scroll={pageRef.current.scroll}
                 dirty={dirty}
                 saving={saveStatus === 'fetching'}
@@ -128,7 +128,7 @@ export const PageCodeEditor: React.FC = () => {
                         }}
                     />,
 
-                    <VersionSelector page={pageRef.current} />,
+                    <VariationSelector page={pageRef.current} />,
 
                     <Button onClick={() => setPreviewing(true)}>Preview</Button>,
 

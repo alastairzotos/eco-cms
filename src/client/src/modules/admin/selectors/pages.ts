@@ -33,9 +33,9 @@ export const getSavePageStatus = createSelector(
     state => state.savePageStatus
 );
 
-export const getSelectedVersion = createSelector(
+export const getSelectedVariation = createSelector(
     getState,
-    state => state.selectedVersion
+    state => state.selectedVariation
 );
 
 export const isDirty = createSelector(

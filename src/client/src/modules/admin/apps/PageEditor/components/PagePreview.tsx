@@ -13,11 +13,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import * as qs from 'qs';
 import * as React from 'react';
 import { useSelector } from 'react-redux';
-import { getSelectedVersion } from '~/modules/admin/selectors/pages';
+import { getSelectedVariation } from '~/modules/admin/selectors/pages';
 import { PageRenderer } from '~/modules/pages/components/PageRenderer';
 
 import { QueryEditor } from './QueryEditor';
-import { VersionSelector } from './VersionSelector';
+import { VariationSelector } from './VariationSelector';
 
 export interface IPagePreviewProps {
     page: IPage;
@@ -50,7 +50,7 @@ export const PagePreview: React.FC<IPagePreviewProps> = ({
 }) => {
     const classes = useStyles();
 
-    const version = useSelector(getSelectedVersion);
+    const version = useSelector(getSelectedVariation);
 
     const [query, setQuery] = React.useState('');
 
@@ -78,7 +78,7 @@ export const PagePreview: React.FC<IPagePreviewProps> = ({
                         version={version}
                     />
 
-                    <VersionSelector
+                    <VariationSelector
                         page={page}
                         showAddRemoveButtons={false}
                     />

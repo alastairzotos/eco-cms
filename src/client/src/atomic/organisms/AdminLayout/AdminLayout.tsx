@@ -11,6 +11,7 @@ import {
     ListItemIcon,
     ListItemText,
     Toolbar,
+    Tooltip,
     Typography
 } from '@material-ui/core';
 import ThemeDark from '@material-ui/icons/Brightness2';
@@ -136,7 +137,15 @@ export const AdminLayout: React.FC<IAdminLayoutProps> = ({
                                         selected={currentPage && page.path === currentPage.path}
                                     >
                                         <ListItemIcon>
-                                            <Icon />
+                                        {
+                                            open
+                                            ? <Icon />
+                                            : (
+                                                <Tooltip placement="right" title={page.title} arrow>
+                                                    <Icon />
+                                                </Tooltip>
+                                            )
+                                        }
                                         </ListItemIcon>
                                         <ListItemText primary={page.title} />
                                     </ListItem>
