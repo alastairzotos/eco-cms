@@ -7,6 +7,8 @@ import { Helmet } from 'react-helmet';
 import { moduleManager } from '~/core';
 import { Runtime } from '~/modules/parser';
 
+import { ErrorBoundary } from './ErrorBoundary';
+
 export const light = createMuiTheme({
     palette: {
         type: 'light'
@@ -30,7 +32,9 @@ const PageContainer: React.FC<IPageContainerProps> = ({
             </Helmet>
             <MuiThemeProvider theme={light}>
                 <Paper style={{ borderRadius: 0, height: '100%' }}>
-                    {children}
+                    <ErrorBoundary>
+                        {children}
+                    </ErrorBoundary>
                 </Paper>
             </MuiThemeProvider>
         </>
