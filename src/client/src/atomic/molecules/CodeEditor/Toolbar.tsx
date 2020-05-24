@@ -1,10 +1,11 @@
-import { Divider, IconButton, Toolbar } from '@material-ui/core';
+import { CircularProgress, Divider, IconButton, Toolbar } from '@material-ui/core';
 import Progress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import SaveIcon from '@material-ui/icons/Save';
 import * as React from 'react';
 
 interface IToolbarButtonProps {
+    highlight?: boolean;
     component: React.FC<any>;
     disabled: boolean;
 
@@ -12,6 +13,7 @@ interface IToolbarButtonProps {
 }
 
 const ToolbarButton: React.FC<IToolbarButtonProps> = ({
+    highlight = false,
     component,
     disabled,
     onClick
@@ -20,6 +22,7 @@ const ToolbarButton: React.FC<IToolbarButtonProps> = ({
 
     return (
         <IconButton
+            color={highlight ? 'secondary' : 'default'}
             onClick={onClick}
             disabled={disabled}
         >
@@ -31,6 +34,7 @@ const ToolbarButton: React.FC<IToolbarButtonProps> = ({
 };
 
 export interface ICodeEditorToolbarProps {
+    dirty: boolean;
     saving: boolean;
     items: React.ReactNode[];
     handleSave: () => void;
@@ -47,6 +51,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const CodeEditorToolbar: React.FC<ICodeEditorToolbarProps> = ({
+    dirty,
     saving,
     handleSave,
     items
@@ -55,11 +60,18 @@ export const CodeEditorToolbar: React.FC<ICodeEditorToolbarProps> = ({
 
     return (
         <Toolbar className={classes.toolbar}>
-            <ToolbarButton
-                component={SaveIcon}
-                disabled={saving}
-                onClick={handleSave}
-            />
+            {
+                saving
+                ? <CircularProgress size={24} />
+                : (
+                    <ToolbarButton
+                        highlight={dirty}
+                        component={SaveIcon}
+                        disabled={saving}
+                        onClick={handleSave}
+                    />
+                )
+            }
             {items.map((item, index) => ({ ...(item as any), key: index }))}
         </Toolbar>
     );

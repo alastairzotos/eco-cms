@@ -40,7 +40,7 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         <PageRenderer
             page={page}
             query={query}
-            deployment="staging"
+            deployment="production"
             version={(parseInt(query.v as string, 10) - 1) || 0}
         />
     );

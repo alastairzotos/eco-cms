@@ -1,15 +1,17 @@
 import {
     Button,
+    DialogContentText,
     InputAdornment,
     TextField
 } from '@material-ui/core';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CodeEditor } from '~/atomic/molecules/CodeEditor';
+import { Confirm } from '~/atomic/molecules/Confirm';
 import { beginSavePage, setPageData } from '~/modules/admin/actions';
 import { IPageInfo } from '~/modules/admin/models';
 import { getTheme } from '~/modules/admin/selectors';
-import { getPages, getSavePageStatus, getSelectedPage, getSelectedVersion } from '~/modules/admin/selectors/pages';
+import { getPages, getSavePageStatus, getSelectedPage, getSelectedVersion, isDirty } from '~/modules/admin/selectors/pages';
 import { isValidUrl } from '~/modules/admin/utils';
 
 import { PagePreview } from './PagePreview';
@@ -22,9 +24,12 @@ export const PageCodeEditor: React.FC = () => {
     const theme = useSelector(getTheme);
     const saveStatus = useSelector(getSavePageStatus);
     const version = useSelector(getSelectedVersion);
+    const dirty = useSelector(isDirty);
 
     const pageRef = React.useRef<IPageInfo>(null);
     const [previewing, setPreviewing] = React.useState(false);
+    const [savePromptOpen, setSavePromptOpen] = React.useState(false);
+    const [publishPromptOpen, setPublishPromptOpen] = React.useState(false);
 
     if (!selectedPage) {
         return <></>;
@@ -41,8 +46,15 @@ export const PageCodeEditor: React.FC = () => {
         }));
     };
 
-    const handleSave = () => {
-        dispatch(beginSavePage(pageRef.current));
+    const handleSave = (publish: boolean) => {
+        if (publish) {
+            dispatch(beginSavePage({
+                ...pageRef.current,
+                production: [...pageRef.current.staging]
+            }));
+        } else {
+            dispatch(beginSavePage(pageRef.current));
+        }
     };
 
     const handleChange = (value: string) => {
@@ -71,6 +83,14 @@ export const PageCodeEditor: React.FC = () => {
         }));
     };
 
+    const handlePublishClick = () => {
+        if (dirty) {
+            setSavePromptOpen(true);
+        } else {
+            setPublishPromptOpen(true);
+        }
+    };
+
     return (
         <>
             <CodeEditor
@@ -78,10 +98,11 @@ export const PageCodeEditor: React.FC = () => {
                 theme={theme}
                 content={selectedPage.staging[version]}
                 scroll={pageRef.current.scroll}
+                dirty={dirty}
                 saving={saveStatus === 'fetching'}
 
                 handleScroll={handleScroll}
-                handleSave={handleSave}
+                handleSave={() => handleSave(false)}
                 handleChange={handleChange}
 
                 toolbar={[
@@ -109,9 +130,15 @@ export const PageCodeEditor: React.FC = () => {
 
                     <VersionSelector page={pageRef.current} />,
 
+                    <Button onClick={() => setPreviewing(true)}>Preview</Button>,
+
                     <Button
-                        onClick={() => setPreviewing(true)}
-                    >Preview</Button>
+                        variant="contained"
+                        onClick={handlePublishClick}
+                        disabled={saveStatus === 'fetching'}
+                    >
+                        Publish
+                    </Button>
                 ]}
             />
 
@@ -120,6 +147,32 @@ export const PageCodeEditor: React.FC = () => {
                 open={previewing}
                 onClose={() => setPreviewing(false)}
             />
+
+            <Confirm
+                title="Save before publishing"
+                open={savePromptOpen}
+                onCancel={() => setSavePromptOpen(false)}
+                onConfirm={() => {
+                    setSavePromptOpen(false);
+                    setPublishPromptOpen(true);
+                }}
+                confirmPrompt="Save"
+            >
+                <DialogContentText>You have unsaved changes. Please save before publishing.</DialogContentText>
+            </Confirm>
+
+            <Confirm
+                title="Publish"
+                open={publishPromptOpen}
+                onCancel={() => setPublishPromptOpen(false)}
+                onConfirm={() => {
+                    setPublishPromptOpen(false);
+                    handleSave(true);
+                }}
+                confirmPrompt="Publish"
+            >
+                <DialogContentText>Are you sure you want to publish?</DialogContentText>
+            </Confirm>
         </>
     );
 };

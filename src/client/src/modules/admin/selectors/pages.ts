@@ -37,3 +37,8 @@ export const getSelectedVersion = createSelector(
     getState,
     state => state.selectedVersion
 );
+
+export const isDirty = createSelector(
+    getState,
+    state => state.dirty
+);

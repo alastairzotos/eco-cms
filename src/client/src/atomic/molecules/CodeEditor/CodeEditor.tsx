@@ -15,6 +15,7 @@ export interface ICodeEditorProps {
     theme: 'light' | 'dark';
     content: string | null;
     scroll?: number;
+    dirty: boolean;
     saving: boolean;
     toolbar: React.ReactNode[];
 
@@ -28,6 +29,7 @@ export const CodeEditor: React.FC<ICodeEditorProps> = ({
     theme,
     content,
     scroll,
+    dirty,
     saving,
     toolbar,
     handleSave,
@@ -62,6 +64,7 @@ export const CodeEditor: React.FC<ICodeEditorProps> = ({
     return (
         <>
             <CodeEditorToolbar
+                dirty={dirty}
                 saving={saving}
                 handleSave={handleSave}
                 items={toolbar}

@@ -13,6 +13,7 @@ export interface IAdminPagesState {
     selectedPageId: string | null;
     currentError: string | null;
     selectedVersion: number;
+    dirty: boolean;
 }
 
 const INITIAL_STATE: IAdminPagesState = {
@@ -22,7 +23,8 @@ const INITIAL_STATE: IAdminPagesState = {
     pages: [],
     selectedPageId: null,
     currentError: null,
-    selectedVersion: 0
+    selectedVersion: 0,
+    dirty: false
 };
 
 const updatePages = (pages: IPageInfo[], page: IPageInfo): IPageInfo[] => {
@@ -76,7 +78,8 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
     }),
     [IAdminPagesActionType.SetPageData]: (state, action: PayloadAction<IPageInfo>) => ({
         ...state,
-        pages: updatePages(state.pages, action.payload)
+        pages: updatePages(state.pages, action.payload),
+        dirty: true
     }),
 
     [IAdminPagesActionType.BeginSavePage]: state => ({
@@ -87,7 +90,8 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
     [IAdminPagesActionType.SetPageSaved]: (state, action: PayloadAction<IPageInfo>) => ({
         ...state,
         savePageStatus: 'success',
-        pages: updatePages(state.pages, action.payload)
+        pages: updatePages(state.pages, action.payload),
+        dirty: false
     }),
 
     [IAdminPagesActionType.SetSavePageError]: (state, action: PayloadAction<string>) => ({
@@ -110,7 +114,8 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
                 action.payload.staging[action.payload.staging.length - 1]
             ]
         }),
-        selectedVersion: action.payload.staging.length
+        selectedVersion: action.payload.staging.length,
+        dirty: true
     }),
 
     [IAdminPagesActionType.DeletePageVersion]: (state, action: PayloadAction<{ page: IPage, version: number }>) => ({
@@ -121,6 +126,7 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
                 (_, index) => index !== action.payload.version
             )
         }),
-        selectedVersion: state.selectedVersion - 1
+        selectedVersion: state.selectedVersion - 1,
+        dirty: true
     })
 });
