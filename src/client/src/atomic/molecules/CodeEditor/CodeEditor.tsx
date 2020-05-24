@@ -5,7 +5,7 @@ import 'ace-builds/src-noconflict/theme-github';
 import 'ace-builds/src-noconflict/theme-terminal';
 import 'ace-builds/src-noconflict/ext-language_tools';
 import * as React from 'react';
-import { CodeEditorToolbar } from './Toolbar';
+import { CodeEditorToolbar, ICodeEditorToolbarItemProps } from './Toolbar';
 
 const DEFAULT_LIGHT_THEME = 'github';
 const DEFAULT_DARK_THEME = 'terminal';
@@ -17,7 +17,7 @@ export interface ICodeEditorProps {
     scroll?: number;
     dirty: boolean;
     saving: boolean;
-    toolbar: React.ReactNode[];
+    toolbar: Array<React.FC<ICodeEditorToolbarItemProps>>;
 
     handleSave: () => void;
     handleScroll: (scroll: number) => void;

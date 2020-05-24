@@ -30,9 +30,12 @@ Sprint 2:
     - [DONE] Preview pages
     - [DONE] Publish pages. Confirm save unsaved changes first
     - [DONE] redux-persist
-    - Head tag data
+    - [DONE] Head tag data
 
 Sprint 3:
+    - Each item in CodeEditorToolbar should be React.FC<{ disabled: boolean }>
+        - i.e.
+        - disabled => <Button disabled={disabled}>Publish</Button>
     - Error boundary around rendered pages
     - Delete pages
     - Rearrange pages

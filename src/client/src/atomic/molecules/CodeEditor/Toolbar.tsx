@@ -33,10 +33,14 @@ const ToolbarButton: React.FC<IToolbarButtonProps> = ({
     );
 };
 
+export interface ICodeEditorToolbarItemProps {
+    disabled: boolean;
+}
+
 export interface ICodeEditorToolbarProps {
     dirty: boolean;
     saving: boolean;
-    items: React.ReactNode[];
+    items: Array<React.FC<ICodeEditorToolbarItemProps>>;
     handleSave: () => void;
 }
 
@@ -76,11 +80,17 @@ export const CodeEditorToolbar: React.FC<ICodeEditorToolbarProps> = ({
                     />
                 )
             }
-            {/* {items.map((item, index) => ({ ...(item as any), key: index }))} */}
-            {
+            {/* {
                 items.map((item, index) => (
                     <div className={classes.toolbarItemContainer} key={index}>
                         { ...(item as any) }
+                    </div>
+                ))
+            } */}
+            {
+                items.map((Item, index) => (
+                    <div className={classes.toolbarItemContainer} key={index}>
+                        <Item disabled={saving} />
                     </div>
                 ))
             }

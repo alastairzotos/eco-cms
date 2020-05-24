@@ -126,53 +126,65 @@ export const PageCodeEditor: React.FC = () => {
                 handleChange={handleChange}
 
                 toolbar={[
-                    <TextField
-                        disabled={saveStatus === 'fetching'}
-                        value={selectedPage.path}
-                        onChange={e => handlePathChange(e.target.value)}
+                    ({ disabled }) =>
+                        <TextField
+                            disabled={disabled}
+                            value={selectedPage.path}
+                            onChange={e => handlePathChange(e.target.value)}
 
-                        error={!pathIsValid()}
+                            error={!pathIsValid()}
 
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start">path</InputAdornment>
-                        }}
-                    />,
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">path</InputAdornment>
+                            }}
+                        />,
 
-                    <TextField
-                        disabled={saveStatus === 'fetching'}
-                        value={selectedPage.title}
-                        onChange={e => handleTitleChange(e.target.value)}
+                    ({ disabled }) =>
+                        <TextField
+                            disabled={disabled}
+                            value={selectedPage.title}
+                            onChange={e => handleTitleChange(e.target.value)}
 
-                        InputProps={{
-                            startAdornment: <InputAdornment position="start">title</InputAdornment>
-                        }}
-                    />,
+                            InputProps={{
+                                startAdornment: <InputAdornment position="start">title</InputAdornment>
+                            }}
+                        />,
 
-                    <FormControlLabel
-                        label="Desc"
-                        control={
-                            <IconButton
-                                size="small"
-                                disabled={saveStatus === 'fetching'}
-                                onClick={() => setDescPromptOpen(true)}
-                            >
-                                <Edit fontSize="small" />
-                            </IconButton>
-                        }
-                    />,
+                    ({ disabled }) =>
+                        <FormControlLabel
+                            label="Desc"
+                            control={
+                                <IconButton
+                                    size="small"
+                                    disabled={disabled}
+                                    onClick={() => setDescPromptOpen(true)}
+                                >
+                                    <Edit fontSize="small" />
+                                </IconButton>
+                            }
+                        />,
 
-                    <VariationSelector page={pageRef.current} />,
+                    () =>
+                        <VariationSelector page={pageRef.current} />,
 
-                    <Button size="small" onClick={() => setPreviewing(true)}>Preview</Button>,
+                    ({ disabled }) =>
+                        <Button
+                            disabled={disabled}
+                            size="small"
+                            onClick={() => setPreviewing(true)}
+                        >
+                            Preview
+                        </Button>,
 
-                    <Button
-                        size="small"
-                        variant="contained"
-                        onClick={handlePublishClick}
-                        disabled={saveStatus === 'fetching'}
-                    >
-                        Publish
-                    </Button>
+                    ({ disabled }) =>
+                        <Button
+                            size="small"
+                            variant="contained"
+                            onClick={handlePublishClick}
+                            disabled={disabled}
+                        >
+                            Publish
+                        </Button>
                 ]}
             />
 
