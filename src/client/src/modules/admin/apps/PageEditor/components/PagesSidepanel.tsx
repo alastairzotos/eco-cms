@@ -37,6 +37,7 @@ export const PagesSidePanel: React.FC = () => {
         dispatch(beginAddPage({
             path: `/page-${pages.length + 1}`,
             title: 'New page',
+            description: 'This is a page',
             staging: [
                 '<p>New page</p>'
             ],

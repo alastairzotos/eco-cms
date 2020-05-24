@@ -1,9 +1,13 @@
 import {
     Button,
     DialogContentText,
+    FormControlLabel,
+    IconButton,
     InputAdornment,
+    makeStyles,
     TextField
 } from '@material-ui/core';
+import Edit from '@material-ui/icons/Edit';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CodeEditor } from '~/atomic/molecules/CodeEditor';
@@ -17,7 +21,15 @@ import { isValidUrl } from '~/modules/admin/utils';
 import { PagePreview } from './PagePreview';
 import { VariationSelector } from './VariationSelector';
 
+const useStyles = makeStyles(theme => ({
+    descTextField: {
+        width: 500
+    }
+}));
+
 export const PageCodeEditor: React.FC = () => {
+    const classes = useStyles();
+
     const dispatch = useDispatch();
     const pages = useSelector(getPages);
     const selectedPage = useSelector(getSelectedPage);
@@ -30,6 +42,7 @@ export const PageCodeEditor: React.FC = () => {
     const [previewing, setPreviewing] = React.useState(false);
     const [savePromptOpen, setSavePromptOpen] = React.useState(false);
     const [publishPromptOpen, setPublishPromptOpen] = React.useState(false);
+    const [descPromptOpen, setDescPromptOpen] = React.useState(false);
 
     if (!selectedPage) {
         return <></>;
@@ -83,6 +96,13 @@ export const PageCodeEditor: React.FC = () => {
         }));
     };
 
+    const handleDescriptionChange = (description: string) => {
+        dispatch(setPageData({
+            ...pageRef.current,
+            description
+        }));
+    };
+
     const handlePublishClick = () => {
         if (dirty) {
             setSavePromptOpen(true);
@@ -128,11 +148,25 @@ export const PageCodeEditor: React.FC = () => {
                         }}
                     />,
 
+                    <FormControlLabel
+                        label="Desc"
+                        control={
+                            <IconButton
+                                size="small"
+                                disabled={saveStatus === 'fetching'}
+                                onClick={() => setDescPromptOpen(true)}
+                            >
+                                <Edit fontSize="small" />
+                            </IconButton>
+                        }
+                    />,
+
                     <VariationSelector page={pageRef.current} />,
 
-                    <Button onClick={() => setPreviewing(true)}>Preview</Button>,
+                    <Button size="small" onClick={() => setPreviewing(true)}>Preview</Button>,
 
                     <Button
+                        size="small"
                         variant="contained"
                         onClick={handlePublishClick}
                         disabled={saveStatus === 'fetching'}
@@ -172,6 +206,20 @@ export const PageCodeEditor: React.FC = () => {
                 confirmPrompt="Publish"
             >
                 <DialogContentText>Are you sure you want to publish?</DialogContentText>
+            </Confirm>
+
+            <Confirm
+                title="Description"
+                open={descPromptOpen}
+                onCancel={() => setDescPromptOpen(false)}
+                onConfirm={() => setDescPromptOpen(false)}
+            >
+                <TextField
+                    className={classes.descTextField}
+                    multiline
+                    value={pageRef.current.description}
+                    onChange={e => handleDescriptionChange(e.target.value)}
+                />
             </Confirm>
         </>
     );

@@ -23,6 +23,9 @@ export interface IVersionSelectorProps {
 }
 
 const useStyles = makeStyles(theme => ({
+    label: {
+        fontSize: 12
+    },
     variationSelector: {
         minWidth: 200,
         display: 'inline-block'
@@ -52,21 +55,21 @@ export const VariationSelector: React.FC<IVersionSelectorProps> = ({
     return (
         <>
             <FormControl className={classes.variationSelector}>
-                <FormLabel>Variation {selected + 1}</FormLabel>
+                <FormLabel className={classes.label}>Vn. {selected + 1}</FormLabel>
                 <ButtonGroup size="small" disableElevation variant="text">
                     <Button
                         size="small"
                         disabled={selected === 0}
                         onClick={() => dispatch(setPageVariation(selected - 1))}
                     >
-                        <Left />
+                        <Left fontSize="small" />
                     </Button>
                     <Button
                         size="small"
                         disabled={selected === page.staging.length - 1}
                         onClick={() => dispatch(setPageVariation(selected + 1))}
                     >
-                        <Right />
+                        <Right fontSize="small" />
                     </Button>
                 </ButtonGroup>
                 {showAddRemoveButtons && (
@@ -75,7 +78,7 @@ export const VariationSelector: React.FC<IVersionSelectorProps> = ({
                             size="small"
                             onClick={handleAddVariation}
                         >
-                            <Add />
+                            <Add fontSize="small" />
                         </Button>
 
                         {page.staging.length > 1 && (
@@ -83,7 +86,7 @@ export const VariationSelector: React.FC<IVersionSelectorProps> = ({
                                 size="small"
                                 onClick={() => setConfirmDeleteOpen(true)}
                             >
-                                <Remove />
+                                <Remove fontSize="small" />
                             </Button>
                         )}
                     </ButtonGroup>

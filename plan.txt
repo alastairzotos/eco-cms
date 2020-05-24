@@ -33,6 +33,8 @@ Sprint 2:
     - Head tag data
 
 Sprint 3:
+    - Error boundary around rendered pages
+    - Delete pages
     - Rearrange pages
     - 404 page
     - Themes
