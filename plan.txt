@@ -29,8 +29,8 @@ Sprint 2:
     - [DONE] Multi-armed bandit
     - [DONE] Preview pages
     - [DONE] Publish pages. Confirm save unsaved changes first
+    - [DONE] redux-persist
     - Head tag data
-    - redux-persist
 
 Sprint 3:
     - Rearrange pages

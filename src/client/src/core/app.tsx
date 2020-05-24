@@ -2,6 +2,8 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { applyMiddleware, compose, createStore } from 'redux';
 import { createEpicMiddleware } from 'redux-observable';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import history from './history';
 import { moduleManager } from './module';
@@ -12,9 +14,16 @@ export const startApp = () => {
 
     const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
+    const persistConfig = {
+        key: 'root',
+        storage,
+    };
+
+    const persistedReducer = persistReducer(persistConfig, rootModule.reducer);
+
     const epicMiddleware = createEpicMiddleware();
     const store = createStore(
-        rootModule.reducer,
+        persistedReducer,
         composeEnhancers(
             applyMiddleware(
                 epicMiddleware
@@ -22,11 +31,14 @@ export const startApp = () => {
         ),
     );
 
+    const persistor = persistStore(store);
+
     epicMiddleware.run(rootModule.epic);
 
     ReactDOM.render(
         <Root
             store={store}
+            persistor={persistor}
             history={history}
             pages={rootModule.pages}
         />,

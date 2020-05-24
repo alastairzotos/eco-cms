@@ -1,6 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { IAdminTheme } from '~/atomic/organisms/AdminLayout';
-import { getTheme } from '~/core';
 
 import { IAdminThemeActionType } from '../actions';
 
@@ -9,7 +8,7 @@ export interface IAdminThemeState {
 }
 
 const INITIAL_STATE: IAdminThemeState = {
-    theme: getTheme()
+    theme: 'light'
 };
 
 export const themeReducer = createReducer<IAdminThemeState>(INITIAL_STATE, {
