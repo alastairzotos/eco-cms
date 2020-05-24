@@ -33,7 +33,7 @@ Sprint 2:
     - [DONE] Head tag data
 
 Sprint 3:
-    - Error boundary around rendered pages
+    - [DONE] Error boundary around rendered pages
     - Delete pages
     - Rearrange pages
     - 404 page
