@@ -16,6 +16,7 @@ const plugins = [
         chunks: ["index"],
         filename: '../../server/public/index.html',
         template: '../server/templates/index.template.html',
+        favicon: './favicon.ico'
     }),
 ];
 
