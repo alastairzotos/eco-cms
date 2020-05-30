@@ -35,6 +35,15 @@ Sprint 2:
 Sprint 3:
     - [DONE] Error boundary around rendered pages
     - [DONE] Delete pages
-    - Rearrange pages
+    - [DONE] Rearrange pages
     - 404 page
     - Themes
+
+Sprint 4:
+    - File manager
+
+Sprint 5:
+    - Integrate Google analytics
+    - Front-end .env
+    - npm run build
+    - Publish to npm
