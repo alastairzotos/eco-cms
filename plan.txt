@@ -39,10 +39,15 @@ Sprint 3:
     - [DONE] 404 page
     - Themes
 
-Sprint 4:
-    - File manager
+Sprint 4: File manager
+    - Browse files
+    - Add files
+    - Delete files
+    - Move files
+    - Preview files
 
 Sprint 5:
+    - Front-end service
     - Integrate Google analytics
     - Front-end .env
     - npm run build
