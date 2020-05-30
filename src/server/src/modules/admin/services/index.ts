@@ -10,6 +10,10 @@ class AdminService extends Service {
         this.pages = pagesService;
     }
     pages: PagesService;
+
+    onStart = async () => {
+        await this.pages.onStart();
+    }
 }
 
 export const adminService = new AdminService();

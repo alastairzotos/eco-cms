@@ -5,7 +5,20 @@ import { IPageRecord, pagesModel } from '../models';
 
 export class PagesService extends Service {
     onStart = async () => {
-        // tslint:disable-line
+        const pages = await this.getPages();
+
+        const notFoundPath = '/not-found';
+        const notFoundCode = '<p>Page not found</p>';
+
+        if (!pages.find(page => page.path === notFoundPath)) {
+            await this.addPage({
+                path: notFoundPath,
+                title: 'Page not found',
+                description: 'Page not found',
+                staging: [notFoundCode],
+                production: [notFoundCode]
+            });
+        }
     }
 
     getPages = async () =>

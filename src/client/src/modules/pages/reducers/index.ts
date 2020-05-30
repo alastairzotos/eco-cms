@@ -20,7 +20,9 @@ const INITIAL_STATE: IPagesState = {
 const pagesReducer = createReducer<IPagesState>(INITIAL_STATE, {
     [IPagesActions.BeginGetPage]: state => ({
         ...state,
-        getPageStatus: 'fetching'
+        getPageStatus: 'fetching',
+        error: null,
+        page: null
     }),
     [IPagesActions.SetPage]: (state, action: PayloadAction<IPage>) => ({
         ...state,

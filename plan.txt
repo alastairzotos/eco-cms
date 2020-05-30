@@ -36,7 +36,7 @@ Sprint 3:
     - [DONE] Error boundary around rendered pages
     - [DONE] Delete pages
     - [DONE] Rearrange pages
-    - 404 page
+    - [DONE] 404 page
     - Themes
 
 Sprint 4:
