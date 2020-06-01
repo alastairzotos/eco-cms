@@ -1,4 +1,4 @@
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider, Paper } from '@material-ui/core';
 import * as React from 'react';
 
 export const MyComponent: React.FC<{ test: string }> = ({ test, children }) => {
@@ -30,7 +30,9 @@ const theme = createMuiTheme({
 export const Page: React.FC = ({ children }) => {
     return (
         <MuiThemeProvider theme={theme}>
-            {children}
+            <Paper square style={{ height: '100%' }}>
+                {children}
+            </Paper>
         </MuiThemeProvider>
     );
 };
