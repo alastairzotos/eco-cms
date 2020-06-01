@@ -9,11 +9,9 @@ import {
 
 export const start = (
     components: Dictionary<any>,
-    theme: ThemeOptions,
     modules: IModule[] = []
 ) => {
     moduleManager.components = components;
-    moduleManager.theme = theme;
     moduleManager.modules = [
         authModule,
         adminModule,

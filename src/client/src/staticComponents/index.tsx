@@ -1,3 +1,4 @@
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import * as React from 'react';
 
 export const MyComponent: React.FC<{ test: string }> = ({ test, children }) => {
@@ -17,6 +18,20 @@ export const MyComponent2: React.FC<any> = ({ children }) => {
             <h4>My Component 2</h4>
             {children}
         </div>
+    );
+};
+
+const theme = createMuiTheme({
+    palette: {
+        type: 'dark'
+    }
+});
+
+export const Page: React.FC = ({ children }) => {
+    return (
+        <MuiThemeProvider theme={theme}>
+            {children}
+        </MuiThemeProvider>
     );
 };
 

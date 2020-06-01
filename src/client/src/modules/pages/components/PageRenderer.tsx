@@ -1,5 +1,5 @@
 import { IPage } from '@common';
-import { Paper, useTheme } from '@material-ui/core';
+import { useTheme } from '@material-ui/core';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { ParsedQs } from 'qs';
 import * as React from 'react';
@@ -30,13 +30,9 @@ const PageContainer: React.FC<IPageContainerProps> = ({
                 <title>{page.title}</title>
                 <meta name="description" content={page.description} />
             </Helmet>
-            <MuiThemeProvider theme={moduleManager.getMuiTheme()}>
-                <Paper style={{ borderRadius: 0, height: '100%' }}>
-                    <ErrorBoundary>
-                        {children}
-                    </ErrorBoundary>
-                </Paper>
-            </MuiThemeProvider>
+            <ErrorBoundary>
+                {children}
+            </ErrorBoundary>
         </>
     );
 };

@@ -1,9 +1,12 @@
 import { IPage } from '@common';
 import {
     AppBar,
+    createMuiTheme,
     Dialog,
     IconButton,
     makeStyles,
+    MuiThemeProvider,
+    Paper,
     Slide,
     Toolbar,
     Typography
@@ -25,6 +28,12 @@ export interface IPagePreviewProps {
     onClose: () => void;
 }
 
+const lightTheme = createMuiTheme({
+    palette: {
+        type: 'light'
+    }
+});
+
 const useStyles = makeStyles(theme => ({
     appBar: {
         position: 'relative'
@@ -35,6 +44,9 @@ const useStyles = makeStyles(theme => ({
     },
     main: {
         backgroundColor: 'white'
+    },
+    preview: {
+        height: '100%'
     }
 }));
 
@@ -85,12 +97,16 @@ export const PagePreview: React.FC<IPagePreviewProps> = ({
                 </Toolbar>
             </AppBar>
 
-            <PageRenderer
-                page={page}
-                deployment="staging"
-                query={qs.parse(query, { ignoreQueryPrefix: true })}
-                version={version}
-            />
+            <MuiThemeProvider theme={lightTheme}>
+                <Paper className={classes.preview}>
+                    <PageRenderer
+                        page={page}
+                        deployment="staging"
+                        query={qs.parse(query, { ignoreQueryPrefix: true })}
+                        version={version}
+                    />
+                </Paper>
+            </MuiThemeProvider>
         </Dialog>
     );
 };

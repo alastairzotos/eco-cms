@@ -37,7 +37,7 @@ Sprint 3:
     - [DONE] Delete pages
     - [DONE] Rearrange pages
     - [DONE] 404 page
-    - Themes
+    - [REMOVED] Themes
 
 Sprint 4: File manager
     - Browse files
