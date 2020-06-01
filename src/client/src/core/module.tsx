@@ -1,3 +1,4 @@
+import { createMuiTheme, Theme, ThemeOptions } from '@material-ui/core';
 import { Dictionary } from 'lodash';
 import { combineReducers, Reducer } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
@@ -20,6 +21,16 @@ class ModuleManager {
 
     components: Dictionary<any>;
     modules: IModule[];
+    theme: ThemeOptions;
+    private muiTheme: Theme;
+
+    getMuiTheme = (): Theme => {
+        if (!this.muiTheme) {
+            this.muiTheme = createMuiTheme(this.theme);
+        }
+
+        return this.muiTheme;
+    }
 
     combineModules = (
         name: string,

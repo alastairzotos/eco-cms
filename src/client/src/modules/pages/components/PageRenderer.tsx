@@ -30,7 +30,7 @@ const PageContainer: React.FC<IPageContainerProps> = ({
                 <title>{page.title}</title>
                 <meta name="description" content={page.description} />
             </Helmet>
-            <MuiThemeProvider theme={light}>
+            <MuiThemeProvider theme={moduleManager.getMuiTheme()}>
                 <Paper style={{ borderRadius: 0, height: '100%' }}>
                     <ErrorBoundary>
                         {children}

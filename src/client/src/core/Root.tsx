@@ -1,3 +1,4 @@
+import { ThemeOptions } from '@material-ui/core';
 import { History } from 'history';
 import * as React from 'react';
 import { Provider } from 'react-redux';
