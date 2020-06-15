@@ -7,6 +7,7 @@ import history from './history';
 export interface IRequest {
     url: string;
     method: 'GET' | 'POST';
+    contentType?: 'application/json' | 'multipart/form-data';
     body?: any;
     query?: object;
 }
@@ -53,14 +54,30 @@ const performFetch = <T = any>(req: IRequest): Promise<IResponse<T>> =>
             const domain = 'http://localhost:5999';
             const apiRoute = '/api';
 
+            const contentHeaders = {
+                Accept: 'application/json'
+            };
+
+            if (req.contentType !== 'multipart/form-data') {
+                contentHeaders['Content-Type'] = req.contentType || 'application/json';
+            }
+
+            let body;
+            if (req.body) {
+                if (req.contentType === 'multipart/form-data') {
+                    body = req.body;
+                } else {
+                    body = JSON.stringify(req.body);
+                }
+            }
+
             const response = await window.fetch(domain + apiRoute + req.url, {
                 method: req.method,
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
+                    ...contentHeaders,
                     ...authHeaders
                 },
-                body: req.body ? JSON.stringify(req.body) : undefined
+                body
             });
 
             const responseObject: IResponse<T> = {

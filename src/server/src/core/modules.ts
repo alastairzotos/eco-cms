@@ -1,9 +1,11 @@
 import {
     adminModule,
-    authModule
+    authModule,
+    filesModule
 } from '~/modules';
 
 export const coreModules = [
     authModule,
-    adminModule
+    adminModule,
+    filesModule
 ];

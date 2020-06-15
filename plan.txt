@@ -40,13 +40,15 @@ Sprint 3:
     - [REMOVED] Themes
 
 Sprint 4: File manager
+    - [DONE] Add files
+    - Add multiple files
     - Browse files
-    - Add files
     - Delete files
     - Move files
     - Preview files
 
 Sprint 5:
+    - Handle JWT expiration (https://gist.github.com/soulmachine/b368ce7292ddd7f91c15accccc02b8df)
     - Front-end service
     - Integrate Google analytics
     - Front-end .env

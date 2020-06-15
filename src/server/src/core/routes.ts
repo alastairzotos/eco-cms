@@ -1,4 +1,4 @@
-import { RequestHandler, Router } from 'express';
+import { NextFunction, Request, RequestHandler, Response, Router } from 'express';
 import * as core from 'express-serve-static-core';
 
 export const createRouter = () =>
@@ -13,3 +13,8 @@ export const catchAsync = <P extends core.Params = core.ParamsDictionary, ResBod
 ): RequestHandler =>
     (req, res, next) =>
         controller(req as any, res, next).catch(e => next(e));
+
+export const identity = (req: Request, res: Response, next: NextFunction) => {
+    console.log('identify');
+    next();
+};

@@ -47,13 +47,22 @@ export const myModule: IModule = {
                 const dispatch = useDispatch();
                 const count = useSelector(getCount);
 
+                // return (
+                //     <>
+                //         <button
+                //             onClick={() => dispatch({ type: 'inc_count' })}
+                //         >Click me</button>
+
+                //         <p>Count: {count}</p>
+                //     </>
+                // );
+
                 return (
                     <>
-                        <button
-                            onClick={() => dispatch({ type: 'inc_count' })}
-                        >Click me</button>
-
-                        <p>Count: {count}</p>
+                        <form method="post" action="http://localhost:5999/api/upload" encType="multipart/form-data">
+                            <input type="file" id="file" name="file" />
+                            <input type="submit" value="submit" />
+                        </form>
                     </>
                 );
             }

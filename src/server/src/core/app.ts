@@ -19,7 +19,7 @@ import { createRouter } from './routes';
 
 const startApp = async (modules: IModule[]) => {
     console.log('Connecting to database...');
-    await mongoose.connect(
+    await mongoose.createConnection(
         config.db.connectionString.replace('%PASSWORD%', config.db.password),
         {
             useNewUrlParser: true,
