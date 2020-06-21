@@ -43,6 +43,7 @@ Sprint 4: File manager
     - [DONE] Add files
     - [DONE] Add multiple files
     - Move to own module
+    - Upload progress
     - Browse files
     - Delete files
     - Move files
