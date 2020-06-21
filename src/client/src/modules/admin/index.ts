@@ -1,6 +1,7 @@
 import { IModule } from '~/core';
 
 import { dashboardApp } from './apps/Dashboard/Dashboard';
+import { fileManagerApp } from './apps/FileManager';
 import { pageEditorApp } from './apps/PageEditor';
 import epic from './epics';
 import pages from './pages';
@@ -16,6 +17,7 @@ export const adminModule: IModule = {
     pages,
     adminPages: [
         dashboardApp,
-        pageEditorApp
+        pageEditorApp,
+        fileManagerApp
     ]
 };
