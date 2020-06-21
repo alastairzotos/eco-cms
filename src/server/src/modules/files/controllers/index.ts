@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import multer from 'multer';
 import GridFsStorage from 'multer-gridfs-storage';
 import config from '~/config';
-import { createRouter, identity } from '~/core/routes';
+import { createRouter } from '~/core/routes';
 
 export const filesRouter = createRouter();
 
@@ -30,7 +30,8 @@ const storage = new GridFsStorage({
 
 const upload = multer({ storage });
 
-filesRouter.post('/upload', upload.single('file'), (req, res) => {
+filesRouter.post('/upload', upload.array('files'), (req, res) => {
     console.log(req.file);
+    console.log(req.files);
     res.sendStatus(200);
 });

@@ -54,7 +54,9 @@ export const filesModule: IModule = {
         switchMap((action: IAction<IAdminFilesActionTypes, FileList>) => {
             const formData = new FormData();
             formData.set('enctype', 'multipart/form-data');
-            formData.append('file', action.payload.item(0));
+            for (let i = 0; i < action.payload.length; i++) {
+                formData.append('files', action.payload.item(i));
+            }
 
             return fetch$({
                 method: 'POST',
@@ -89,6 +91,7 @@ export const filesModule: IModule = {
 
                         <input
                             type="file"
+                            multiple
                             onChange={e => setFiles(e.target.files)}
                         />
                         <br />

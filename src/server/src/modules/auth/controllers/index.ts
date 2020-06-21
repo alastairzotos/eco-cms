@@ -7,6 +7,7 @@ export const authRouter = createRouter();
 
 authRouter.post('/login', catchAsync<any, IAuthResponse, IUserRecord>(async (req, res) => {
     const { email, password } = req.body;
+
     const user = await users.model.findOne({ email }).select('+password');
 
     if (!user || !users.validatePassword(user, password)) {
