@@ -1,16 +1,16 @@
 import { createAction } from '~/core';
 
 export enum IAdminFilesActionTypes {
-    BeginUploadFile = 'admin/files/BEGIN_UPLOAD_FILE',
-    SetFileUploaded = 'admin/files/SET_FILE_UPLOADED',
-    SetFileUploadError = 'admin/files/SET_FILE_UPLOAD_ERROR'
+    BeginUploadFiles = 'admin/files/BEGIN_UPLOAD_FILES',
+    SetFilesUploaded = 'admin/files/SET_FILES_UPLOADED',
+    SetFilesUploadError = 'admin/files/SET_FILES_UPLOAD_ERROR'
 }
 
-export const beginUploadFile = (files: FileList) =>
-    createAction(IAdminFilesActionTypes.BeginUploadFile, files);
+export const beginUploadFiles = (files: File[]) =>
+    createAction(IAdminFilesActionTypes.BeginUploadFiles, files);
 
-export const setFileUploaded = () =>
-    createAction(IAdminFilesActionTypes.SetFileUploaded);
+export const setFilesUploaded = () =>
+    createAction(IAdminFilesActionTypes.SetFilesUploaded);
 
-export const setFileUploadeError = () =>
-    createAction(IAdminFilesActionTypes.SetFileUploadError);
+export const setFilesUploadError = () =>
+    createAction(IAdminFilesActionTypes.SetFilesUploadError);

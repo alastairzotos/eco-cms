@@ -12,15 +12,15 @@ const INITIAL_STATE: IFilesState = {
 };
 
 export const filesReducer = createReducer<IFilesState>(INITIAL_STATE, {
-    [IAdminFilesActionTypes.BeginUploadFile]: state => ({
+    [IAdminFilesActionTypes.BeginUploadFiles]: state => ({
         ...state,
         uploadStatus: 'fetching'
     }),
-    [IAdminFilesActionTypes.SetFileUploaded]: state => ({
+    [IAdminFilesActionTypes.SetFilesUploaded]: state => ({
         ...state,
         uploadStatus: 'success'
     }),
-    [IAdminFilesActionTypes.SetFileUploadError]: state => ({
+    [IAdminFilesActionTypes.SetFilesUploadError]: state => ({
         ...state,
         uploadStatus: 'error'
     }),

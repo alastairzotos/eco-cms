@@ -42,7 +42,8 @@ Sprint 3:
 Sprint 4: File manager
     - [DONE] Add files
     - [DONE] Add multiple files
-    - Move to own module
+    - [DONE] Move to own module
+    - Dropzone
     - Upload progress
     - Browse files
     - Delete files

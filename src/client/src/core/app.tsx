@@ -16,7 +16,7 @@ export const startApp = () => {
 
     const persistConfig = {
         key: 'root',
-        storage,
+        storage
     };
 
     const persistedReducer = persistReducer(persistConfig, rootModule.reducer);

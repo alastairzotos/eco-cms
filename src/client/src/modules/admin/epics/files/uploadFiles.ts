@@ -3,16 +3,16 @@ import { of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { fetch$, IAction } from '~/core';
 
-import { IAdminFilesActionTypes, setFileUploaded, setFileUploadeError } from '../../actions';
+import { IAdminFilesActionTypes, setFilesUploaded, setFilesUploadError } from '../../actions';
 
 export const uploadFilesEpic: Epic = action$ =>
-    action$.ofType(IAdminFilesActionTypes.BeginUploadFile).pipe(
-        switchMap((action: IAction<IAdminFilesActionTypes, FileList>) => {
+    action$.ofType(IAdminFilesActionTypes.BeginUploadFiles).pipe(
+        switchMap((action: IAction<IAdminFilesActionTypes, File[]>) => {
             const formData = new FormData();
             formData.set('enctype', 'multipart/form-data');
-            for (let i = 0; i < action.payload.length; i++) {
-                formData.append('files', action.payload.item(i));
-            }
+            action.payload.forEach(item => {
+                formData.append('files', item);
+            });
 
             return fetch$({
                 method: 'POST',
@@ -20,8 +20,8 @@ export const uploadFilesEpic: Epic = action$ =>
                 contentType: 'multipart/form-data',
                 body: formData
             }).pipe(
-                switchMap(() => of(setFileUploaded())),
-                catchError(() => of(setFileUploadeError()))
+                switchMap(() => of(setFilesUploaded())),
+                catchError(() => of(setFilesUploadError()))
             );
         })
 );
