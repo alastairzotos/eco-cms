@@ -43,12 +43,12 @@ Sprint 4: File manager
     - [DONE] Add files
     - [DONE] Add multiple files
     - [DONE] Move to own module
-    - Dropzone
+    - [DONE] Dropzone
+    - [DONE] Browse folders
+    - [DONE] Browse files
+    - Delete/move/preview files
+    - Add/delete/move folders
     - Upload progress
-    - Browse files
-    - Delete files
-    - Move files
-    - Preview files
 
 Sprint 5:
     - Handle JWT expiration (https://gist.github.com/soulmachine/b368ce7292ddd7f91c15accccc02b8df)

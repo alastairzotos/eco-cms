@@ -1,11 +1,14 @@
-import { Epic } from 'redux-observable';
+import { Observable } from 'redux';
+import { Epic, StateObservable } from 'redux-observable';
 import { of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { fetch$, IAction } from '~/core';
+import { IState } from '~/modules/state';
 
 import { IAdminFilesActionTypes, setFilesUploaded, setFilesUploadError } from '../../actions';
+import { getCurrentPath } from '../../selectors/files';
 
-export const uploadFilesEpic: Epic = action$ =>
+export const uploadFilesEpic: Epic = (action$, state$: StateObservable<IState>) =>
     action$.ofType(IAdminFilesActionTypes.BeginUploadFiles).pipe(
         switchMap((action: IAction<IAdminFilesActionTypes, File[]>) => {
             const formData = new FormData();
@@ -16,9 +19,10 @@ export const uploadFilesEpic: Epic = action$ =>
 
             return fetch$({
                 method: 'POST',
-                url: '/upload',
+                url: '/files/upload',
                 contentType: 'multipart/form-data',
-                body: formData
+                body: formData,
+                query: { path: getCurrentPath(state$.value) }
             }).pipe(
                 switchMap(() => of(setFilesUploaded())),
                 catchError(() => of(setFilesUploadError()))

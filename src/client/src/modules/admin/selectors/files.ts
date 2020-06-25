@@ -9,3 +9,18 @@ export const getUploadStatus = createSelector(
     getState,
     state => state.uploadStatus
 );
+
+export const getCurrentPath = createSelector(
+    getState,
+    state => state.currentPath
+);
+
+export const getFilesAndFoldersFetchStatus = createSelector(
+    getState,
+    state => state.getFilesFoldersStatus
+);
+
+export const getFilesAndFolders = createSelector(
+    getState,
+    state => state.filesAndFolders
+);

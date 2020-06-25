@@ -1,11 +1,17 @@
+import { IFilesAndFolders } from '@common';
+import { Request } from 'express';
 import Grid from 'gridfs-stream';
 import mongoose from 'mongoose';
 import multer from 'multer';
 import GridFsStorage from 'multer-gridfs-storage';
+import * as path from 'path';
 import config from '~/config';
-import { createRouter } from '~/core/routes';
+import { catchAsync, createRouter } from '~/core/routes';
+import { authenticate } from '~/modules/auth';
 
-export const filesRouter = createRouter();
+import { filesService } from '../services';
+
+const privateRouter = createRouter();
 
 let gfs: Grid.Grid;
 
@@ -25,13 +31,25 @@ conn.once('open', () => {
 });
 
 const storage = new GridFsStorage({
-    url: connectionString
+    url: connectionString,
+    file: (req: Request<any, any, any, { path: string}>, file) => ({
+        filename: path.resolve(req.query.path, file.originalname)
+    })
 });
 
 const upload = multer({ storage });
 
-filesRouter.post('/upload', upload.array('files'), (req, res) => {
-    console.log(req.file);
-    console.log(req.files);
+privateRouter.post('/upload', authenticate, upload.array('files'), (req, res) => {
     res.sendStatus(200);
 });
+
+privateRouter.get(
+    '/files-folders',
+    authenticate,
+    catchAsync<any, IFilesAndFolders, any, { path: string }>(async (req, res) => {
+        res.json(await filesService.getFilesAndFolders(req.query.path, await conn));
+    })
+);
+
+export const filesRouter = createRouter();
+filesRouter.use('/files', privateRouter);
