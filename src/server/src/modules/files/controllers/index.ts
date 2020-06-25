@@ -32,7 +32,7 @@ conn.once('open', () => {
 
 const storage = new GridFsStorage({
     url: connectionString,
-    file: (req: Request<any, any, any, { path: string}>, file) => ({
+    file: (req: Request<any, any, any, { path: string }>, file) => ({
         filename: path.resolve(req.query.path, file.originalname)
     })
 });
