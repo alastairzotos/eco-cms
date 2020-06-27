@@ -1,4 +1,4 @@
-import { IFilesAndFolders } from '@common';
+import { IFile, IFilesAndFolders } from '@common';
 import { Request } from 'express';
 import Grid from 'gridfs-stream';
 import mongoose from 'mongoose';
@@ -27,7 +27,7 @@ const conn = mongoose.createConnection(
 
 conn.once('open', () => {
     gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('uploads');
+    gfs.collection('fs');
 });
 
 const storage = new GridFsStorage({
@@ -51,5 +51,26 @@ privateRouter.get(
     })
 );
 
+const staticRouter = createRouter();
+
+staticRouter.get('*', catchAsync(async (req, res) => {
+    const filename = req.params[0];
+
+    gfs.exist({ filename }, async (err, found) => {
+        if (err || !found) {
+            return res.status(404).send('File not found');
+        }
+
+        gfs.files.find({ filename }).toArray((_, files) => {
+            res.set('Content-Type', files[0].contentType);
+            res.set('Content-Disposition', 'attachment; filename="' + files[0].filename + '"');
+
+            const readstream = gfs.createReadStream({ filename });
+            readstream.pipe(res);
+        });
+    });
+}));
+
 export const filesRouter = createRouter();
 filesRouter.use('/files', privateRouter);
+filesRouter.use('/static', staticRouter);

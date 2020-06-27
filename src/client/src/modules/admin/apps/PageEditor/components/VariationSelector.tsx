@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
     variationSelector: {
         minWidth: 200,
-        display: 'inline-block'
+        display: 'inline-block',
     }
 }));
 
