@@ -46,6 +46,7 @@ Sprint 4: File manager
     - [DONE] Dropzone
     - [DONE] Browse folders
     - [DONE] Browse files
+    - Start updating UI
     - Delete/move/preview files
     - Add/delete/move folders
     - Upload progress

@@ -3,12 +3,14 @@ import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { ICallStatus } from '~/core';
 
 import { IAdminFilesActionTypes } from '../actions';
+import { IFilesViewStyle } from '../models';
 
 export interface IFilesState {
     uploadStatus: ICallStatus | null;
     getFilesFoldersStatus: ICallStatus | null;
     filesAndFolders: IFilesAndFolders;
     currentPath: string;
+    filesViewStyle: IFilesViewStyle;
 }
 
 const INITIAL_STATE: IFilesState = {
@@ -18,7 +20,8 @@ const INITIAL_STATE: IFilesState = {
         files: [],
         folders: []
     },
-    currentPath: '/'
+    currentPath: '/',
+    filesViewStyle: 'list'
 };
 
 export const filesReducer = createReducer<IFilesState>(INITIAL_STATE, {
@@ -52,5 +55,10 @@ export const filesReducer = createReducer<IFilesState>(INITIAL_STATE, {
     [IAdminFilesActionTypes.SetCurrentPath]: (state, action: PayloadAction<string>) => ({
         ...state,
         currentPath: action.payload
+    }),
+
+    [IAdminFilesActionTypes.SetFilesViewStyle]: (state, action: PayloadAction<IFilesViewStyle>) => ({
+        ...state,
+        filesViewStyle: action.payload
     })
 });

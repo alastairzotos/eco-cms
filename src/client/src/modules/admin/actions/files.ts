@@ -1,6 +1,8 @@
 import { IFilesAndFolders } from '@common*';
 import { createAction } from '~/core';
 
+import { IFilesViewStyle } from '../models';
+
 export enum IAdminFilesActionTypes {
     BeginUploadFiles = 'admin/files/BEGIN_UPLOAD_FILES',
     SetFilesUploaded = 'admin/files/SET_FILES_UPLOADED',
@@ -10,7 +12,9 @@ export enum IAdminFilesActionTypes {
     SetFilesAndFolders = 'admin/files/SET_FILES_AND_FOLDERS',
     SetGetFilesAndFoldersError = 'admin/files/SET_GET_FILES_AND_FOLDERS_ERROR',
 
-    SetCurrentPath = 'admin/files/SET_CURRENT_PATH'
+    SetCurrentPath = 'admin/files/SET_CURRENT_PATH',
+
+    SetFilesViewStyle = 'admin/files/SET_FILES_VIEW_STYLE'
 }
 
 export const beginUploadFiles = (files: File[]) =>
@@ -33,3 +37,6 @@ export const setGetFilesAndFoldersError = () =>
 
 export const setCurrentPath = (path: string) =>
     createAction(IAdminFilesActionTypes.SetCurrentPath, path);
+
+export const setFilesViewStyle = (viewStyle: IFilesViewStyle) =>
+    createAction(IAdminFilesActionTypes.SetFilesViewStyle, viewStyle);

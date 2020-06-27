@@ -24,3 +24,8 @@ export const getFilesAndFolders = createSelector(
     getState,
     state => state.filesAndFolders
 );
+
+export const getFilesViewStyle = createSelector(
+    getState,
+    state => state.filesViewStyle
+);
