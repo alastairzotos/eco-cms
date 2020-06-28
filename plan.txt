@@ -44,16 +44,19 @@ Sprint 4: File manager
     - [DONE] Add multiple files
     - [DONE] Move to own module
     - [DONE] Dropzone
+
+Sprint 5:
     - [DONE] Browse folders
     - [DONE] Browse files
     - [DONE] List file UI
     - [DONE] Download files
     - [DONE] Refactor admin module to have separate modules for each app
     - Delete/move/preview files
+    - Better upload
     - Add/delete/move folders
     - Upload progress
 
-Sprint 5:
+Sprint 6:
     - Find port from front-end for fetch requests and maybe an <Image /> component
     - Handle JWT expiration (https://gist.github.com/soulmachine/b368ce7292ddd7f91c15accccc02b8df)
     - Front-end service

@@ -20,20 +20,20 @@ export const combineModules = (name: string, ...modules: IModule[]): IModule => 
     reducer: combineReducers(
         modules
             .filter(mod => !!mod.reducer)
-            .reduce(
-                (result, { name: subName, reducer }) => ({
-                    ...result,
-                    [subName]: reducer
-                }),
-                {}
-            )
+            .reduce((
+                result,
+                { name: moduleName, reducer }
+            ) => ({
+                ...result,
+                [moduleName]: reducer
+            }), {})
     ),
     pages: modules
         .filter(mod => !!mod.pages)
         .reduce((allPages, mod) => ({
             ...allPages,
-            ...(Object.keys(mod.pages).reduce((modPages, url) => ({
-                ...modPages,
+            ...(Object.keys(mod.pages).reduce((modulePages, url) => ({
+                ...modulePages,
                 [url]: mod.pages[url]
             }), {}))
         }), {}),
