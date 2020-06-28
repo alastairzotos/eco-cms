@@ -14,6 +14,35 @@ export interface IModule {
     adminPages?: IAdminApp[];
 }
 
+export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
+    name,
+    epic: combineEpics(...modules.map(mod => mod.epic).filter(epic => !!epic)),
+    reducer: combineReducers(
+        modules
+            .filter(mod => !!mod.reducer)
+            .reduce(
+                (result, { name: subName, reducer }) => ({
+                    ...result,
+                    [subName]: reducer
+                }),
+                {}
+            )
+    ),
+    pages: modules
+        .filter(mod => !!mod.pages)
+        .reduce((allPages, mod) => ({
+            ...allPages,
+            ...(Object.keys(mod.pages).reduce((modPages, url) => ({
+                ...modPages,
+                [url]: mod.pages[url]
+            }), {}))
+        }), {}),
+    adminPages: [].concat.apply(
+        [],
+        modules.map(mod => mod.adminPages)
+    ).filter(app => !!app)
+});
+
 class ModuleManager {
     constructor() {
         // tslint:disable-line
@@ -22,47 +51,14 @@ class ModuleManager {
     components: Dictionary<any>;
     modules: IModule[];
 
-    combineModules = (
-        name: string,
-        initialReducers: {
-            [name: string]: Reducer
-        } = {}
-    ): IModule => ({
-        name,
-        epic: combineEpics(...this.modules.map(mod => mod.epic).filter(epic => !!epic)),
-        reducer: combineReducers(
-            this.modules
-                .filter(mod => !!mod.reducer)
-                .reduce(
-                    (result, { name: subName, reducer }) => ({
-                        ...result,
-                        [subName]: reducer,
-                    }),
-                    initialReducers,
-                )
-        ),
-        pages: this.combinePages()
-    })
+    combineModules = (name: string): IModule =>
+        combineModules(name, ...this.modules)
 
     getApps = (): IAdminApp[] =>
         [].concat.apply(
             [],
             this.modules.map(mod => mod.adminPages)
         ).filter(app => !!app)
-
-    private combinePages = (): IPages => {
-        const pages: IPages = {};
-
-        this.modules.forEach(mod => {
-            if (mod.pages) {
-                Object.keys(mod.pages).forEach(uri => {
-                    pages[uri] = mod.pages[uri];
-                });
-            }
-        });
-
-        return pages;
-    }
 }
 
 export const moduleManager = new ModuleManager();

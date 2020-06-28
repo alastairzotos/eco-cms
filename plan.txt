@@ -48,6 +48,7 @@ Sprint 4: File manager
     - [DONE] Browse files
     - [DONE] List file UI
     - [DONE] Download files
+    - [DONE] Refactor admin module to have separate modules for each app
     - Delete/move/preview files
     - Add/delete/move folders
     - Upload progress

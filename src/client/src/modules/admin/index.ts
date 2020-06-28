@@ -1,23 +1,20 @@
-import { IModule } from '~/core';
+import { combineModules, IModule } from '~/core';
 
-import { dashboardApp } from './apps/Dashboard/Dashboard';
-import { fileManagerApp } from './apps/FileManager';
-import { pageEditorApp } from './apps/PageEditor';
-import epic from './epics';
-import pages from './pages';
-import reducer from './reducers';
+import { dashboardModule } from './subModules/Dashboard';
+import { filesModule, IAdminFilesState } from './subModules/FileManager';
+import { IAdminMainState, mainAdmin } from './subModules/Main';
+import { IAdminPagesState, pageEditorModule } from './subModules/PageEditor';
 
-export * from './actions';
-export * from './reducers';
+export interface IAdminState {
+    main: IAdminMainState;
+    pages: IAdminPagesState;
+    files: IAdminFilesState;
+}
 
-export const adminModule: IModule = {
-    name: 'admin',
-    epic,
-    reducer,
-    pages,
-    adminPages: [
-        dashboardApp,
-        pageEditorApp,
-        fileManagerApp
-    ]
-};
+export const adminModule: IModule = combineModules(
+    'admin',
+    mainAdmin,
+    dashboardModule,
+    pageEditorModule,
+    filesModule
+);

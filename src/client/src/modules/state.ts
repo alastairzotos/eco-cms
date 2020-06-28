@@ -1,4 +1,4 @@
-import { IAdminState } from './admin/reducers';
+import { IAdminState } from './admin';
 import { IAuthState } from './auth/reducers';
 import { IPagesState } from './pages/reducers';
 

@@ -21,21 +21,21 @@ const RouteSwitch: React.FC<{
     pages,
     ...props
 }) => (
-            <Switch>
-                {
-                    Object.keys(pages).map(url => {
-                        return (
-                            <Route
-                                key={url}
-                                path={url}
-                                exact
-                                component={pages[url]}
-                            />
-                        );
-                    })
-                }
-            </Switch>
-        );
+    <Switch>
+        {
+            Object.keys(pages).map(url => {
+                return (
+                    <Route
+                        key={url}
+                        path={url}
+                        exact
+                        component={pages[url]}
+                    />
+                );
+            })
+        }
+    </Switch>
+);
 
 const WithRouterSwitch = withRouter(RouteSwitch);
 
