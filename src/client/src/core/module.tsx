@@ -16,7 +16,11 @@ export interface IModule {
 
 export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
     name,
-    epic: combineEpics(...modules.map(mod => mod.epic).filter(epic => !!epic)),
+    epic: combineEpics(
+        ...modules
+            .map(mod => mod.epic)
+            .filter(epic => !!epic)
+    ),
     reducer: combineReducers(
         modules
             .filter(mod => !!mod.reducer)
