@@ -16,6 +16,9 @@ const useStyles = makeStyles(theme => ({
     image: {
         maxWidth: '100%',
         maxHeight: '100%',
+    },
+    main: {
+        margin: theme.spacing(1)
     }
 }));
 
@@ -64,7 +67,7 @@ export const FilePreview: React.FC = () => {
                     </IconButton>
                 </Toolbar>
             </AppBar>
-            <>
+            <div className={classes.main}>
                 <TextField
                     disabled={updateStatus === 'fetching'}
                     value={basename}
@@ -94,7 +97,7 @@ export const FilePreview: React.FC = () => {
                         />
                     )}
                 </div>
-            </>
+            </div>
         </>
     );
 };
