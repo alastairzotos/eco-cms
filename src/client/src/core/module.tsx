@@ -20,10 +20,7 @@ export const combineModules = (name: string, ...modules: IModule[]): IModule => 
     reducer: combineReducers(
         modules
             .filter(mod => !!mod.reducer)
-            .reduce((
-                result,
-                { name: moduleName, reducer }
-            ) => ({
+            .reduce((result, { name: moduleName, reducer }) => ({
                 ...result,
                 [moduleName]: reducer
             }), {})
