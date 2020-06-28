@@ -1,11 +1,11 @@
 import { IModule } from '~/core';
 
 import pages from './pages';
-import { themeReducer } from './reducers';
+import { coreReducer } from './reducers';
 
-export const mainAdmin: IModule = {
-    name: 'main',
-    reducer: themeReducer,
+export const adminCore: IModule = {
+    name: 'core',
+    reducer: coreReducer,
     pages
 };
 

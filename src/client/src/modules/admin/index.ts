@@ -1,19 +1,19 @@
 import { combineModules, IModule } from '~/core';
 
+import { adminCore, IAdminCoreState } from './subModules/AdminCore';
 import { dashboardModule } from './subModules/Dashboard';
 import { filesModule, IAdminFilesState } from './subModules/FileManager';
-import { IAdminMainState, mainAdmin } from './subModules/Main';
 import { IAdminPagesState, pageEditorModule } from './subModules/PageEditor';
 
 export interface IAdminState {
-    main: IAdminMainState;
+    core: IAdminCoreState;
     pages: IAdminPagesState;
     files: IAdminFilesState;
 }
 
 export const adminModule: IModule = combineModules(
     'admin',
-    mainAdmin,
+    adminCore,
     dashboardModule,
     pageEditorModule,
     filesModule

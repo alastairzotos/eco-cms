@@ -13,15 +13,13 @@ import FileIcon from '@material-ui/icons/InsertDriveFile';
 import dayjs from 'dayjs';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Spacer } from '~/atomic/atoms/Spacer';
 
 import { setCurrentPath } from '../actions';
 import { getCurrentPath, getFilesAndFolders } from '../selectors';
 import { formatFileSize, getBaseName } from '../utils';
 
 const useStyles = makeStyles(theme => ({
-    table: {
-        marginBottom: theme.spacing(1)
-    },
     header: {
         fontWeight: 900
     },
@@ -48,10 +46,39 @@ export const FilesListBrowser: React.FC = () => {
 
     return (
         <>
+            {folders.length > 0 && (
+                <>
+                    <TableContainer component={Paper}>
+                        <Table stickyHeader>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell className={classes.header}>Folder</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {folders.map(folder => (
+                                    <TableRow key={folder.path}>
+                                        <TableCell
+                                            className={classes.item}
+                                            onClick={() => dispatch(setCurrentPath(folder.path))}
+                                        >
+                                           <FolderIcon className={classes.icon} fontSize="small" />
+                                           <span>{getBaseName(folder.path, currentPath)}</span>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </>
+            )}
+
+            {folders.length > 0 && files.length > 0 && <Spacer bottom={2} />}
+
             {files.length > 0 && (
                 <>
                     <TableContainer component={Paper}>
-                        <Table stickyHeader className={classes.table}>
+                        <Table stickyHeader>
                             <TableHead className={classes.header}>
                                 <TableRow>
                                     <TableCell className={classes.header}>File name</TableCell>
@@ -72,33 +99,6 @@ export const FilesListBrowser: React.FC = () => {
                                         <TableCell>{file.contentType}</TableCell>
                                         <TableCell>{formatFileSize(file.length)}</TableCell>
                                         <TableCell>{dayjs(file.uploadDate).format('DD/MM/YYYY')}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </>
-            )}
-
-            {folders.length > 0 && (
-                <>
-                    <TableContainer component={Paper}>
-                        <Table stickyHeader className={classes.table}>
-                            <TableHead>
-                                <TableRow>
-                                    <TableCell className={classes.header}>Folder</TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {folders.map(folder => (
-                                    <TableRow key={folder.path}>
-                                        <TableCell
-                                            className={classes.item}
-                                            onClick={() => dispatch(setCurrentPath(folder.path))}
-                                        >
-                                           <FolderIcon className={classes.icon} fontSize="small" />
-                                           <span>{getBaseName(folder.path, currentPath)}</span>
-                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
