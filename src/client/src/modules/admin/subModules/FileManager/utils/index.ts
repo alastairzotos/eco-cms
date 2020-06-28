@@ -13,6 +13,11 @@ export const getBaseName = (filename: string, path?: string) => {
     return basename;
 };
 
+export const getFilePath = (filename: string) => {
+    const parts = filename.split('/');
+    return parts.slice(0, parts.length - 1).join('/');
+};
+
 export const getUpperPath = (path: string) => {
     const parts = path.split('/');
     const upperPath = parts.slice(0, parts.length - 1).join('/');
@@ -23,6 +28,9 @@ export const getUpperPath = (path: string) => {
 
     return upperPath;
 };
+
+export const validateFilename = (filename: string) =>
+    !filename.includes('/') && !filename.includes('..');
 
 export const formatFileSize = (bytes: number, si = false, dp = 1) => {
     const thresh = si ? 1000 : 1024;

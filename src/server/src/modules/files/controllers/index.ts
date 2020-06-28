@@ -51,6 +51,15 @@ privateRouter.get(
     })
 );
 
+privateRouter.post(
+    '/update-filename',
+    authenticate,
+    catchAsync<any, any, IFile>(async (req, res) => {
+        await filesService.updateFilename(req.body, await conn);
+        res.sendStatus(200);
+    })
+);
+
 const staticRouter = createRouter();
 
 staticRouter.get('*', catchAsync(async (req, res) => {

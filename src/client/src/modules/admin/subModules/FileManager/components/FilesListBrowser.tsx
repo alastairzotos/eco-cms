@@ -47,7 +47,7 @@ export const FilesListBrowser: React.FC = () => {
     const folders = filesAndFolders.folders;
 
     const handleFileClick = (file: IFile) => {
-        if (previewedFile && previewedFile.filename === file.filename) {
+        if (previewedFile && previewedFile._id === file._id) {
             dispatch(previewFile(null));
         } else {
             dispatch(previewFile(file));

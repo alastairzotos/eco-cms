@@ -30,7 +30,17 @@ export const getFilesViewStyle = createSelector(
     state => state.filesViewStyle
 );
 
+export const getPreviewFileId = createSelector(
+    getState,
+    state => state.previewId
+);
+
 export const getPreviewFile = createSelector(
     getState,
-    state => state.preview
+    state => state.filesAndFolders.files.find(file => file._id === state.previewId)
+);
+
+export const getFileUpdateStatus = createSelector(
+    getState,
+    state => state.fileUpdateStatus
 );

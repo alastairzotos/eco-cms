@@ -63,6 +63,7 @@ Sprint 6:
 
 Sprint 7:
     - Redis cache, especially for images
+    - Front-end modules should choose if their state is persisted
     - Find port from front-end for fetch requests and maybe an <Image /> component
     - Handle JWT expiration (https://gist.github.com/soulmachine/b368ce7292ddd7f91c15accccc02b8df)
     - Front-end service

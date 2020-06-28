@@ -11,7 +11,8 @@ export interface IAdminFilesState {
     filesAndFolders: IFilesAndFolders;
     currentPath: string;
     filesViewStyle: IFilesViewStyle;
-    preview: IFile | null;
+    previewId: string | null;
+    fileUpdateStatus: ICallStatus | null;
 }
 
 const INITIAL_STATE: IAdminFilesState = {
@@ -23,7 +24,8 @@ const INITIAL_STATE: IAdminFilesState = {
     },
     currentPath: '/',
     filesViewStyle: 'list',
-    preview: null
+    previewId: null,
+    fileUpdateStatus: null
 };
 
 export const filesReducer = createReducer<IAdminFilesState>(INITIAL_STATE, {
@@ -66,6 +68,28 @@ export const filesReducer = createReducer<IAdminFilesState>(INITIAL_STATE, {
 
     [IAdminFilesActionTypes.PreviewFile]: (state, action: PayloadAction<IFile>) => ({
         ...state,
-        preview: action.payload
+        previewId: action.payload && action.payload._id
+    }),
+
+    [IAdminFilesActionTypes.BeginUpdateFile]: state => ({
+        ...state,
+        fileUpdateStatus: 'fetching'
+    }),
+    [IAdminFilesActionTypes.SetFile]: (state, action: PayloadAction<IFile>) => ({
+        ...state,
+        fileUpdateStatus: 'success',
+        filesAndFolders: {
+            ...state.filesAndFolders,
+            files: state.filesAndFolders.files
+                .map(file =>
+                    file._id === action.payload._id
+                    ? action.payload
+                    : file
+                )
+        }
+    }),
+    [IAdminFilesActionTypes.SetUpdateFileError]: state => ({
+        ...state,
+        fileUpdateStatus: 'error'
     })
 });

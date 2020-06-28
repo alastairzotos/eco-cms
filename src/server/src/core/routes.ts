@@ -8,6 +8,13 @@ export const createRouter = () =>
         strict: true
     });
 
+/**
+ * Type arguments:
+ * - Path params
+ * - Response body
+ * - Request body
+ * - Query params
+ */
 export const catchAsync = <P extends core.Params = core.ParamsDictionary, ResBody = any, ReqBody = any, Q = core.Query>(
     controller: RequestHandler<P, ResBody, ReqBody, Q>
 ): RequestHandler =>

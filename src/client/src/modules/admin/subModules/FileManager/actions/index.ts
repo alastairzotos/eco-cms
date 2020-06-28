@@ -16,7 +16,11 @@ export enum IAdminFilesActionTypes {
 
     SetFilesViewStyle = 'admin/files/SET_FILES_VIEW_STYLE',
 
-    PreviewFile = 'admin/files/PREVIEW_FILE'
+    PreviewFile = 'admin/files/PREVIEW_FILE',
+
+    BeginUpdateFile = 'admin/files/BEGIN_UPDATE_FILE',
+    SetFile = 'admin/files/SET_FILE',
+    SetUpdateFileError = 'admin/files/SET_UPDATE_FILE_ERROR'
 }
 
 export const beginUploadFiles = (files: File[]) =>
@@ -45,3 +49,12 @@ export const setFilesViewStyle = (viewStyle: IFilesViewStyle) =>
 
 export const previewFile = (file: IFile) =>
     createAction(IAdminFilesActionTypes.PreviewFile, file);
+
+export const beginUpdateFile = (file: IFile) =>
+    createAction(IAdminFilesActionTypes.BeginUpdateFile, file);
+
+export const setFile = (file: IFile) =>
+    createAction(IAdminFilesActionTypes.SetFile, file);
+
+export const setUpdateFileError = () =>
+    createAction(IAdminFilesActionTypes.SetUpdateFileError);

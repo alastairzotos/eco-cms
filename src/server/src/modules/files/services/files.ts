@@ -1,4 +1,5 @@
 import { IFile, IFilesAndFolders } from '@common*';
+import { ObjectID } from 'mongodb';
 import * as mongoose from 'mongoose';
 import { Service } from '~/core/service';
 
@@ -17,6 +18,15 @@ const isInFolder = (filename: string, path: string) => {
 export class FilesService extends Service {
     constructor() {
         super();
+    }
+
+    updateFilename = async (file: IFile, filesConn: mongoose.Connection) => {
+        await filesConn.collection('fs.files')
+            .updateOne({ _id: new ObjectID(file._id) }, {
+                $set: {
+                    filename: file.filename
+                }
+            });
     }
 
     getFilesAndFolders = async (path: string, filesConn: mongoose.Connection): Promise<IFilesAndFolders> => {
