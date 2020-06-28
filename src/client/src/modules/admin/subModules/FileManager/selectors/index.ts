@@ -29,3 +29,8 @@ export const getFilesViewStyle = createSelector(
     getState,
     state => state.filesViewStyle
 );
+
+export const getPreviewFile = createSelector(
+    getState,
+    state => state.preview
+);

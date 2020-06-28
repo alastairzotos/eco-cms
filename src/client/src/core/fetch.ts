@@ -2,6 +2,7 @@ import cookies from 'cookiesjs';
 import { from, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 
+import { config } from './config';
 import history from './history';
 
 export interface IRequest {
@@ -51,7 +52,7 @@ const performFetch = <T = any>(req: IRequest): Promise<IResponse<T>> =>
                 authHeaders.Authorization = `Bearer ${token}`;
             }
 
-            const domain = 'http://localhost:5999';
+            const domain = config.domain;
             const apiRoute = '/api';
 
             const contentHeaders = {

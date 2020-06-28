@@ -1,3 +1,4 @@
+import { IFile } from '@common';
 import {
     makeStyles,
     Paper,
@@ -15,8 +16,8 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spacer } from '~/atomic/atoms/Spacer';
 
-import { setCurrentPath } from '../actions';
-import { getCurrentPath, getFilesAndFolders } from '../selectors';
+import { previewFile, setCurrentPath } from '../actions';
+import { getCurrentPath, getFilesAndFolders, getPreviewFile } from '../selectors';
 import { formatFileSize, getBaseName } from '../utils';
 
 const useStyles = makeStyles(theme => ({
@@ -40,9 +41,18 @@ export const FilesListBrowser: React.FC = () => {
 
     const filesAndFolders = useSelector(getFilesAndFolders);
     const currentPath = useSelector(getCurrentPath);
+    const previewedFile = useSelector(getPreviewFile);
 
     const files = filesAndFolders.files;
     const folders = filesAndFolders.folders;
+
+    const handleFileClick = (file: IFile) => {
+        if (previewedFile && previewedFile.filename === file.filename) {
+            dispatch(previewFile(null));
+        } else {
+            dispatch(previewFile(file));
+        }
+    };
 
     return (
         <>
@@ -92,6 +102,7 @@ export const FilesListBrowser: React.FC = () => {
                                     <TableRow key={file.filename}>
                                         <TableCell
                                             className={classes.item}
+                                            onClick={() => handleFileClick(file)}
                                         >
                                             <FileIcon className={classes.icon} fontSize="small" />
                                             <span>{getBaseName(file.filename, currentPath)}</span>

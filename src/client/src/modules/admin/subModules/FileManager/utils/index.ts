@@ -1,4 +1,9 @@
-export const getBaseName = (filename: string, path: string) => {
+export const getBaseName = (filename: string, path?: string) => {
+    if (!path) {
+        const parts = filename.split('/');
+        return parts.pop();
+    }
+
     const basename = filename.substr(path.length);
 
     if (basename.startsWith('/')) {

@@ -1,4 +1,4 @@
-import { IFilesAndFolders } from '@common*';
+import { IFile, IFilesAndFolders } from '@common';
 import { createAction } from '~/core';
 
 import { IFilesViewStyle } from '../models';
@@ -14,7 +14,9 @@ export enum IAdminFilesActionTypes {
 
     SetCurrentPath = 'admin/files/SET_CURRENT_PATH',
 
-    SetFilesViewStyle = 'admin/files/SET_FILES_VIEW_STYLE'
+    SetFilesViewStyle = 'admin/files/SET_FILES_VIEW_STYLE',
+
+    PreviewFile = 'admin/files/PREVIEW_FILE'
 }
 
 export const beginUploadFiles = (files: File[]) =>
@@ -40,3 +42,6 @@ export const setCurrentPath = (path: string) =>
 
 export const setFilesViewStyle = (viewStyle: IFilesViewStyle) =>
     createAction(IAdminFilesActionTypes.SetFilesViewStyle, viewStyle);
+
+export const previewFile = (file: IFile) =>
+    createAction(IAdminFilesActionTypes.PreviewFile, file);

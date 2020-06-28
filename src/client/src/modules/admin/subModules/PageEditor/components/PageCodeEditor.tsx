@@ -15,7 +15,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CodeEditor } from '~/atomic/molecules/CodeEditor';
 import { Confirm } from '~/atomic/molecules/Confirm';
-import { getTheme } from '~/modules/admin/subModules/Main';
+import { getTheme } from '~/modules/admin/subModules/AdminCore';
 
 import { beginDeletePage, beginSavePage, setPageData } from '../actions';
 import { IPageInfo } from '../models';

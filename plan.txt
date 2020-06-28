@@ -51,12 +51,18 @@ Sprint 5:
     - [DONE] List file UI
     - [DONE] Download files
     - [DONE] Refactor admin module to have separate modules for each app
-    - Delete/move/preview files
-    - Better upload
-    - Add/delete/move folders
-    - Upload progress
 
 Sprint 6:
+    - [DONE] Preview files
+    - Update file names
+    - Delete/move files
+    - Update folder names
+    - Add/delete/move folders
+    - Better upload
+    - Upload progress
+
+Sprint 7:
+    - Redis cache, especially for images
     - Find port from front-end for fetch requests and maybe an <Image /> component
     - Handle JWT expiration (https://gist.github.com/soulmachine/b368ce7292ddd7f91c15accccc02b8df)
     - Front-end service

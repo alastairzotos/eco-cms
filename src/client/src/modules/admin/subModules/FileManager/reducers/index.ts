@@ -1,4 +1,4 @@
-import { IFilesAndFolders } from '@common*';
+import { IFile, IFilesAndFolders } from '@common';
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { ICallStatus } from '~/core';
 
@@ -11,6 +11,7 @@ export interface IAdminFilesState {
     filesAndFolders: IFilesAndFolders;
     currentPath: string;
     filesViewStyle: IFilesViewStyle;
+    preview: IFile | null;
 }
 
 const INITIAL_STATE: IAdminFilesState = {
@@ -21,7 +22,8 @@ const INITIAL_STATE: IAdminFilesState = {
         folders: []
     },
     currentPath: '/',
-    filesViewStyle: 'list'
+    filesViewStyle: 'list',
+    preview: null
 };
 
 export const filesReducer = createReducer<IAdminFilesState>(INITIAL_STATE, {
@@ -60,5 +62,10 @@ export const filesReducer = createReducer<IAdminFilesState>(INITIAL_STATE, {
     [IAdminFilesActionTypes.SetFilesViewStyle]: (state, action: PayloadAction<IFilesViewStyle>) => ({
         ...state,
         filesViewStyle: action.payload
+    }),
+
+    [IAdminFilesActionTypes.PreviewFile]: (state, action: PayloadAction<IFile>) => ({
+        ...state,
+        preview: action.payload
     })
 });
