@@ -47,11 +47,11 @@ export const Root: React.FC<IRootProps> = ({
 }) => {
     return (
         <Provider store={store}>
-            {/* <PersistGate loading={null} persistor={persistor}> */}
+            <PersistGate loading={null} persistor={persistor}>
                 <Router history={history}>
                     <WithRouterSwitch pages={pages} />
                 </Router>
-            {/* </PersistGate> */}
+            </PersistGate>
         </Provider>
     );
 };

@@ -5,6 +5,8 @@ import { renderPage } from '~/modules/pages/utils';
 import { getTheme } from '../../../AdminCore';
 import { getDeletePageStatus, getPages, getSavePageStatus, getSelectedPage, getSelectedVariation, isDirty } from '../../selectors';
 
+import { GridEditor } from './GridEditor';
+
 export const PageEditor: React.FC = () => {
     const dispatch = useDispatch();
     const pages = useSelector(getPages);
@@ -19,6 +21,6 @@ export const PageEditor: React.FC = () => {
         return <></>;
     }
 
-    return <>{renderPage(selectedPage.staging[0])}</>;
+    return <GridEditor />;
     // return <samp>{JSON.stringify(selectedPage.staging[0], null, 2)}</samp>;
 };
