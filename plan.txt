@@ -59,7 +59,8 @@ Sprint 6:
 Sprint 7:
     - [DONE] Components should come from modules
     - [DONE] Store pages as rows, columns and components
-    - Edit grid
+    - [DONE] Edit grid
+    - Add components to columns
 
 Sprint 8:
     - Delete/move files

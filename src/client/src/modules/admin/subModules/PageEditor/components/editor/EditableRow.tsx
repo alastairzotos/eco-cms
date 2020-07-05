@@ -6,11 +6,11 @@ import * as React from 'react';
 import { EditableColumn } from './EditableColumn';
 
 const useStyles = makeStyles(theme => ({
-    row: {
+    root: {
         display: 'flex',
         width: '100%'
     },
-    rowHovered: {
+    highlight: {
         boxShadow: `0px 0px 5px 0px ${theme.palette.action.selected}`
     },
     resizeHover: {
@@ -32,12 +32,8 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
     const ref = React.useRef<HTMLDivElement>();
 
     const [hovered, setHovered] = React.useState(false);
-    const [resizeHover, setResizeHover] = React.useState(-1);
+    const [hoveredColumnForResizing, setHoveredColumnForResizing] = React.useState(-1);
     const [resizing, setResizing] = React.useState(false);
-
-    const handleHover = (hovering: boolean) => {
-        setHovered(hovering);
-    };
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         const boundingRect = ref.current.getBoundingClientRect();
@@ -47,17 +43,18 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
             let totalWidth = 0;
             row.columns.forEach((col, colIndex) => {
                 const colWidth = (col.span / 12) * boundingRect.width;
+                const mouseIsOverColumn = offsetX >= totalWidth && offsetX < totalWidth + colWidth;
 
-                if (offsetX >= totalWidth && offsetX < totalWidth + colWidth) {
-                    const draggable = colIndex < row.columns.length - 1 && offsetX >= totalWidth + colWidth - 5;
+                if (mouseIsOverColumn) {
+                    const canDrag = colIndex < row.columns.length - 1 && offsetX >= totalWidth + colWidth - 5;
 
-                    if (draggable) {
-                        if (resizeHover < 0) {
-                            setResizeHover(colIndex);
+                    if (canDrag) {
+                        if (hoveredColumnForResizing < 0) {
+                            setHoveredColumnForResizing(colIndex);
                         }
                     } else {
-                        if (resizeHover >= 0) {
-                            setResizeHover(-1);
+                        if (hoveredColumnForResizing >= 0) {
+                            setHoveredColumnForResizing(-1);
                         }
                     }
                 }
@@ -65,24 +62,24 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
                 totalWidth += colWidth;
             });
         } else {
-            const spanOfColumnsOnLeft = resizeHover === 0
+            const spanOfColumnsOnLeft = hoveredColumnForResizing === 0
                 ? 0
-                : row.columns.slice(0, resizeHover).reduce((span, col) => span + col.span, 0);
+                : row.columns.slice(0, hoveredColumnForResizing).reduce((span, col) => span + col.span, 0);
 
-            const newSpan = Math.round((offsetX / boundingRect.width) * 12) - spanOfColumnsOnLeft;
+            const newSpan = (Math.round((offsetX / boundingRect.width) * 12) - spanOfColumnsOnLeft) || 1;
 
-            if (row.columns[resizeHover].span !== newSpan) {
-                const diff = newSpan - row.columns[resizeHover].span;
+            if (row.columns[hoveredColumnForResizing].span !== newSpan) {
+                const diff = newSpan - row.columns[hoveredColumnForResizing].span;
 
                 onUpdate({
                     ...row,
                     columns: row.columns.map((col, colIndex) =>
-                        colIndex === resizeHover
+                        colIndex === hoveredColumnForResizing
                             ? { ...col, span: newSpan as ColumnSpan }
                             : (
-                                colIndex === resizeHover + 1
-                                ? { ...col, span: (col.span - diff) as ColumnSpan }
-                                : { ...col }
+                                colIndex === hoveredColumnForResizing + 1
+                                    ? { ...col, span: (col.span - diff) as ColumnSpan }
+                                    : { ...col }
                             )
                     )
                 });
@@ -90,40 +87,29 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
         }
     };
 
-    const handleMouseDown = () => {
-        setResizing(resizeHover >= 0);
-    };
-
-    const handleMouseUp = () => {
-        setResizing(false);
-    };
-
     return (
         <div
-            onMouseEnter={() => handleHover(true)}
-            onMouseLeave={() => handleHover(false)}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
-        >
-            <div
-                ref={ref}
-                className={cx(classes.row, {
-                    [classes.rowHovered]: hovered,
-                    [classes.resizeHover]: resizeHover >= 0
-                })}
+            ref={ref}
+            className={cx(classes.root, {
+                [classes.highlight]: hovered || resizing,
+                [classes.resizeHover]: hoveredColumnForResizing >= 0 || resizing
+            })}
 
-                onMouseMove={handleMouseMove}
-            >
-                {
-                    row.columns.map((col, colIndex) => (
-                        <EditableColumn
-                            key={`col-${colIndex}`}
-                            column={col}
-                            highlight={hovered && colIndex > 0}
-                        />
-                    ))
-                }
-            </div>
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+            onMouseDown={() => setResizing(hoveredColumnForResizing >= 0)}
+            onMouseUp={() => setResizing(false)}
+            onMouseMove={handleMouseMove}
+        >
+            {
+                row.columns.map((col, colIndex) => (
+                    <EditableColumn
+                        key={`col-${colIndex}`}
+                        column={col}
+                        highlight={hovered && colIndex > 0 || resizing}
+                    />
+                ))
+            }
         </div>
     );
 };
