@@ -1,5 +1,5 @@
 import { IPageColumn } from '@common';
-import { makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import cx from 'clsx';
 import * as React from 'react';
 import { renderComponent } from '~/modules/pages/utils';
@@ -11,7 +11,7 @@ export interface IEditableColumnProps {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        minHeight: 40
+        minHeight: 40,
     },
     highlight: {
         boxShadow: `-5px 0px 0px 0px ${theme.palette.action.selected}`
@@ -26,17 +26,19 @@ export const EditableColumn: React.FC<IEditableColumnProps> = ({ column, highlig
 
     return (
         <>
-            <div
+            <Grid
+                item
+                lg={column.span}
                 className={cx(classes.root, {
                     [classes.highlight]: highlight
                 })}
 
-                style={{ width: getColumnWidth(column) }}
+                // style={{ width: getColumnWidth(column) }}
             >
                 {
-                    column.children.map(child => renderComponent(child))
+                   column.children.map(child => renderComponent(child))
                 }
-            </div>
+            </Grid>
         </>
     );
 };

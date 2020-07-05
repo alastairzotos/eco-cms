@@ -1,15 +1,11 @@
 import { ColumnSpan, IPageRow } from '@common';
-import { makeStyles } from '@material-ui/core';
+import { Grid, makeStyles } from '@material-ui/core';
 import cx from 'clsx';
 import * as React from 'react';
 
 import { EditableColumn } from './EditableColumn';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-        width: '100%'
-    },
     highlight: {
         boxShadow: `0px 0px 5px 0px ${theme.palette.action.selected}`
     },
@@ -90,9 +86,10 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
     };
 
     return (
-        <div
+        <Grid
+            container
             ref={ref}
-            className={cx(classes.root, {
+            className={cx({
                 [classes.highlight]: hovered || resizing,
                 [classes.resizeHover]: hoveredColumnForResizing >= 0 || resizing
             })}
@@ -112,6 +109,6 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
                     />
                 ))
             }
-        </div>
+        </Grid>
     );
 };
