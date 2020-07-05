@@ -64,7 +64,9 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
         } else {
             const spanOfColumnsOnLeft = hoveredColumnForResizing === 0
                 ? 0
-                : row.columns.slice(0, hoveredColumnForResizing).reduce((span, col) => span + col.span, 0);
+                : row.columns
+                    .slice(0, hoveredColumnForResizing)
+                    .reduce((span, col) => span + col.span, 0);
 
             const newSpan = (Math.round((offsetX / boundingRect.width) * 12) - spanOfColumnsOnLeft) || 1;
 
