@@ -3,12 +3,10 @@ import * as qs from 'qs';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, RouteComponentProps } from 'react-router-dom';
-import { moduleManager } from '~/core';
-import { Runtime } from '~/modules/parser';
 
 import { beginGetPage } from '../actions';
-import { PageRenderer } from '../components/PageRenderer';
 import { getPage, getPageError, getPageFetchStatus } from '../selectors';
+import { renderPage } from '../utils';
 
 const StaticPage: React.FC<RouteComponentProps> = ({
     location
@@ -35,15 +33,9 @@ const StaticPage: React.FC<RouteComponentProps> = ({
     }
 
     const query = qs.parse(location.search, { ignoreQueryPrefix: true });
+    const variation = (parseInt(query.v as string, 10) - 1) || 0;
 
-    return (
-        <PageRenderer
-            page={page}
-            query={query}
-            deployment="production"
-            version={(parseInt(query.v as string, 10) - 1) || 0}
-        />
-    );
+    return <>{renderPage(page.production[variation])}</>;
 };
 
 export default StaticPage;

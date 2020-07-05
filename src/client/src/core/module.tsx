@@ -55,9 +55,16 @@ class ModuleManager {
     }
 
     modules: IModule[];
+    moduleMap: Dictionary<IModule> = {};
 
-    combineModules = (name: string): IModule =>
-        combineModules(name, ...this.modules)
+    combineModules = (name: string): IModule => {
+        this.moduleMap = this.modules.reduce((map, mod) => ({
+            ...map,
+            [mod.name]: mod
+        }), {});
+
+        return combineModules(name, ...this.modules);
+    }
 
     getApps = (): IAdminApp[] =>
         [].concat.apply(

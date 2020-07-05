@@ -40,7 +40,11 @@ export const PagesSidePanel: React.FC = () => {
             title: 'New page',
             description: 'This is a page',
             staging: [
-                '<p>New page</p>'
+                {
+                    rows: [
+
+                    ]
+                }
             ],
             production: []
         }));

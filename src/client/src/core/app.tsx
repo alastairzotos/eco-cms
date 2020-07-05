@@ -19,7 +19,7 @@ export const startApp = () => {
         storage
     };
 
-    const persistedReducer = persistReducer(persistConfig, rootModule.reducer);
+    const persistedReducer = rootModule.reducer; // persistReducer(persistConfig, rootModule.reducer);
 
     const epicMiddleware = createEpicMiddleware();
     const store = createStore(

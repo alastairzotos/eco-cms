@@ -4,7 +4,7 @@ import { Panel } from '~/atomic/atoms/Panel';
 import SplitPanel from '~/atomic/atoms/SplitPanel';
 import { IAdminApp } from '~/core';
 
-import { PageCodeEditor } from '../components/PageCodeEditor';
+import { PageEditor as VisualEditor } from '../components/editor/PageEditor';
 import { PagesSidePanel } from '../components/PagesSidepanel';
 
 const PageEditor: React.FC = () => {
@@ -12,7 +12,7 @@ const PageEditor: React.FC = () => {
         <SplitPanel id="main" split="vertical">
             <PagesSidePanel />
             <Panel border="left">
-                <PageCodeEditor />
+                <VisualEditor />
             </Panel>
         </SplitPanel>
     );

@@ -67,5 +67,9 @@ export const myModule: IModule = {
                 );
             }
         }
-    ]
+    ],
+
+    components: {
+        MyComponent: () => <h1>Welcome</h1>
+    }
 };
