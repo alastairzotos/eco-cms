@@ -1,5 +1,5 @@
-import { createMuiTheme, Theme, ThemeOptions } from '@material-ui/core';
 import { Dictionary } from 'lodash';
+import * as React from 'react';
 import { combineReducers, Reducer } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 
@@ -12,6 +12,7 @@ export interface IModule {
     reducer?: Reducer;
     pages?: IPages;
     adminPages?: IAdminApp[];
+    components?: Dictionary<React.FC>;
 }
 
 export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
@@ -41,7 +42,11 @@ export const combineModules = (name: string, ...modules: IModule[]): IModule => 
     adminPages: [].concat.apply(
         [],
         modules.map(mod => mod.adminPages)
-    ).filter(app => !!app)
+    ).filter(app => !!app),
+    components: modules.reduce((comps, mod) => ({
+        ...comps,
+        ...(mod.components || {})
+    }), {})
 });
 
 class ModuleManager {
@@ -49,7 +54,6 @@ class ModuleManager {
         // tslint:disable-line
     }
 
-    components: Dictionary<any>;
     modules: IModule[];
 
     combineModules = (name: string): IModule =>

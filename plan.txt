@@ -55,13 +55,19 @@ Sprint 5:
 Sprint 6:
     - [DONE] Preview files
     - [DONE] Update file names
+
+Sprint 7:
+    - Components should come from modules
+    - Visual editor
+
+Sprint 8:
     - Delete/move files
     - Update folder names
     - Add/delete/move folders
     - Better upload
     - Upload progress
 
-Sprint 7:
+Sprint 9:
     - Redis cache, especially for images
     - Front-end modules should choose if their state is persisted
     - Find port from front-end for fetch requests and maybe an <Image /> component

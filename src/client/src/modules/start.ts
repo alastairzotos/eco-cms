@@ -1,18 +1,15 @@
-import { ThemeOptions } from '@material-ui/core';
 import { Dictionary } from 'lodash';
 import { IModule, moduleManager, startApp } from '~/core';
 import {
     adminModule,
     authModule,
+    coreModule,
     pagesModule
 } from '~/modules';
 
-export const start = (
-    components: Dictionary<any>,
-    modules: IModule[] = []
-) => {
-    moduleManager.components = components;
+export const start = (modules: IModule[] = []) => {
     moduleManager.modules = [
+        coreModule,
         authModule,
         adminModule,
         pagesModule,
