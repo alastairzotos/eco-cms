@@ -13,7 +13,7 @@ const useStyles = makeStyles(() => ({
         marginTop: -20
     },
     rootEmpty: {
-        marginTop: 20
+        marginTop: -10
     }
 }));
 

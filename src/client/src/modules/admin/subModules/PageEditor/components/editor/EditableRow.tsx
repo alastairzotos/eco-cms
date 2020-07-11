@@ -15,11 +15,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export interface IEditableRowProps {
+    path: number[];
     row: IPageRow;
     onUpdate: (row: IPageRow) => void;
 }
 
 export const EditableRow: React.FC<IEditableRowProps> = ({
+    path,
     row,
     onUpdate
 }) => {
@@ -48,6 +50,7 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
 
                     if (canDrag) {
                         if (hoveredColumnForResizing < 0) {
+                            e.stopPropagation();
                             setHoveredColumnForResizing(colIndex);
                         }
                     } else {
@@ -116,6 +119,7 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
             {
                 row.columns.map((col, colIndex) => (
                     <EditableColumn
+                        path={[...path, colIndex]}
                         key={`col-${colIndex}`}
                         column={col}
                         resizing={resizing}

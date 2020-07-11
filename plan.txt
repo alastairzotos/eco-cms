@@ -61,7 +61,7 @@ Sprint 7:
     - [DONE] Store pages as rows, columns and components
     - [DONE] Edit grid
     - [DONE] Add components to columns
-    - Move components between columns
+    - Move components around
 
 Sprint 8:
     - Delete/move files

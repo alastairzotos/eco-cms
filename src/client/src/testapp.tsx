@@ -70,6 +70,18 @@ export const myModule: IModule = {
     ],
 
     components: {
-        MyComponent: () => <h1>Welcome</h1>
+        MyComponent1: () => (
+            <div style={{ border: '1px solid black', padding: 10 }}>
+                <h3>A component</h3>
+                <p>Testing comp</p>
+            </div>
+        ),
+        MyComponent2: () => (
+            <div style={{ border: '1px solid green', padding: 10 }}>
+                <h3>Another component</h3>
+                <p>Testing comp 2</p>
+                <p>Test <a href="#">link</a></p>
+            </div>
+        )
     }
 };

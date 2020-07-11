@@ -2,11 +2,14 @@ import { IPageColumn } from '@common';
 import { Grid, makeStyles } from '@material-ui/core';
 import cx from 'clsx';
 import * as React from 'react';
+import { Droppable } from 'react-beautiful-dnd';
 import { renderComponent } from '~/modules/pages/utils';
 
 import { AddComponentButton } from './AddComponentButton';
+import { ComponentWrapper } from './ComponentWrapper';
 
 export interface IEditableColumnProps {
+    path: number[];
     column: IPageColumn;
     highlight: boolean;
     resizing: boolean;
@@ -23,15 +26,17 @@ const useStyles = makeStyles(theme => ({
     addCompContainer: {
         display: 'flex',
         justifyContent: 'center'
-        // display: 'flex',
-        // flex: 1,
-        // height: '100%',
-        // flexDirection: 'column',
-        // alignItems: 'flex-end'
+    },
+    droppable: {
+        height: '100%'
+    },
+    droppableHover: {
+        backgroundColor: theme.palette.action.focus
     }
 }));
 
 export const EditableColumn: React.FC<IEditableColumnProps> = ({
+    path,
     column,
     highlight,
     resizing,
@@ -56,32 +61,48 @@ export const EditableColumn: React.FC<IEditableColumnProps> = ({
     };
 
     return (
-        <>
-            <Grid
-                item
-                lg={column.span}
-                className={cx(classes.root, {
-                    [classes.highlight]: highlight
-                })}
+        <Droppable droppableId={path.join('-')}>
+            {
+                (provided, snapshot) => (
+                    <Grid
+                        ref={provided.innerRef}
+                        item
+                        lg={column.span}
+                        className={cx(classes.root, {
+                            [classes.highlight]: highlight,
+                            [classes.droppableHover]: snapshot.isDraggingOver
+                        })}
 
-                onMouseEnter={() => setHovering(true)}
-                onMouseLeave={() => setHovering(false)}
-            >
-                <div>
-                {
-                   column.children.map(child => renderComponent(child))
-                }
-                </div>
+                        onMouseEnter={() => setHovering(true)}
+                        onMouseLeave={() => setHovering(false)}
 
-                {hovering && !resizing && (
-                    <div className={classes.addCompContainer}>
-                        <AddComponentButton
-                            column={column}
-                            onAddComponent={handleAddComponent}
-                        />
-                    </div>
-                )}
-            </Grid>
-        </>
+                        {...provided.droppableProps}
+                    >
+                        {
+                            column.children
+                                .map(child => renderComponent(child))
+                                .map((comp, i) => (
+                                    <ComponentWrapper
+                                        key={i}
+                                        index={i}
+                                        path={[...path, i]}
+                                    >
+                                        {comp}
+                                    </ComponentWrapper>
+                                ))
+                        }
+
+                        {hovering && !resizing && (
+                            <div className={classes.addCompContainer}>
+                                <AddComponentButton
+                                    column={column}
+                                    onAddComponent={handleAddComponent}
+                                />
+                            </div>
+                        )}
+                    </Grid>
+                )
+            }
+        </Droppable>
     );
 };
