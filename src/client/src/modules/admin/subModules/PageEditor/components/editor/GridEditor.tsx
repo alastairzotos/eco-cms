@@ -13,9 +13,6 @@ import { AddRowButton } from './AddRowButton';
 import { EditableRow } from './EditableRow';
 
 const useStyles = makeStyles(theme => ({
-    root: {
-        boxShadow: `0px 0px 5px 0px ${theme.palette.action.selected}`
-    },
     rowActions: {
         display: 'flex',
         justifyContent: 'center',
@@ -30,8 +27,6 @@ export const GridEditor: React.FC = () => {
 
     // const content = selectedPage.staging[variation];
     const [content, setContent] = React.useState(selectedPage.staging[variation]);
-
-    const [hovered, setHovered] = React.useState(false);
 
     const handleAddRow = (spans: ColumnSpan[]) => {
         setContent({
@@ -60,11 +55,7 @@ export const GridEditor: React.FC = () => {
     };
 
     return (
-        <div
-            className={cx({ [classes.root]: hovered })}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
-        >
+        <>
             {
                 content.rows.map((row, rowIndex) => (
                     <EditableRow
@@ -75,13 +66,11 @@ export const GridEditor: React.FC = () => {
                 ))
             }
 
-            {hovered && (
-                <div className={classes.rowActions}>
-                    <AddRowButton
-                        onAddRow={handleAddRow}
-                    />
-                </div>
-            )}
-        </div>
+            <div className={classes.rowActions}>
+                <AddRowButton
+                    onAddRow={handleAddRow}
+                />
+            </div>
+        </>
     );
 };

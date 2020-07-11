@@ -1,4 +1,4 @@
-import { ColumnSpan, IPageRow } from '@common';
+import { ColumnSpan, IPageColumn, IPageRow } from '@common';
 import { Grid, makeStyles } from '@material-ui/core';
 import cx from 'clsx';
 import * as React from 'react';
@@ -32,6 +32,8 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
     const [resizing, setResizing] = React.useState(false);
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+        e.preventDefault();
+
         const boundingRect = ref.current.getBoundingClientRect();
         const offsetX = e.clientX - boundingRect.x;
 
@@ -85,6 +87,17 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
         }
     };
 
+    const handleUpdateColumn = (column: IPageColumn, colIndex: number) => {
+        onUpdate({
+            ...row,
+            columns: row.columns.map((col, index) => (
+                index === colIndex
+                ? column
+                : col
+            ))
+        });
+    };
+
     return (
         <Grid
             container
@@ -105,7 +118,9 @@ export const EditableRow: React.FC<IEditableRowProps> = ({
                     <EditableColumn
                         key={`col-${colIndex}`}
                         column={col}
+                        resizing={resizing}
                         highlight={hovered && colIndex > 0 || resizing}
+                        onUpdate={column => handleUpdateColumn(column, colIndex)}
                     />
                 ))
             }

@@ -11,7 +11,7 @@ const useStyles = makeStyles(() => ({
     root: {
         position: 'fixed',
         top: 'auto',
-        marginTop: -20
+        marginTop: 20
     }
 }));
 
@@ -46,10 +46,11 @@ export const AddRowButton: React.FC<IAddRowButtonProps> = ({ onAddRow }) => {
             <Fab
                 size="small"
                 color="primary"
+                variant="extended"
                 className={classes.root}
                 onClick={handleClick}
             >
-                <Plus fontSize={'small'} />
+                Add row <Plus fontSize={'small'} />
             </Fab>
 
             <Menu

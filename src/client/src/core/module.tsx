@@ -6,13 +6,16 @@ import { combineEpics, Epic } from 'redux-observable';
 import { IAdminApp } from './adminApp';
 import { IPages } from './pages';
 
+type IComponents = Dictionary<React.FC>;
+type IModuleComponents = Dictionary<IComponents>;
+
 export interface IModule {
     name: string;
     epic?: Epic;
     reducer?: Reducer;
     pages?: IPages;
     adminPages?: IAdminApp[];
-    components?: Dictionary<React.FC>;
+    components?: IComponents;
 }
 
 export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
@@ -71,6 +74,25 @@ class ModuleManager {
             [],
             this.modules.map(mod => mod.adminPages)
         ).filter(app => !!app)
+
+    getModuleComponents = (): IModuleComponents => {
+        const components: IModuleComponents = {};
+
+        this.modules.forEach(mod => {
+            const keys = mod.components ? Object.keys(mod.components) : [];
+            if (keys.length > 0) {
+                components[mod.name] = components[mod.name] || {};
+
+                keys.forEach(key => {
+                    if (typeof mod.components[key] === 'function') {
+                        components[mod.name][key] = mod.components[key];
+                    }
+                });
+            }
+        });
+
+        return components;
+    }
 }
 
 export const moduleManager = new ModuleManager();
