@@ -139,7 +139,7 @@ export const GridEditor: React.FC = () => {
         }, rowIndex);
     };
 
-    const updateGrid = (
+    const handleGridUpdate = (
         srcRow: number,
         destRow: number,
         srcCol: number,
@@ -263,14 +263,7 @@ export const GridEditor: React.FC = () => {
                 moveBetweenColumns(srcRow, srcCol, destCol, srcIndex, destIndex);
             }
         } else {
-            updateGrid(
-                srcRow,
-                destRow,
-                srcCol,
-                destCol,
-                srcIndex,
-                destIndex
-            );
+            handleGridUpdate(srcRow, destRow, srcCol, destCol, srcIndex, destIndex);
         }
     };
 
