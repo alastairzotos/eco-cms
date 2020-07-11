@@ -1,6 +1,5 @@
-import { ColumnSpan, IPageColumn, IPageRow } from '@common';
+import { ColumnSpan, IPageColumn, IPageContent, IPageRow } from '@common';
 import { makeStyles } from '@material-ui/core';
-import cx from 'clsx';
 import * as React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useSelector } from 'react-redux';
@@ -11,14 +10,84 @@ import {
 } from '../../selectors';
 
 import { AddRowButton } from './AddRowButton';
+import { ComponentTrash } from './ComponentTrash';
 import { EditableRow } from './EditableRow';
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
+    },
     rowActions: {
         display: 'flex',
         justifyContent: 'center',
     }
 }));
+
+const getUpdatedColumns = (
+    content: IPageContent,
+    srcRow: number,
+    destRow: number,
+    srcCol: number,
+    destCol: number,
+    srcIndex: number,
+    destIndex: number
+) => {
+    const col1 = content.rows[srcRow].columns[srcCol];
+    const col2 = content.rows[destRow].columns[destCol];
+
+    const col1Children = [...col1.children];
+    const col2Children = [...col2.children];
+
+    const [removed] = col1Children.splice(srcIndex, 1);
+    col2Children.splice(destIndex, 0, removed);
+
+    return [
+        { ...col1, children: col1Children },
+        { ...col2, children: col2Children }
+    ];
+};
+
+const getUpdatedRows = (
+    content: IPageContent,
+    srcRow: number,
+    destRow: number,
+    srcCol: number,
+    destCol: number,
+    srcIndex: number,
+    destIndex: number
+) => {
+    const row1 = content.rows[srcRow];
+    const row2 = content.rows[destRow];
+
+    const [updatedCol1, updatedCol2] = getUpdatedColumns(
+        content,
+        srcRow,
+        destRow,
+        srcCol,
+        destCol,
+        srcIndex,
+        destIndex
+    );
+
+    const row1Columns = row1.columns.map((col, index) =>
+        index === srcCol
+            ? updatedCol1
+            : col
+    );
+
+    const row2Columns = row2.columns.map((col, index) =>
+        index === destCol
+            ? updatedCol2
+            : col
+    );
+
+    return [
+        { ...row1, columns: row1Columns },
+        { ...row2, columns: row2Columns }
+    ];
+};
 
 export const GridEditor: React.FC = () => {
     const classes = useStyles();
@@ -28,6 +97,8 @@ export const GridEditor: React.FC = () => {
 
     // const content = selectedPage.staging[variation];
     const [content, setContent] = React.useState(selectedPage.staging[variation]);
+
+    const [dragging, setDragging] = React.useState(false);
 
     const handleAddRow = (spans: ColumnSpan[]) => {
         setContent({
@@ -68,67 +139,6 @@ export const GridEditor: React.FC = () => {
         }, rowIndex);
     };
 
-    const getUpdatedColumns = (
-        srcRow: number,
-        destRow: number,
-        srcCol: number,
-        destCol: number,
-        srcIndex: number,
-        destIndex: number
-    ) => {
-        const col1 = content.rows[srcRow].columns[srcCol];
-        const col2 = content.rows[destRow].columns[destCol];
-
-        const col1Children = [...col1.children];
-        const col2Children = [...col2.children];
-
-        const [removed] = col1Children.splice(srcIndex, 1);
-        col2Children.splice(destIndex, 0, removed);
-
-        return [
-            { ...col1, children: col1Children },
-            { ...col2, children: col2Children }
-        ];
-    };
-
-    const getUpdatedRows = (
-        srcRow: number,
-        destRow: number,
-        srcCol: number,
-        destCol: number,
-        srcIndex: number,
-        destIndex: number
-    ) => {
-        const row1 = content.rows[srcRow];
-        const row2 = content.rows[destRow];
-
-        const [updatedCol1, updatedCol2] = getUpdatedColumns(
-            srcRow,
-            destRow,
-            srcCol,
-            destCol,
-            srcIndex,
-            destIndex
-        );
-
-        const row1Columns = row1.columns.map((col, index) =>
-            index === srcCol
-                ? updatedCol1
-                : col
-        );
-
-        const row2Columns = row2.columns.map((col, index) =>
-            index === destCol
-                ? updatedCol2
-                : col
-        );
-
-        return [
-            { ...row1, columns: row1Columns },
-            { ...row2, columns: row2Columns }
-        ];
-    };
-
     const updateGrid = (
         srcRow: number,
         destRow: number,
@@ -138,6 +148,7 @@ export const GridEditor: React.FC = () => {
         destIndex: number
     ) => {
         const [updatedRow1, updatedRow2] = getUpdatedRows(
+            content,
             srcRow,
             destRow,
             srcCol,
@@ -208,7 +219,26 @@ export const GridEditor: React.FC = () => {
         }, rowIndex);
     };
 
+    const deleteComponent = (srcRow: number, srcCol: number, srcIndex: number) => {
+        setContent({
+            ...content,
+            rows: content.rows.map((row, rowIndex) => ({
+                ...row,
+                columns: row.columns.map((col, colIndex) => ({
+                    ...col,
+                    children: col.children.map((child, childIndex) =>
+                        rowIndex === srcRow && colIndex === srcCol && childIndex === srcIndex
+                        ? null
+                        : child
+                    ).filter(c => !!c)
+                }))
+            }))
+        });
+    };
+
     const onDragEnd = (result: DropResult) => {
+        setDragging(false);
+
         const { source, destination } = result;
 
         if (!destination) {
@@ -217,6 +247,11 @@ export const GridEditor: React.FC = () => {
 
         const [srcRow, srcCol] = source.droppableId.split('-').map(i => parseInt(i, 10));
         const srcIndex = source.index;
+
+        if (destination.droppableId === 'trash') {
+            deleteComponent(srcRow, srcCol, srcIndex);
+            return;
+        }
 
         const [destRow, destCol] = destination.droppableId.split('-').map(i => parseInt(i, 10));
         const destIndex = destination.index;
@@ -240,8 +275,11 @@ export const GridEditor: React.FC = () => {
     };
 
     return (
-        <>
-            <DragDropContext onDragEnd={onDragEnd}>
+        <div className={classes.root}>
+            <DragDropContext
+                onDragStart={() => setDragging(true)}
+                onDragEnd={onDragEnd}
+            >
                 {
                     content.rows.map((row, rowIndex) => (
                         <EditableRow
@@ -252,13 +290,18 @@ export const GridEditor: React.FC = () => {
                         />
                     ))
                 }
-            </DragDropContext>
+                <div className={classes.rowActions}>
+                    <AddRowButton
+                        onAddRow={handleAddRow}
+                    />
+                </div>
 
-            <div className={classes.rowActions}>
-                <AddRowButton
-                    onAddRow={handleAddRow}
+                <ComponentTrash
+                    droppableId="trash"
+                    dragging={dragging}
                 />
-            </div>
-        </>
+
+            </DragDropContext>
+        </div>
     );
 };
