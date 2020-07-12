@@ -28,7 +28,7 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         return <p>there was an unexpected error</p>;
     }
 
-    if (fetchPageStatus === 'fetching' || !page) {
+    if (!fetchPageStatus || fetchPageStatus === 'fetching' || !page) {
         return <LinearProgress />;
     }
 
