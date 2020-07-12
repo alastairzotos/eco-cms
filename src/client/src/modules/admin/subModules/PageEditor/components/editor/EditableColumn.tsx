@@ -19,6 +19,7 @@ export interface IEditableColumnProps {
 const useStyles = makeStyles(theme => ({
     root: {
         minHeight: 40,
+        position: 'relative'
     },
     highlight: {
         boxShadow: `-5px 0px 0px 0px ${theme.palette.action.selected}`
@@ -32,6 +33,15 @@ const useStyles = makeStyles(theme => ({
     },
     droppableHover: {
         backgroundColor: theme.palette.action.focus
+    },
+    gutter: {
+        position: 'absolute',
+        top: 0,
+        right: 0,
+        width: 5,
+        marginLeft: 5,
+        height: '100%',
+        zIndex: 1000
     }
 }));
 
@@ -100,6 +110,11 @@ export const EditableColumn: React.FC<IEditableColumnProps> = ({
                                 />
                             </div>
                         )}
+
+                        <div
+                            className={classes.gutter}
+                            onMouseEnter={e => e.stopPropagation()}
+                        />
                     </Grid>
                 )
             }

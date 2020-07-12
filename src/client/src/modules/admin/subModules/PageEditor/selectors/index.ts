@@ -47,3 +47,8 @@ export const getDeletePageStatus = createSelector(
     getState,
     state => state.deletePageStatus
 );
+
+export const getSelectedComponent = createSelector(
+    getState,
+    state => state.selectedComponent
+);

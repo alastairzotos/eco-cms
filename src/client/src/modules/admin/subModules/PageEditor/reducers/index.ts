@@ -1,4 +1,4 @@
-import { IPage } from '@common';
+import { IPage, IPageContent } from '@common';
 import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { ICallStatus } from '~/core';
 
@@ -15,6 +15,7 @@ export interface IAdminPagesState {
     currentError: string | null;
     selectedVariation: number;
     dirty: boolean;
+    selectedComponent: number[] | null;
 }
 
 const INITIAL_STATE: IAdminPagesState = {
@@ -26,7 +27,8 @@ const INITIAL_STATE: IAdminPagesState = {
     selectedPageId: null,
     currentError: null,
     selectedVariation: 0,
-    dirty: false
+    dirty: false,
+    selectedComponent: null
 };
 
 const updatePages = (pages: IPageInfo[], page: IPageInfo): IPageInfo[] => {
@@ -83,6 +85,21 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
         pages: updatePages(state.pages, action.payload),
         dirty: true
     }),
+    [IAdminPagesActionType.SetSelectedPageContent]: (state, action: PayloadAction<IPageContent>) => {
+        const selectedPage = state.pages.find(page => page._id === state.selectedPageId);
+
+        return {
+            ...state,
+            pages: updatePages(state.pages, {
+                ...selectedPage,
+                staging: selectedPage.staging.map((staging, index) =>
+                    index === state.selectedVariation
+                    ? action.payload
+                    : staging
+                )
+            })
+        };
+    },
 
     [IAdminPagesActionType.BeginSavePage]: state => ({
         ...state,
@@ -149,5 +166,14 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
     [IAdminPagesActionType.SetDeletePageError]: state => ({
         ...state,
         deletePageStatus: 'error'
+    }),
+
+    [IAdminPagesActionType.SelectComponent]: (state, action: PayloadAction<number[]>) => ({
+        ...state,
+        selectedComponent: action.payload
+    }),
+    [IAdminPagesActionType.DeselectComponent]: state => ({
+        ...state,
+        selectedComponent: null
     })
 });

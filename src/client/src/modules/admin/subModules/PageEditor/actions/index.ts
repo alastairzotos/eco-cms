@@ -1,4 +1,4 @@
-import { IPage } from '@common';
+import { IPage, IPageContent } from '@common';
 import { createAction } from '~/core';
 
 import { IPageInfo } from '../models';
@@ -14,6 +14,7 @@ export enum IAdminPagesActionType {
 
     SelectCurrentPage = 'admin/pages/SELECT_CURRENT_PAGE',
     SetPageData = 'admin/pages/SET_PAGE_DATA',
+    SetSelectedPageContent = 'admin/pages/SET_SELECTED_PAGE_CONTENT',
 
     BeginSavePage = 'admin/pages/BEGIN_SAVE_PAGE',
     SetPageSaved = 'admin/pages/SET_PAGE_SAVED',
@@ -25,7 +26,10 @@ export enum IAdminPagesActionType {
 
     BeginDeletePage = 'admin/pages/BEGIN_DELETE_PAGE',
     SetPageDeleted = 'admin/pages/SET_PAGE_DELETED',
-    SetDeletePageError = 'admin/pages/SET_DELETE_PAGE_ERROR'
+    SetDeletePageError = 'admin/pages/SET_DELETE_PAGE_ERROR',
+
+    SelectComponent = 'admin/pages/SELECT_COMPONENT',
+    DeselectComponent = 'admin/pages/DESELECT_COMPONENT'
 }
 
 export const beginAddPage = (page: IPage) =>
@@ -51,6 +55,9 @@ export const selectCurrentPage = (id: string) =>
 
 export const setPageData = (data: IPageInfo) =>
     createAction(IAdminPagesActionType.SetPageData, data);
+
+export const setSelectedPageContent = (content: IPageContent) =>
+    createAction(IAdminPagesActionType.SetSelectedPageContent, content);
 
 export const beginSavePage = (data: IPageInfo) =>
     createAction(IAdminPagesActionType.BeginSavePage, data);
@@ -78,3 +85,9 @@ export const setPageDeleted = (page: IPage) =>
 
 export const setDeletePageError = () =>
     createAction(IAdminPagesActionType.SetDeletePageError);
+
+export const selectComponent = (path: number[]) =>
+    createAction(IAdminPagesActionType.SelectComponent, path);
+
+export const deselectComponent = () =>
+    createAction(IAdminPagesActionType.DeselectComponent);

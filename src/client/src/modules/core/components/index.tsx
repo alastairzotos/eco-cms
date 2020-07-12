@@ -15,12 +15,16 @@ interface TypographyProps {
 
 export const components: IComponents = {
     Typography: createComponent<TypographyProps>(
-        ({ variant, content }) => (
+        ({ variant = 'inherit', content = 'Text' }) => (
             <Mui.Typography variant={variant}>{content}</Mui.Typography>
         ),
         {
-            variant: 'inherit',
-            content: 'Text'
+            type: 'object',
+            properties: {
+                content: {
+                    type: 'string'
+                }
+            }
         }
     )
 };

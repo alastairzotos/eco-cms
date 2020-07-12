@@ -8,7 +8,7 @@ const useStyles = makeStyles(() => ({
         display: 'flex',
         justifyContent: 'center',
         marginTop: 'auto',
-        marginBottom: 30
+        marginBottom: 100
     }
 }));
 

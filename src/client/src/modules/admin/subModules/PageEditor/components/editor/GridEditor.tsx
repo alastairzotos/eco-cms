@@ -1,10 +1,10 @@
-import { ColumnSpan, IPageColumn, IPageContent, IPageRow } from '@common';
-import { makeStyles } from '@material-ui/core';
+import { ColumnSpan, IPageComponent, IPageContent, IPageRow } from '@common';
+import { Container, makeStyles, Paper } from '@material-ui/core';
 import * as React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { setPageData } from '../../actions';
+import { setSelectedPageContent } from '../../actions';
 import {
     getSelectedPage,
     getSelectedVariation
@@ -26,69 +26,57 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-const getUpdatedColumns = (
+const getComponentByPath = (
     content: IPageContent,
-    srcRow: number,
-    destRow: number,
-    srcCol: number,
-    destCol: number,
-    srcIndex: number,
-    destIndex: number
-) => {
-    const col1 = content.rows[srcRow].columns[srcCol];
-    const col2 = content.rows[destRow].columns[destCol];
+    path: number[]
+): IPageComponent =>
+    content
+        .rows[path[0]]
+        .columns[path[1]]
+        .children[path[2]];
 
-    const col1Children = [...col1.children];
-    const col2Children = [...col2.children];
-
-    const [removed] = col1Children.splice(srcIndex, 1);
-    col2Children.splice(destIndex, 0, removed);
-
-    return [
-        { ...col1, children: col1Children },
-        { ...col2, children: col2Children }
-    ];
-};
-
-const getUpdatedRows = (
+const removeFromContent = (
     content: IPageContent,
-    srcRow: number,
-    destRow: number,
-    srcCol: number,
-    destCol: number,
-    srcIndex: number,
-    destIndex: number
-) => {
-    const row1 = content.rows[srcRow];
-    const row2 = content.rows[destRow];
+    path: number[]
+): IPageContent => ({
+    ...content,
+    rows: content.rows.map((row, rowIndex) => ({
+        ...row,
+        columns: row.columns.map((column, columnIndex) => ({
+            ...column,
+            children: column.children.map((child, childIndex) => (
+                rowIndex === path[0]
+                    && columnIndex === path[1]
+                    && childIndex === path[2]
+                    ? null
+                    : child
+            )).filter(child => !!child)
+        }))
+    }))
+});
 
-    const [updatedCol1, updatedCol2] = getUpdatedColumns(
-        content,
-        srcRow,
-        destRow,
-        srcCol,
-        destCol,
-        srcIndex,
-        destIndex
-    );
-
-    const row1Columns = row1.columns.map((col, index) =>
-        index === srcCol
-            ? updatedCol1
-            : col
-    );
-
-    const row2Columns = row2.columns.map((col, index) =>
-        index === destCol
-            ? updatedCol2
-            : col
-    );
-
-    return [
-        { ...row1, columns: row1Columns },
-        { ...row2, columns: row2Columns }
-    ];
-};
+const addToContent = (
+    content: IPageContent,
+    path: number[],
+    component: IPageComponent
+): IPageContent => ({
+    ...content,
+    rows: content.rows.map((row, rowIndex) => ({
+        ...row,
+        columns: row.columns.map((column, columnIndex) => ({
+            ...column,
+            children: (
+                rowIndex === path[0] && columnIndex === path[1]
+                    ? [
+                        ...column.children.splice(0, path[2]),
+                        component,
+                        ...column.children.splice(path[2])
+                    ]
+                    : column.children
+            )
+        }))
+    }))
+});
 
 export const GridEditor: React.FC = () => {
     const classes = useStyles();
@@ -101,16 +89,8 @@ export const GridEditor: React.FC = () => {
 
     const [dragging, setDragging] = React.useState(false);
 
-    const setContent = (pageContent: IPageContent) => {
-        dispatch(setPageData({
-            ...selectedPage,
-            staging: selectedPage.staging.map((staging, index) =>
-                index === variation
-                ? pageContent
-                : staging
-            )
-        }));
-    };
+    const setContent = (pageContent: IPageContent) =>
+        dispatch(setSelectedPageContent(pageContent));
 
     const handleAddRow = (spans: ColumnSpan[]) => {
         setContent({
@@ -138,175 +118,69 @@ export const GridEditor: React.FC = () => {
         });
     };
 
-    const handleColumnUpdate = (newColumn: IPageColumn, rowIndex: number, colIndex: number) => {
-        const row = content.rows[rowIndex];
-
-        handleRowUpdate({
-            ...row,
-            columns: row.columns.map((col, index) =>
-                colIndex === index
-                    ? newColumn
-                    : col
-            )
-        }, rowIndex);
-    };
-
-    const handleGridUpdate = (
-        srcRow: number,
-        destRow: number,
-        srcCol: number,
-        destCol: number,
-        srcIndex: number,
-        destIndex: number
-    ) => {
-        const [updatedRow1, updatedRow2] = getUpdatedRows(
-            content,
-            srcRow,
-            destRow,
-            srcCol,
-            destCol,
-            srcIndex,
-            destIndex
-        );
-
-        setContent({
-            ...content,
-            rows: content.rows.map((row, index) =>
-                index === srcRow
-                    ? updatedRow1
-                    : index === destRow
-                        ? updatedRow2
-                        : row
-            )
-        });
-    };
-
-    const reorderColumn = (
-        rowIndex: number,
-        colIndex: number,
-        startIndex: number,
-        endIndex: number
-    ) => {
-        const col = content.rows[rowIndex].columns[colIndex];
-        const children = [...col.children];
-
-        const [removed] = children.splice(startIndex, 1);
-        children.splice(endIndex, 0, removed);
-
-        handleColumnUpdate(
-            { ...col, children },
-            rowIndex,
-            colIndex
-        );
-    };
-
-    const moveBetweenColumns = (
-        rowIndex: number,
-        startCol: number,
-        endCol: number,
-        startIndex: number,
-        endIndex: number
-    ) => {
-        handleRowUpdate({
-            ...content.rows[rowIndex],
-            columns: content.rows[rowIndex].columns.map((col, colIndex) =>
-                colIndex === startCol
-                    ? {
-                        ...col,
-                        children: col.children.filter((_, childIndex) => childIndex !== startIndex)
-                    }
-                    : (
-                        colIndex === endCol
-                            ? {
-                                ...col,
-                                children: [
-                                    ...col.children.slice(0, endIndex),
-                                    content.rows[rowIndex].columns[startCol].children[startIndex],
-                                    ...col.children.slice(endIndex)
-                                ]
-                            }
-                            : col
-                    )
-            )
-        }, rowIndex);
-    };
-
-    const deleteComponent = (srcRow: number, srcCol: number, srcIndex: number) => {
-        setContent({
-            ...content,
-            rows: content.rows.map((row, rowIndex) => ({
-                ...row,
-                columns: row.columns.map((col, colIndex) => ({
-                    ...col,
-                    children: col.children.map((child, childIndex) =>
-                        rowIndex === srcRow && colIndex === srcCol && childIndex === srcIndex
-                        ? null
-                        : child
-                    ).filter(c => !!c)
-                }))
-            }))
-        });
-    };
-
     const onDragEnd = (result: DropResult) => {
         setDragging(false);
 
-        const { source, destination } = result;
-
-        if (!destination) {
+        if (!result.destination) {
             return;
         }
 
-        const [srcRow, srcCol] = source.droppableId.split('-').map(i => parseInt(i, 10));
-        const srcIndex = source.index;
+        const sourcePath = [
+            ...result.source.droppableId.split('-').map(i => parseInt(i, 10)),
+            result.source.index
+        ];
 
-        if (destination.droppableId === 'trash') {
-            deleteComponent(srcRow, srcCol, srcIndex);
+        const destPath = [
+            ...result.destination.droppableId.split('-').map(i => parseInt(i, 10)),
+            result.destination.index
+        ];
+
+        if (result.destination.droppableId === 'trash') {
+            setContent(removeFromContent(content, sourcePath));
             return;
         }
 
-        const [destRow, destCol] = destination.droppableId.split('-').map(i => parseInt(i, 10));
-        const destIndex = destination.index;
-
-        if (srcRow === destRow) {
-            if (srcCol === destCol) {
-                reorderColumn(srcRow, srcCol, srcIndex, destIndex);
-            } else {
-                moveBetweenColumns(srcRow, srcCol, destCol, srcIndex, destIndex);
-            }
-        } else {
-            handleGridUpdate(srcRow, destRow, srcCol, destCol, srcIndex, destIndex);
-        }
+        setContent(
+            addToContent(
+                removeFromContent(content, sourcePath),
+                destPath,
+                getComponentByPath(content, sourcePath)
+            )
+        );
     };
 
     return (
-        <div className={classes.root}>
-            <DragDropContext
-                onDragStart={() => setDragging(true)}
-                onDragEnd={onDragEnd}
-            >
-                {
-                    content.rows.map((row, rowIndex) => (
-                        <EditableRow
-                            path={[rowIndex]}
-                            key={`row-${rowIndex}`}
-                            row={row}
-                            onUpdate={newRow => handleRowUpdate(newRow, rowIndex)}
+        <Container maxWidth="xl">
+            <Paper>
+                <div className={classes.root}>
+                    <DragDropContext
+                        onDragStart={() => setDragging(true)}
+                        onDragEnd={onDragEnd}
+                    >
+                        {
+                            content.rows.map((row, rowIndex) => (
+                                <EditableRow
+                                    path={[rowIndex]}
+                                    key={`row-${rowIndex}`}
+                                    row={row}
+                                    onUpdate={newRow => handleRowUpdate(newRow, rowIndex)}
+                                />
+                            ))
+                        }
+                        <div className={classes.rowActions}>
+                            <AddRowButton
+                                onAddRow={handleAddRow}
+                            />
+                        </div>
+
+                        <ComponentTrash
+                            droppableId="trash"
+                            dragging={dragging}
                         />
-                    ))
-                }
-                <div className={classes.rowActions}>
-                    <AddRowButton
-                        onAddRow={handleAddRow}
-                    />
+
+                    </DragDropContext>
                 </div>
-
-                <ComponentTrash
-                    droppableId="trash"
-                    dragging={dragging}
-                />
-
-            </DragDropContext>
-        </div>
+            </Paper>
+        </Container>
     );
 };

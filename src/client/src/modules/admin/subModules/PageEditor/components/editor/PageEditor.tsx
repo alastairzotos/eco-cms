@@ -27,9 +27,15 @@ import {
 import { isValidUrl } from '../../utils';
 import { VariationSelector } from '../VariationSelector';
 
+import { ComponentEditor } from './ComponentEditor';
 import { GridEditor } from './GridEditor';
 
 const useStyles = makeStyles(theme => ({
+    root: {
+        backgroundColor: theme.palette.background.default,
+        width: '100%',
+        height: '100%'
+    },
     descTextField: {
         width: 500
     },
@@ -162,7 +168,11 @@ export const PageEditor: React.FC = () => {
                 ]}
             />
 
-            <GridEditor />
+            <div className={classes.root}>
+                <GridEditor />
+            </div>
+
+            <ComponentEditor />
 
             <Confirm
                 title="Save before publishing"

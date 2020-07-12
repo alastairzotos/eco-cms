@@ -1,7 +1,9 @@
 import { makeStyles } from '@material-ui/core';
-import cx from 'clsx';
 import * as React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import { useDispatch } from 'react-redux';
+
+import { selectComponent } from '../../actions';
 
 export interface IComponentWrapperProps {
     path: number[];
@@ -27,6 +29,7 @@ export const ComponentWrapper: React.FC<IComponentWrapperProps> = ({
     children
 }) => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     return (
         <Draggable draggableId={path.join('-')} index={index}>
@@ -37,13 +40,13 @@ export const ComponentWrapper: React.FC<IComponentWrapperProps> = ({
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
-                    style={{ margin: 10, ...provided.draggableProps.style }}
                 >
-                    <div style={{ margin: -10 }}>
-                        {children}
-                    </div>
+                    {children}
 
-                    <div className={classes.overlay} />
+                    <div
+                        className={classes.overlay}
+                        onClick={() => dispatch(selectComponent(path))}
+                    />
                 </div>
             )
         }

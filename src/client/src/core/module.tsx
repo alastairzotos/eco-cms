@@ -3,10 +3,10 @@ import { combineReducers, Reducer } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 
 import { IAdminApp } from './adminApp';
-import { IComponentType } from './createComponent';
+import { IComponentInfo } from './createComponent';
 import { IPages } from './pages';
 
-export type IComponents = Dictionary<IComponentType>;
+export type IComponents = Dictionary<IComponentInfo>;
 type IModuleComponents = Dictionary<IComponents>;
 
 export interface IModule {
