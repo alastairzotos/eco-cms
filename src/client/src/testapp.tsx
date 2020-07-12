@@ -6,34 +6,7 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { fetch$, IModule } from './core';
-
-const compDefaults = {
-    title: 'This is the title',
-    text: 'This is the text',
-    name: {
-        first: 'joe',
-        last: 'bloggs'
-    }
-};
-
-function createComponent<T>(defaults: T, comp: React.FC<T>): React.FC<T> {
-    return props => {
-        props = { ...defaults, ...props };
-
-        return comp(props);
-    };
-}
-
-const MyComponent = createComponent(compDefaults, ({ title, text, name: { first: firstName, last: lastName } }) => (
-    <>
-        <h1>{text}</h1>
-        <p>{title}</p>
-        <span>{firstName}</span>
-        <span>{lastName}</span>
-    </>
-));
-
-const t = <MyComponent text="" title="" name={{ first: 'alastair', last: 'zotos' }} />;
+import { createComponent } from './core/createComponent';
 
 interface ITestState {
     count: number;
@@ -98,18 +71,18 @@ export const myModule: IModule = {
     ],
 
     components: {
-        MyComponent1: () => (
+        MyComponent1: createComponent(() => (
             <div style={{ border: '1px solid black', padding: 10 }}>
                 <h3>A component</h3>
                 <p>Testing comp</p>
             </div>
-        ),
-        MyComponent2: () => (
+        )),
+        MyComponent2: createComponent(() => (
             <div style={{ border: '1px solid green', padding: 10 }}>
                 <h3>Another component</h3>
                 <p>Testing comp 2</p>
                 <p>Test <a href="#">link</a></p>
             </div>
-        )
+        ))
     }
 };

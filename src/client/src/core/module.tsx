@@ -1,12 +1,12 @@
 import { Dictionary } from 'lodash';
-import * as React from 'react';
 import { combineReducers, Reducer } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 
 import { IAdminApp } from './adminApp';
+import { IComponentType } from './createComponent';
 import { IPages } from './pages';
 
-type IComponents = Dictionary<React.FC>;
+export type IComponents = Dictionary<IComponentType>;
 type IModuleComponents = Dictionary<IComponents>;
 
 export interface IModule {
@@ -84,9 +84,7 @@ class ModuleManager {
                 components[mod.name] = components[mod.name] || {};
 
                 keys.forEach(key => {
-                    if (typeof mod.components[key] === 'function') {
-                        components[mod.name][key] = mod.components[key];
-                    }
+                    components[mod.name][key] = mod.components[key];
                 });
             }
         });

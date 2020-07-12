@@ -1,10 +1,11 @@
 import { IPageComponent, IPageContent } from '@common*';
+import { Grid } from '@material-ui/core';
 import * as React from 'react';
 import { moduleManager } from '~/core';
-import { Column, Row } from '~/modules/core/components';
 
 export const renderComponent = (component: IPageComponent) => {
-    const Component = moduleManager.moduleMap[component.type[0]].components[component.type[1]];
+    const componentInfo = moduleManager.moduleMap[component.type[0]].components[component.type[1]];
+    const Component = componentInfo.component;
 
     const children = component.children
         ? component.children.map(renderComponent)
@@ -15,16 +16,16 @@ export const renderComponent = (component: IPageComponent) => {
 
 export const renderPage = (pageContent: IPageContent) => {
     return pageContent.rows.map((row, rowIndex) => (
-        <Row key={`row-${rowIndex}`}>
+        <Grid container key={`row-${rowIndex}`}>
         {
             row.columns.map((column, columnIndex) => (
-                <Column key={`col-${columnIndex}`} span={column.span}>
+                <Grid item key={`col-${columnIndex}`} lg={column.span}>
                 {
                     column.children.map(renderComponent)
                 }
-                </Column>
+                </Grid>
             ))
         }
-        </Row>
+        </Grid>
     ));
 };

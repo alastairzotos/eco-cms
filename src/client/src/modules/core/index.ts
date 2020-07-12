@@ -1,6 +1,6 @@
 import { IModule } from '~/core';
 
-import * as components from './components';
+import { components } from './components';
 
 export const coreModule: IModule = {
     name: 'core',
