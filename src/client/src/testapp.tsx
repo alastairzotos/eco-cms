@@ -7,6 +7,34 @@ import { switchMap } from 'rxjs/operators';
 
 import { fetch$, IModule } from './core';
 
+const compDefaults = {
+    title: 'This is the title',
+    text: 'This is the text',
+    name: {
+        first: 'joe',
+        last: 'bloggs'
+    }
+};
+
+function createComponent<T>(defaults: T, comp: React.FC<T>): React.FC<T> {
+    return props => {
+        props = { ...defaults, ...props };
+
+        return comp(props);
+    };
+}
+
+const MyComponent = createComponent(compDefaults, ({ title, text, name: { first: firstName, last: lastName } }) => (
+    <>
+        <h1>{text}</h1>
+        <p>{title}</p>
+        <span>{firstName}</span>
+        <span>{lastName}</span>
+    </>
+));
+
+const t = <MyComponent text="" title="" name={{ first: 'alastair', last: 'zotos' }} />;
+
 interface ITestState {
     count: number;
 }

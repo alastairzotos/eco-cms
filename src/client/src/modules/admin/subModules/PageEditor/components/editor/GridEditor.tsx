@@ -2,8 +2,9 @@ import { ColumnSpan, IPageColumn, IPageContent, IPageRow } from '@common';
 import { makeStyles } from '@material-ui/core';
 import * as React from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setPageData } from '../../actions';
 import {
     getSelectedPage,
     getSelectedVariation
@@ -91,14 +92,25 @@ const getUpdatedRows = (
 
 export const GridEditor: React.FC = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const selectedPage = useSelector(getSelectedPage);
     const variation = useSelector(getSelectedVariation);
 
-    // const content = selectedPage.staging[variation];
-    const [content, setContent] = React.useState(selectedPage.staging[variation]);
+    const content = selectedPage.staging[variation];
 
     const [dragging, setDragging] = React.useState(false);
+
+    const setContent = (pageContent: IPageContent) => {
+        dispatch(setPageData({
+            ...selectedPage,
+            staging: selectedPage.staging.map((staging, index) =>
+                index === variation
+                ? pageContent
+                : staging
+            )
+        }));
+    };
 
     const handleAddRow = (spans: ColumnSpan[]) => {
         setContent({
