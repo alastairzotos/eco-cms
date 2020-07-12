@@ -1,4 +1,4 @@
-import { Drawer, makeStyles } from '@material-ui/core';
+import { Drawer, makeStyles, Typography } from '@material-ui/core';
 import * as JSONSchemaForm from '@rjsf/material-ui';
 import cx from 'clsx';
 import * as React from 'react';
@@ -106,17 +106,18 @@ export const ComponentEditor: React.FC = () => {
                 })
             }}
         >
-        {
-            component && componentInfo.schema && (
-                <Form
-                    schema={componentInfo.schema}
-                    onChange={e => updateProperties(e.formData)}
-                    formData={component.props}
+            {component && <Typography variant="h6">{component.type.join('.')}</Typography>}
+            {
+                component && componentInfo.schema && (
+                    <Form
+                        schema={componentInfo.schema}
+                        onChange={e => updateProperties(e.formData)}
+                        formData={component.props}
 
-                    onSubmit={() => dispatch(deselectComponent())}
-                />
-            )
-        }
+                        onSubmit={() => dispatch(deselectComponent())}
+                    />
+                )
+            }
         </Drawer>
     );
 };

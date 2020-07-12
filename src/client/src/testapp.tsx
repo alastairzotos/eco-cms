@@ -77,12 +77,20 @@ export const myModule: IModule = {
                 <p>Testing comp</p>
             </div>
         )),
-        MyComponent2: createComponent(() => (
+        MyComponent2: createComponent<{ showLink: boolean }>(({ showLink }) => (
             <div style={{ border: '1px solid green', padding: 10, height: '100%' }}>
                 <h3>Another component</h3>
                 <p>Testing comp 2</p>
-                <p>Test <a href="#">link</a></p>
+                {showLink && <p>Test <a href="#">link</a></p>}
             </div>
-        ))
+        ), {
+            type: 'object',
+            properties: {
+                showLink: {
+                    type: 'boolean',
+                    title: 'Show link'
+                }
+            }
+        })
     }
 };
