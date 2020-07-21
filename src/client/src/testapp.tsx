@@ -48,22 +48,13 @@ export const myModule: IModule = {
                 const dispatch = useDispatch();
                 const count = useSelector(getCount);
 
-                // return (
-                //     <>
-                //         <button
-                //             onClick={() => dispatch({ type: 'inc_count' })}
-                //         >Click me</button>
-
-                //         <p>Count: {count}</p>
-                //     </>
-                // );
-
                 return (
                     <>
-                        <form method="post" action="http://localhost:5999/api/upload" encType="multipart/form-data">
-                            <input type="file" id="file" name="file" />
-                            <input type="submit" value="submit" />
-                        </form>
+                        <button
+                            onClick={() => dispatch({ type: 'inc_count' })}
+                        >Click me</button>
+
+                        <p>Count: {count}</p>
                     </>
                 );
             }
@@ -77,20 +68,23 @@ export const myModule: IModule = {
                 <p>Testing comp</p>
             </div>
         )),
-        MyComponent2: createComponent<{ showLink: boolean }>(({ showLink }) => (
-            <div style={{ border: '1px solid green', padding: 10, height: '100%' }}>
-                <h3>Another component</h3>
-                <p>Testing comp 2</p>
-                {showLink && <p>Test <a href="#">link</a></p>}
-            </div>
-        ), {
-            type: 'object',
-            properties: {
-                showLink: {
-                    type: 'boolean',
-                    title: 'Show link'
+        MyComponent2: createComponent<{ showLink: boolean }>(
+            ({ showLink }) => (
+                <div style={{ border: '1px solid green', padding: 10, height: '100%' }}>
+                    <h3>Another component</h3>
+                    <p>Testing comp 2</p>
+                    {showLink && <p>Test <a href="#">link</a></p>}
+                </div>
+            ),
+            {
+                type: 'object',
+                properties: {
+                    showLink: {
+                        type: 'boolean',
+                        title: 'Show link'
+                    }
                 }
             }
-        })
+        )
     }
 };

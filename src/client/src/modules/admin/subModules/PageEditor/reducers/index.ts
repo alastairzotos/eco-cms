@@ -90,6 +90,7 @@ export const pagesReducer = createReducer<IAdminPagesState>(INITIAL_STATE, {
 
         return {
             ...state,
+            dirty: true,
             pages: updatePages(state.pages, {
                 ...selectedPage,
                 staging: selectedPage.staging.map((staging, index) =>

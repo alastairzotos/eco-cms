@@ -14,7 +14,7 @@ import {
 
 const Form = JSONSchemaForm.default;
 
-const drawerWidth = 400;
+const drawerWidth = 300;
 
 const useStyles = makeStyles(theme => ({
     drawer: {
@@ -92,7 +92,7 @@ export const ComponentEditor: React.FC = () => {
 
     return (
         <Drawer
-            anchor="right"
+            anchor="left"
             open={drawerOpen}
             onClose={() => dispatch(deselectComponent())}
             className={cx(classes.drawer, {
