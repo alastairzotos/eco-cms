@@ -7,9 +7,8 @@ import { moduleManager } from '~/core';
 
 import { beginGetPage } from '../actions';
 import { getPage, getPageError, getPageFetchStatus } from '../selectors';
-import { renderPage } from '../utils';
 
-const StaticPage: React.FC<RouteComponentProps> = ({
+const StaticPage2: React.FC<RouteComponentProps> = ({
     location
 }) => {
     const dispatch = useDispatch();
@@ -33,10 +32,12 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         return <LinearProgress />;
     }
 
-    const query = qs.parse(location.search, { ignoreQueryPrefix: true });
-    const variation = (parseInt(query.v as string, 10) - 1) || 0;
-
-    return <>{renderPage(page.production[variation])}</>;
+    return moduleManager
+        .moduleMap.mymodule
+        .themes.find(theme => theme.name === 'My Theme')
+        .renderPage[page.pageType]({
+            page
+        });
 };
 
-export default StaticPage;
+export default StaticPage2;

@@ -7,7 +7,7 @@ import reducer from './reducers';
 export * from './actions';
 export * from './reducers';
 
-export const pagesModule: IModule = {
+export const pages2Module: IModule = {
     name: 'pages2',
     epic,
     reducer,

@@ -86,5 +86,29 @@ export const myModule: IModule = {
                 }
             }
         )
-    }
+    },
+
+    themes: [
+        {
+            name: 'My Theme',
+            pageTypes: [],
+
+            renderPage: {
+                home: ({ page }) => (
+                    <>
+                        <h1>Home page</h1>
+                        <h2>{page.title}</h2>
+                        <p>{page.content}</p>
+                    </>
+                ),
+
+                standard: ({ page }) => (
+                    <>
+                        <h2>{page.title}</h2>
+                        <p>{page.content}</p>
+                    </>
+                )
+            }
+        }
+    ]
 };

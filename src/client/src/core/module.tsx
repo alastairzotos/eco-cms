@@ -5,6 +5,7 @@ import { combineEpics, Epic } from 'redux-observable';
 import { IAdminApp } from './adminApp';
 import { IComponentInfo } from './createComponent';
 import { IPages } from './pages';
+import { ITheme } from './theme';
 
 export type IComponents = Dictionary<IComponentInfo>;
 type IModuleComponents = Dictionary<IComponents>;
@@ -16,6 +17,7 @@ export interface IModule {
     pages?: IPages;
     adminPages?: IAdminApp[];
     components?: IComponents;
+    themes?: ITheme[];
 }
 
 export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
@@ -49,7 +51,11 @@ export const combineModules = (name: string, ...modules: IModule[]): IModule => 
     components: modules.reduce((comps, mod) => ({
         ...comps,
         ...(mod.components || {})
-    }), {})
+    }), {}),
+    themes: [].concat.apply(
+        [],
+        modules.map(mod => mod.themes)
+    ).filter(theme => !!theme)
 });
 
 class ModuleManager {

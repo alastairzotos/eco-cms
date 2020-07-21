@@ -4,7 +4,8 @@ import {
     adminModule,
     authModule,
     coreModule,
-    pagesModule
+    // pagesModule,
+    pages2Module,
 } from '~/modules';
 
 export const start = (modules: IModule[] = []) => {
@@ -12,7 +13,8 @@ export const start = (modules: IModule[] = []) => {
         coreModule,
         authModule,
         adminModule,
-        pagesModule,
+        // pagesModule,
+        pages2Module,
         ...modules
     ];
 
