@@ -35,6 +35,8 @@ export const startApp = () => {
 
     epicMiddleware.run(rootModule.epic);
 
+    rootModule.onInit(action => store.dispatch(action));
+
     ReactDOM.render(
         <Root
             store={store}

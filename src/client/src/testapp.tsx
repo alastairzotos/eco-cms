@@ -7,6 +7,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { fetch$, IModule } from './core';
 import { createComponent } from './core/createComponent';
+import { Body } from './core/theme';
 
 interface ITestState {
     count: number;
@@ -91,7 +92,14 @@ export const myModule: IModule = {
     themes: [
         {
             name: 'My Theme',
-            pageTypes: [],
+
+            renderDefault: ({ page }) => (
+                <>
+                    <h1>Home page</h1>
+                    <h2>{page.title}</h2>
+                    <p>{page.content}</p>
+                </>
+            ),
 
             renderPage: {
                 home: ({ page }) => (
@@ -109,6 +117,17 @@ export const myModule: IModule = {
                     </>
                 )
             }
+        },
+        {
+            name: 'My Theme 2',
+            renderDefault: ({ page }) => (
+                <>
+                    <Body style={{ backgroundColor: '#dedede', fontFamily: 'Arial', padding: 8 }} />
+                    <p>foo</p>
+                    <h2>{page.title}</h2>
+                    <p>{page.content}</p>
+                </>
+            )
         }
     ]
 };

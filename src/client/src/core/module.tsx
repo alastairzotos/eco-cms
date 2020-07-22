@@ -1,5 +1,5 @@
 import { Dictionary } from 'lodash';
-import { combineReducers, Reducer } from 'redux';
+import { AnyAction, combineReducers, Reducer, Store } from 'redux';
 import { combineEpics, Epic } from 'redux-observable';
 
 import { IAdminApp } from './adminApp';
@@ -10,8 +10,10 @@ import { ITheme } from './theme';
 export type IComponents = Dictionary<IComponentInfo>;
 type IModuleComponents = Dictionary<IComponents>;
 
+type IDispatchFunction = (action: AnyAction) => void;
 export interface IModule {
     name: string;
+    onInit?: (dispatch: IDispatchFunction) => void;
     epic?: Epic;
     reducer?: Reducer;
     pages?: IPages;
@@ -22,6 +24,8 @@ export interface IModule {
 
 export const combineModules = (name: string, ...modules: IModule[]): IModule => ({
     name,
+    onInit: (dispatch: IDispatchFunction) =>
+        modules.forEach(mod => mod.onInit && mod.onInit(dispatch)),
     epic: combineEpics(
         ...modules
             .map(mod => mod.epic)
