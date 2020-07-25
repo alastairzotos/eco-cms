@@ -24,7 +24,7 @@ const StaticPage2: React.FC<RouteComponentProps> = ({
 
     if (error) {
         if (error === 404) {
-            return <Redirect to="/not-found" />;
+            return <p>put theme's 404 here</p>;
         }
 
         return <p>there was an unexpected error</p>;
@@ -34,19 +34,24 @@ const StaticPage2: React.FC<RouteComponentProps> = ({
         return <LinearProgress />;
     }
 
-    const themeProps: IThemeRenderProps = {
-        page
-    };
+    let Component: React.FC<IThemeRenderProps>;
 
     if (theme) {
-        if (theme.renderPage && theme.renderPage[page.pageType]) {
-            return theme.renderPage[page.pageType](themeProps);
+        if (theme.renderPageType && theme.renderPageType[page.pageType]) {
+            Component = theme.renderPageType[page.pageType];
         } else {
-            return theme.renderDefault(themeProps);
+            Component = theme.renderDefault;
         }
+    } else {
+        Component = theme.renderDefault;
     }
 
-    return defaultTheme.renderDefault(themeProps);
+    return (
+        <Component
+            page={page}
+            location={location}
+        />
+    );
 };
 
 export default StaticPage2;

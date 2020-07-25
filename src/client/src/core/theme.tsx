@@ -1,4 +1,5 @@
 import { IPage2 } from '@common*';
+import { Location } from 'history';
 import { Dictionary } from 'lodash';
 import * as React from 'react';
 import withSideEffects from 'react-side-effect';
@@ -22,16 +23,22 @@ export const Body = withSideEffects<IBodyProps, any>(
 
 export interface IThemeRenderProps {
     page: IPage2;
+    location: Location<{}>;
 }
 
 export type IThemeRenderer = React.FC<IThemeRenderProps>;
+
+export interface IPageTypeRenderer {
+    home: IThemeRenderer;
+    [pageType: string]: IThemeRenderer;
+}
 
 export interface ITheme {
     name: string;
 
     renderDefault: IThemeRenderer;
     render404?: IThemeRenderer;
-    renderPage?: Dictionary<IThemeRenderer>;
+    renderPageType?: IPageTypeRenderer;
 }
 
 export const defaultTheme: ITheme = {

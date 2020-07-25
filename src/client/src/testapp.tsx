@@ -1,3 +1,4 @@
+import { Container, Paper, Typography } from '@material-ui/core';
 import Icon from '@material-ui/icons/Adjust';
 import { createReducer, createSelector } from '@reduxjs/toolkit';
 import * as React from 'react';
@@ -10,21 +11,22 @@ import { createComponent } from './core/createComponent';
 import { Body } from './core/theme';
 
 interface ITestState {
-    count: number;
+    darkMode: boolean;
 }
 
 const getState = (state: any): ITestState => state.mymodule;
 
-const getCount = createSelector(
+const isDarkMode = createSelector(
     getState,
-    state => state.count
+    state => state.darkMode
 );
 
 export const myModule: IModule = {
     name: 'mymodule',
-    reducer: createReducer<ITestState>({ count: 0 }, {
-        inc_count: state => ({
-            count: state.count + 1
+    reducer: createReducer<ITestState>({ darkMode: false }, {
+        set_mode: (state, action) => ({
+            ...state,
+            darkMode: action.payload
         })
     }),
     epic: action$ => action$.ofType('inc_count').pipe(
@@ -47,15 +49,15 @@ export const myModule: IModule = {
             icon: Icon,
             component: () => {
                 const dispatch = useDispatch();
-                const count = useSelector(getCount);
+                const darkMode = useSelector(isDarkMode);
 
                 return (
                     <>
                         <button
-                            onClick={() => dispatch({ type: 'inc_count' })}
-                        >Click me</button>
-
-                        <p>Count: {count}</p>
+                            onClick={() => dispatch({ type: 'set_mode', payload: !darkMode })}
+                        >
+                            {darkMode ? 'Light mode' : 'Dark mode'}
+                        </button>
                     </>
                 );
             }
@@ -101,7 +103,7 @@ export const myModule: IModule = {
                 </>
             ),
 
-            renderPage: {
+            renderPageType: {
                 home: ({ page }) => (
                     <>
                         <h1>Home page</h1>
@@ -120,14 +122,71 @@ export const myModule: IModule = {
         },
         {
             name: 'My Theme 2',
-            renderDefault: ({ page }) => (
-                <>
-                    <Body style={{ backgroundColor: '#dedede', fontFamily: 'Arial', padding: 8 }} />
-                    <p>foo</p>
-                    <h2>{page.title}</h2>
-                    <p>{page.content}</p>
-                </>
-            )
+            renderDefault: ({ page, location }) => {
+                const darkMode = useSelector(isDarkMode);
+
+                return (
+                    <>
+                        <Body style={{ backgroundColor: darkMode ? 'black' : '#dedede' }} />
+
+                        <Paper elevation={6} style={{ paddingTop: 200, paddingBottom: 200, margin: 30 }}>
+                            <Container>
+                                <Typography variant="h3">{page.title}</Typography>
+                                <Typography variant="overline">{page.description}</Typography>
+                            </Container>
+                        </Paper>
+
+                        <Container>
+                            <Typography>{page.content}</Typography>
+                        </Container>
+                    </>
+                );
+            },
+
+            renderPageType: {
+                home: ({ page, location }) => {
+                    const darkMode = useSelector(isDarkMode);
+
+                    return (
+                        <>
+                            <Body style={{ backgroundColor: darkMode ? 'black' : '#dedede' }} />
+
+                            <Paper elevation={6} style={{ paddingTop: 200, paddingBottom: 200, margin: 30 }}>
+                                <Container>
+                                    <Typography variant="h3">{page.title}</Typography>
+                                    <Typography variant="overline">{page.description}</Typography>
+                                </Container>
+                            </Paper>
+
+                            <Container>
+                                <Typography>{page.content}</Typography>
+                            </Container>
+                        </>
+                    );
+                },
+
+                contact: ({ page }) => {
+                    const darkMode = useSelector(isDarkMode);
+
+                    return (
+                        <>
+                            <Body style={{ backgroundColor: darkMode ? 'black' : '#dedede' }} />
+
+                            <Paper elevation={6} style={{ paddingTop: 200, paddingBottom: 200, margin: 30 }}>
+                                <Container>
+                                <Typography variant="h1">Contact Us</Typography>
+                                    <Typography variant="h3">{page.title}</Typography>
+                                    <Typography variant="overline">{page.description}</Typography>
+                                </Container>
+                            </Paper>
+
+                            <Container>
+                                <Typography>{page.content}</Typography>
+                            </Container>
+                        </>
+                    );
+                }
+            }
         }
     ]
 };

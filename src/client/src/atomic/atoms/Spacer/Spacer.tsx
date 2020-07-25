@@ -17,16 +17,16 @@ const createStyles = ({
 }: ISpacerProps) =>
     makeStyles(theme => ({
         left: {
-            marginLeft: theme.spacing(left)
+            paddingLeft: theme.spacing(left)
         },
         right: {
-            marginRight: theme.spacing(right)
+            paddingRight: theme.spacing(right)
         },
         top: {
-            marginTop: theme.spacing(top)
+            paddingTop: theme.spacing(top)
         },
         bottom: {
-            marginBottom: theme.spacing(bottom)
+            paddingBottom: theme.spacing(bottom)
         }
     }));
 
