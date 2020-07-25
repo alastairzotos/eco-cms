@@ -1,4 +1,4 @@
-import { IPage2 } from '@common*';
+import { IPage } from '@common*';
 import { Location } from 'history';
 import { Dictionary } from 'lodash';
 import * as React from 'react';
@@ -22,7 +22,7 @@ export const Body = withSideEffects<IBodyProps, any>(
 )(() => null);
 
 export interface IThemeRenderProps {
-    page: IPage2;
+    page: IPage;
     location: Location<{}>;
 }
 

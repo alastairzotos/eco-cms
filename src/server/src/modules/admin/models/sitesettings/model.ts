@@ -1,4 +1,4 @@
-import { IPage2, ISiteSettings } from '@common*';
+import { IPage, ISiteSettings } from '@common*';
 import { Model } from '~/core/model';
 
 import { siteSettingsSchema } from './schema';

@@ -3,8 +3,8 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spacer } from '~/atomic/atoms/Spacer';
 
-import { getSelectedPage } from '../../Pages2Editor/selectors';
 import { setPageData } from '../actions';
+import { getSelectedPage } from '../selectors';
 
 import { PageSettings } from './settings/PageSettings';
 

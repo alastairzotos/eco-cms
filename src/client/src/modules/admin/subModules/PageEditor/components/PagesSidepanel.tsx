@@ -39,14 +39,9 @@ export const PagesSidePanel: React.FC = () => {
             path: `/page-${pages.length + 1}`,
             title: 'New page',
             description: 'This is a page',
-            staging: [
-                {
-                    rows: [
-
-                    ]
-                }
-            ],
-            production: []
+            content: '',
+            pageType: 'standard',
+            published: false
         }));
     };
 

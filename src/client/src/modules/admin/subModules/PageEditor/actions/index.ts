@@ -1,93 +1,65 @@
-import { IPage, IPageContent } from '@common';
+import { IPage } from '@common';
 import { createAction } from '~/core';
 
-import { IPageInfo } from '../models';
+export enum IAdminPageEditorActionType {
+    BeginAddPage = 'admin/pageeditor/BEGIN_ADD_PAGE',
+    AddPage = 'admin/pageeditor/ADD_PAGE',
+    SetAddPageError = 'admin/pageeditor/SET_ADD_PAGE_ERROR',
 
-export enum IAdminPagesActionType {
-    BeginAddPage = 'admin/pages/BEGIN_ADD_PAGE',
-    AddPage = 'admin/pages/ADD_PAGE',
-    SetAddPageError = 'admin/pages/SET_ADD_PAGE_ERROR',
+    BeginGetPages = 'admin/pageeditor/BEGIN_GET_PAGES',
+    SetPages = 'admin/pageeditor/SET_PAGES',
+    SetGetPagesError = 'admin/pageeditor/SET_GET_PAGES_ERROR',
 
-    BeginGetPages = 'admin/pages/BEGIN_GET_PAGES',
-    SetPages = 'admin/pages/SET_PAGES',
-    SetGetPagesError = 'admin/pages/SET_GET_PAGES_ERROR',
+    SelectCurrentPage = 'admin/pageeditor/SELECT_CURRENT_PAGE',
+    SetPageData = 'admin/pageeditor/SET_PAGE_DATA',
 
-    SelectCurrentPage = 'admin/pages/SELECT_CURRENT_PAGE',
-    SetPageData = 'admin/pages/SET_PAGE_DATA',
-    SetSelectedPageContent = 'admin/pages/SET_SELECTED_PAGE_CONTENT',
-
-    BeginSavePage = 'admin/pages/BEGIN_SAVE_PAGE',
-    SetPageSaved = 'admin/pages/SET_PAGE_SAVED',
+    BeginSavePage = 'admin/pageeditor/BEGIN_SAVE_PAGE',
+    SetPageSaved = 'admin/pageeditor/SET_PAGE_SAVED',
     SetSavePageError = 'admin/page/SET_SAVE_PAGE_ERROR',
 
-    SetPageVariation = 'admin/pages/SET_PAGE_VARIATION',
-    AddPageVariation = 'admin/pages/ADD_PAGE_VARIATION',
-    DeletePageVariation = 'admin/pages/DELETE_PAGE_VARIATION',
-
-    BeginDeletePage = 'admin/pages/BEGIN_DELETE_PAGE',
-    SetPageDeleted = 'admin/pages/SET_PAGE_DELETED',
-    SetDeletePageError = 'admin/pages/SET_DELETE_PAGE_ERROR',
-
-    SelectComponent = 'admin/pages/SELECT_COMPONENT',
-    DeselectComponent = 'admin/pages/DESELECT_COMPONENT'
+    BeginDeletePage = 'admin/pageeditor/BEGIN_DELETE_PAGE',
+    SetPageDeleted = 'admin/pageeditor/SET_PAGE_DELETED',
+    SetDeletePageError = 'admin/pageeditor/SET_DELETE_PAGE_ERROR',
 }
 
 export const beginAddPage = (page: IPage) =>
-    createAction(IAdminPagesActionType.BeginAddPage, page);
+    createAction(IAdminPageEditorActionType.BeginAddPage, page);
 
 export const addPage = (page: IPage) =>
-    createAction(IAdminPagesActionType.AddPage, page);
+    createAction(IAdminPageEditorActionType.AddPage, page);
 
 export const setAddPageError = () =>
-    createAction(IAdminPagesActionType);
+    createAction(IAdminPageEditorActionType);
 
 export const beginGetPages = () =>
-    createAction(IAdminPagesActionType.BeginGetPages);
+    createAction(IAdminPageEditorActionType.BeginGetPages);
 
 export const setPages = (pages: IPage[]) =>
-    createAction(IAdminPagesActionType.SetPages, pages);
+    createAction(IAdminPageEditorActionType.SetPages, pages);
 
 export const setGetPagesError = () =>
-    createAction(IAdminPagesActionType.SetGetPagesError);
+    createAction(IAdminPageEditorActionType.SetGetPagesError);
 
 export const selectCurrentPage = (id: string) =>
-    createAction(IAdminPagesActionType.SelectCurrentPage, id);
+    createAction(IAdminPageEditorActionType.SelectCurrentPage, id);
 
-export const setPageData = (data: IPageInfo) =>
-    createAction(IAdminPagesActionType.SetPageData, data);
+export const setPageData = (data: IPage) =>
+    createAction(IAdminPageEditorActionType.SetPageData, data);
 
-export const setSelectedPageContent = (content: IPageContent) =>
-    createAction(IAdminPagesActionType.SetSelectedPageContent, content);
+export const beginSavePage = (data: IPage) =>
+    createAction(IAdminPageEditorActionType.BeginSavePage, data);
 
-export const beginSavePage = (data: IPageInfo) =>
-    createAction(IAdminPagesActionType.BeginSavePage, data);
+export const setPageSaved = (data: IPage) =>
+    createAction(IAdminPageEditorActionType.SetPageSaved, data);
 
-export const setPageSaved = (data: IPageInfo) =>
-    createAction(IAdminPagesActionType.SetPageSaved, data);
-
-export const setSavePageError = (error: string) =>
-    createAction(IAdminPagesActionType.SetSavePageError, error);
-
-export const setPageVariation = (variation: number) =>
-    createAction(IAdminPagesActionType.SetPageVariation, variation);
-
-export const addPageVariation = (page: IPage) =>
-    createAction(IAdminPagesActionType.AddPageVariation, page);
-
-export const deletePageVariation = (page: IPage, variation: number) =>
-    createAction(IAdminPagesActionType.DeletePageVariation, { page, variation });
+export const setSavePageError = (error: IPage) =>
+    createAction(IAdminPageEditorActionType.SetSavePageError, error);
 
 export const beginDeletePage = (page: IPage) =>
-    createAction(IAdminPagesActionType.BeginDeletePage, page);
+    createAction(IAdminPageEditorActionType.BeginDeletePage, page);
 
 export const setPageDeleted = (page: IPage) =>
-    createAction(IAdminPagesActionType.SetPageDeleted, page);
+    createAction(IAdminPageEditorActionType.SetPageDeleted, page);
 
 export const setDeletePageError = () =>
-    createAction(IAdminPagesActionType.SetDeletePageError);
-
-export const selectComponent = (path: number[]) =>
-    createAction(IAdminPagesActionType.SelectComponent, path);
-
-export const deselectComponent = () =>
-    createAction(IAdminPagesActionType.DeselectComponent);
+    createAction(IAdminPageEditorActionType.SetDeletePageError);

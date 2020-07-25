@@ -1,4 +1,4 @@
-import { IPage, IPageColumn } from '@common';
+import { IPage } from '@common';
 
 export const isValidUrl = (pages: IPage[], thisPage: IPage, url: string) =>
     !(pages

@@ -7,13 +7,13 @@ import { IResponse } from '~/core/fetch';
 
 import {
     addPage,
-    IAdminPagesActionType,
+    IAdminPageEditorActionType,
     setAddPageError
 } from '../actions';
 
 export const addPageEpic: Epic = action$ =>
-    action$.ofType(IAdminPagesActionType.BeginAddPage).pipe(
-        switchMap((action: IAction<IAdminPagesActionType, IPage>) => {
+    action$.ofType(IAdminPageEditorActionType.BeginAddPage).pipe(
+        switchMap((action: IAction<IAdminPageEditorActionType, IPage>) => {
             return fetch$({
                 method: 'POST',
                 url: '/admin/pages/add',

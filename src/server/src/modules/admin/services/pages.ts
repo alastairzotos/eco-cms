@@ -1,4 +1,4 @@
-import { IPage, IPageContent } from '@common';
+import { IPage } from '@common';
 import { Service } from '~/core/service';
 
 import { IPageRecord, pagesModel } from '../models';
@@ -7,36 +7,16 @@ export class PagesService extends Service {
     onStart = async () => {
         const pages = await this.getPages();
 
-        const notFoundPath = '/not-found';
-        const notFoundPage: IPageContent = {
-            rows: [
-                {
-                    columns: [
-                        {
-                            span: 12,
-                            children: [
-                                {
-                                    type: ['core', 'Typography'],
-                                    order: 0,
-                                    props: {
-                                        variant: 'h1',
-                                        content: 'Page not found'
-                                    }
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ]
-        };
+        const homePath = '/';
 
-        if (!pages.find(page => page.path === notFoundPath)) {
+        if (!pages.find(page => page.path === homePath)) {
             await this.addPage({
-                path: notFoundPath,
-                title: 'Page not found',
-                description: 'Page not found',
-                staging: [notFoundPage],
-                production: [notFoundPage]
+                path: homePath,
+                title: 'My site',
+                description: 'Welcome to my site',
+                pageType: 'home',
+                content: 'Welcome to my home page!',
+                published: false
             });
         }
     }

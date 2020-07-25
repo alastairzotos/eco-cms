@@ -5,7 +5,7 @@ import { deletePageEpic } from './deletePage';
 import { getPagesEpic } from './getPages';
 import { savePageEpic } from './savePage';
 
-export const pagesEpic = combineEpics(
+export const pagesEditorEpic = combineEpics(
     addPageEpic,
     getPagesEpic,
     savePageEpic,

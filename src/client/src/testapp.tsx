@@ -7,7 +7,6 @@ import { of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { fetch$, IModule } from './core';
-import { createComponent } from './core/createComponent';
 import { Body } from './core/theme';
 
 interface ITestState {
@@ -63,33 +62,6 @@ export const myModule: IModule = {
             }
         }
     ],
-
-    components: {
-        MyComponent1: createComponent(() => (
-            <div style={{ border: '1px solid black', padding: 10, height: '100%' }}>
-                <h3>A component</h3>
-                <p>Testing comp</p>
-            </div>
-        )),
-        MyComponent2: createComponent<{ showLink: boolean }>(
-            ({ showLink }) => (
-                <div style={{ border: '1px solid green', padding: 10, height: '100%' }}>
-                    <h3>Another component</h3>
-                    <p>Testing comp 2</p>
-                    {showLink && <p>Test <a href="#">link</a></p>}
-                </div>
-            ),
-            {
-                type: 'object',
-                properties: {
-                    showLink: {
-                        type: 'boolean',
-                        title: 'Show link'
-                    }
-                }
-            }
-        )
-    },
 
     themes: [
         {

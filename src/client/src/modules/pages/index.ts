@@ -8,7 +8,7 @@ export * from './actions';
 export * from './reducers';
 
 export const pagesModule: IModule = {
-    name: 'pages2',
+    name: 'pages',
     epic,
     reducer,
     pages

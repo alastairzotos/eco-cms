@@ -6,13 +6,13 @@ import { fetch$ } from '~/core';
 import { IResponse } from '~/core/fetch';
 
 import {
-    IAdminPagesActionType,
+    IAdminPageEditorActionType,
     setGetPagesError,
     setPages
 } from '../actions';
 
 export const getPagesEpic: Epic = action$ =>
-    action$.ofType(IAdminPagesActionType.BeginGetPages).pipe(
+    action$.ofType(IAdminPageEditorActionType.BeginGetPages).pipe(
         switchMap(() => {
             return fetch$({
                 method: 'GET',

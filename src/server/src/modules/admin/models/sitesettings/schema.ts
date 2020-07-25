@@ -1,10 +1,10 @@
 import { Schema } from 'mongoose';
 
-import { page2Schema } from '../pages2/schema';
+import { pageSchema } from '../pages/schema';
 
 export const navigationItemSchema = new Schema();
 navigationItemSchema.add({
-    pageId: page2Schema,
+    pageId: pageSchema,
     parent: navigationItemSchema
 });
 

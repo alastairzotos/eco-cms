@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { IState } from '~/modules/state';
 
-const getState = (state: IState) => state.admin.pages;
+const getState = (state: IState) => state.admin.pageEditor;
 
 export const getAddPageStatus = createSelector(
     getState,
@@ -33,11 +33,6 @@ export const getSavePageStatus = createSelector(
     state => state.savePageStatus
 );
 
-export const getSelectedVariation = createSelector(
-    getState,
-    state => state.selectedVariation
-);
-
 export const isDirty = createSelector(
     getState,
     state => state.dirty
@@ -46,9 +41,4 @@ export const isDirty = createSelector(
 export const getDeletePageStatus = createSelector(
     getState,
     state => state.deletePageStatus
-);
-
-export const getSelectedComponent = createSelector(
-    getState,
-    state => state.selectedComponent
 );

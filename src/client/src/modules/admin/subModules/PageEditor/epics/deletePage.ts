@@ -5,14 +5,14 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { fetch$, IAction } from '~/core';
 
 import {
-    IAdminPagesActionType,
+    IAdminPageEditorActionType,
     setDeletePageError,
     setPageDeleted
 } from '../actions';
 
 export const deletePageEpic: Epic = action$ =>
-    action$.ofType(IAdminPagesActionType.BeginDeletePage).pipe(
-        switchMap((action: IAction<IAdminPagesActionType, IPage>) => {
+    action$.ofType(IAdminPageEditorActionType.BeginDeletePage).pipe(
+        switchMap((action: IAction<IAdminPageEditorActionType, IPage>) => {
             return fetch$({
                 method: 'POST',
                 url: '/admin/pages/delete',

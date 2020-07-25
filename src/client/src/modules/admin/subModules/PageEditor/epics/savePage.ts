@@ -5,14 +5,14 @@ import { catchError, switchMap } from 'rxjs/operators';
 import { fetch$, IAction } from '~/core';
 
 import {
-    IAdminPagesActionType,
+    IAdminPageEditorActionType,
     setPageSaved,
     setSavePageError
 } from '../actions';
 
 export const savePageEpic: Epic = action$ =>
-    action$.ofType(IAdminPagesActionType.BeginSavePage).pipe(
-        switchMap((action: IAction<IAdminPagesActionType, IPage>) => {
+    action$.ofType(IAdminPageEditorActionType.BeginSavePage).pipe(
+        switchMap((action: IAction<IAdminPageEditorActionType, IPage>) => {
             return fetch$({
                 method: 'POST',
                 url: '/admin/pages/save',
