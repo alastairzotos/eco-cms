@@ -63,6 +63,11 @@ export const myModule: IModule = {
         }
     ],
 
+    pages: {
+        '/get-in-touch': () =>
+            <p>Get in touch</p>
+    },
+
     themes: [
         {
             name: 'My Theme',

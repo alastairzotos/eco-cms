@@ -12,8 +12,8 @@ export const start = (modules: IModule[] = []) => {
         coreModule,
         authModule,
         adminModule,
-        pagesModule,
-        ...modules
+        ...modules,
+        pagesModule,    // Pages module will capture all pages, so custom module pages must come first
     ];
 
     startApp();
