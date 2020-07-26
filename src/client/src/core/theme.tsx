@@ -57,5 +57,7 @@ export const defaultTheme: ITheme = {
             <h2>{page.title}</h2>
             <p>{page.content}</p>
         </>
-    )
+    ),
+
+    render404: () => <p>Page not found</p>
 };

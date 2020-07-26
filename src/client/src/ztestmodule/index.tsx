@@ -3,24 +3,10 @@ import Icon from '@material-ui/icons/Adjust';
 import { createReducer, createSelector } from '@reduxjs/toolkit';
 import NestedMenuItem from 'material-ui-nested-menu-item';
 import * as React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import { of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { Link } from 'react-router-dom';
 
-import { fetch$, IModule } from '../core';
+import { IModule } from '../core';
 import { Body, IPageNavigation, IThemeRenderProps } from '../core/theme';
-
-interface ITestState {
-    darkMode: boolean;
-}
-
-const getState = (state: any): ITestState => state.mymodule;
-
-const isDarkMode = createSelector(
-    getState,
-    state => state.darkMode
-);
 
 const NavMenuDropdownItem: React.FC<{ item: IPageNavigation }> = ({ item }) => {
     const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -69,8 +55,7 @@ const NavMenuItem: React.FC<{ item: IPageNavigation }> = ({ item }) => {
 
 const PageTemplate: React.FC<IThemeRenderProps> = ({
     page,
-    navigation,
-    children
+    navigation
 }) => {
     return (
         <>
@@ -105,58 +90,7 @@ const PageTemplate: React.FC<IThemeRenderProps> = ({
 
 export const myModule: IModule = {
     name: 'mymodule',
-    reducer: createReducer<ITestState>({ darkMode: false }, {
-        set_mode: (state, action) => ({
-            ...state,
-            darkMode: action.payload
-        })
-    }),
-    epic: action$ => action$.ofType('inc_count').pipe(
-        switchMap(action =>
-            fetch$({
-                method: 'GET',
-                url: '/test'
-            }).pipe(
-                switchMap(res => {
-                    console.log(res);
-                    return of({ type: 'nothing' });
-                })
-            )
-        )
-    ),
-    adminPages: [
-        {
-            title: 'My App',
-            path: '/myapp',
-            icon: Icon,
-            component: () => {
-                const dispatch = useDispatch();
-                const darkMode = useSelector(isDarkMode);
-
-                return (
-                    <>
-                        <button
-                            onClick={() => dispatch({ type: 'set_mode', payload: !darkMode })}
-                        >
-                            {darkMode ? 'Light mode' : 'Dark mode'}
-                        </button>
-                    </>
-                );
-            }
-        }
-    ],
-
-    pages: {
-        '/get-in-touch': () =>
-            <p>Get in touch</p>
-    },
-
     themes: [
-        {
-            name: 'My Theme',
-
-            renderDefault: PageTemplate,
-        },
         {
             name: 'My Theme 2',
             renderDefault: PageTemplate,
@@ -164,7 +98,22 @@ export const myModule: IModule = {
             renderPageType: {
                 home: PageTemplate,
                 contact: PageTemplate
-            }
+            },
+
+            render404:props => (
+                <PageTemplate
+                    {...props}
+                    page={{
+                        title: 'Not found',
+                        content: 'This page cannot be found',
+                        description: '404 - Page not found',
+                        navigation: null,
+                        pageType: '404',
+                        path: '',
+                        published: true
+                    }}
+                />
+            )
         }
     ]
 };

@@ -3,7 +3,7 @@ import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { pagesToTree } from '~/core';
-import { IPageNavigation, IThemeRenderProps } from '~/core/theme';
+import { defaultTheme, IPageNavigation, IThemeRenderProps } from '~/core/theme';
 import { getPages } from '~/modules/admin/subModules/PageEditor/selectors';
 import { getSelectedTheme } from '~/modules/admin/subModules/SiteSettings';
 
@@ -24,9 +24,20 @@ const StaticPage: React.FC<RouteComponentProps> = ({
         dispatch(beginGetPage(location.pathname));
     }, [location.pathname]);
 
+    const navigation = pagesToTree<IPageNavigation>(
+        pages,
+        {
+            filter: navPage => navPage.navigation.selected
+        }
+    );
+
     if (error) {
         if (error === 404) {
-            return <p>put theme's 404 here</p>;
+            if (theme && theme.render404) {
+                return theme.render404({ page: null, location, navigation });
+            } else {
+                return defaultTheme.render404({ page: null, location, navigation });
+            }
         }
 
         return <p>there was an unexpected error</p>;
@@ -54,12 +65,7 @@ const StaticPage: React.FC<RouteComponentProps> = ({
                 <Component
                     page={page}
                     location={location}
-                    navigation={pagesToTree<IPageNavigation>(
-                        pages,
-                        {
-                            filter: navPage => navPage.navigation.selected
-                        }
-                    )}
+                    navigation={navigation}
                 />
             )}
         </>
