@@ -16,7 +16,11 @@ export class PagesService extends Service {
                 description: 'Welcome to my site',
                 pageType: 'home',
                 content: 'Welcome to my home page!',
-                published: false
+                published: false,
+                navigation: {
+                    parentPage: null,
+                    selected: true
+                }
             });
         }
     }

@@ -1,3 +1,7 @@
+export interface INavigationInfo {
+    parentPage: IPage;
+    selected: boolean;
+}
 
 export interface IPage {
     _id?: string;
@@ -7,4 +11,5 @@ export interface IPage {
     pageType: string;
     content: string;
     published: boolean;
+    navigation: INavigationInfo;
 }

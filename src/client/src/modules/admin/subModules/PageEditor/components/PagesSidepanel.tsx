@@ -10,10 +10,16 @@ import { PagesView } from './PagesView';
 
 const useStyles = makeStyles(theme => ({
     main: {
-        padding: theme.spacing(1)
+        padding: theme.spacing(1),
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column'
     },
     view: {
         marginBottom: theme.spacing(1)
+    },
+    spacer: {
+        flexGrow: 1,
     },
     addBtn: {
         marginTop: theme.spacing(1)
@@ -28,12 +34,6 @@ export const PagesSidePanel: React.FC = () => {
     const addPageStatus = useSelector(getAddPageStatus);
     const getPagesStatus = useSelector(getGetPagesStatus);
 
-    React.useEffect(() => {
-        if (pages.length === 0 && !getPagesStatus) {
-            dispatch(beginGetPages());
-        }
-    }, [pages, getPagesStatus]);
-
     const onClickNew = () => {
         dispatch(beginAddPage({
             path: `/page-${pages.length + 1}`,
@@ -41,7 +41,11 @@ export const PagesSidePanel: React.FC = () => {
             description: 'This is a page',
             content: '',
             pageType: 'standard',
-            published: false
+            published: false,
+            navigation: {
+                parentPage: null,
+                selected: true
+            }
         }));
     };
 
@@ -58,6 +62,8 @@ export const PagesSidePanel: React.FC = () => {
                 </div>
 
                 <Divider />
+
+                <div className={classes.spacer} />
 
                 <Fab
                     className={classes.addBtn}

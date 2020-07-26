@@ -10,7 +10,7 @@ export class PagesModel extends Model<IPageRecord> {
     }
 
     getPages = async () =>
-        this.model.find()
+        this.model.find().populate('navigation.parentPage')
 
     addPage = async (page: IPage) => {
         const record = await this.model.create(page);

@@ -19,5 +19,12 @@ export const pageSchema = new Schema({
     },
     published: {
         type: Boolean
+    },
+    navigation: {
+        parentPage: {
+            type: Schema.Types.ObjectId,
+            ref: 'pages'
+        },
+        selected: Boolean
     }
 });

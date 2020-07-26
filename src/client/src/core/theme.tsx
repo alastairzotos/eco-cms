@@ -4,6 +4,8 @@ import { Dictionary } from 'lodash';
 import * as React from 'react';
 import withSideEffects from 'react-side-effect';
 
+import { pagesToTree } from './pages';
+
 export interface IBodyProps {
     className?: string;
     style?: React.CSSProperties;
@@ -21,9 +23,15 @@ export const Body = withSideEffects<IBodyProps, any>(
     }
 )(() => null);
 
+export interface IPageNavigation {
+    page: IPage;
+    children: IPageNavigation[];
+}
+
 export interface IThemeRenderProps {
     page: IPage;
     location: Location<{}>;
+    navigation: IPageNavigation[];
 }
 
 export type IThemeRenderer = React.FC<IThemeRenderProps>;

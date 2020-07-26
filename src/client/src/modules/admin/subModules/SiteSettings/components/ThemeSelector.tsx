@@ -19,7 +19,7 @@ import { getSiteSettings, getSiteSettingsLoadStatus, getSiteSettingsUpdateStatus
 const useStyles = makeStyles(theme => ({
     root: {
         margin: theme.spacing(1),
-        padding: theme.spacing(1)
+        padding: theme.spacing(2)
     },
     formControl: {
         margin: theme.spacing(1),
