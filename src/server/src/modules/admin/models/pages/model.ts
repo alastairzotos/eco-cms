@@ -6,7 +6,7 @@ import { IPageRecord } from './types';
 
 export class PagesModel extends Model<IPageRecord> {
     constructor() {
-        super('pages2', pageSchema);
+        super('pages', pageSchema);
     }
 
     getPages = async () =>
