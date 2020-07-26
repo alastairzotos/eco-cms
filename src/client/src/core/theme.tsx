@@ -23,13 +23,14 @@ export const Body = withSideEffects<IBodyProps, any>(
     }
 )(() => null);
 
+export type IThemePage = Pick<IPage, 'title' | 'description' | 'content' | 'path'>;
 export interface IPageNavigation {
-    page: IPage;
+    page: IThemePage;
     children: IPageNavigation[];
 }
 
 export interface IThemeRenderProps {
-    page: IPage;
+    page: IThemePage;
     location: Location<{}>;
     navigation: IPageNavigation[];
     loading: boolean;

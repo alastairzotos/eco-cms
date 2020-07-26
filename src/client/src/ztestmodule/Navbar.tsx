@@ -27,7 +27,7 @@ const NavMenuDropdownItem: React.FC<{ item: IPageNavigation }> = ({ item }) => {
                     )
                     : (
                         <MenuItem
-                            key={subItem.page._id}
+                            key={subItem.page.path}
                             component={Link}
                             to={subItem.page.path}
                         >
@@ -55,7 +55,7 @@ export const Navbar: React.FC<{ navigation: IPageNavigation[] }> = ({ navigation
             <Toolbar>
                 <Typography variant="h6">My Website</Typography>
                 {navigation.map(navItem => (
-                    <NavMenuItem key={navItem.page._id} item={navItem} />
+                    <NavMenuItem key={navItem.page.path} item={navItem} />
                 ))}
             </Toolbar>
         </AppBar>
