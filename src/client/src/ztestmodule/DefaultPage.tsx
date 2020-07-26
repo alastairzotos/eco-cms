@@ -1,0 +1,14 @@
+import { Typography } from '@material-ui/core';
+import * as React from 'react';
+import { IThemeRenderProps } from '~/core/theme';
+
+import { PageTemplate } from './PageTemplate';
+
+export const DefaultPage: React.FC<IThemeRenderProps> = ({ page, navigation }) =>
+    <PageTemplate
+        title={page.title}
+        subtitle={page.description}
+        navigation={navigation}
+    >
+        <Typography>{page.content}</Typography>
+    </PageTemplate>;
