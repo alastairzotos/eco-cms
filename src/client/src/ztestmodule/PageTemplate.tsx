@@ -1,4 +1,4 @@
-import {  Container, Paper, Typography } from '@material-ui/core';
+import { CircularProgress, Container, LinearProgress, Paper, Typography } from '@material-ui/core';
 import * as React from 'react';
 import { Body, IPageNavigation, IThemeRenderProps } from '~/core/theme';
 
@@ -9,6 +9,7 @@ interface IPageTemplateProps {
     subtitle: string;
     paperStyle?: React.CSSProperties;
     navigation: IPageNavigation[];
+    loading: boolean;
 }
 
 export const PageTemplate: React.FC<IPageTemplateProps> = ({
@@ -16,15 +17,22 @@ export const PageTemplate: React.FC<IPageTemplateProps> = ({
     subtitle,
     paperStyle = {},
     navigation,
+    loading,
     children
 }) => {
     return (
         <>
             <Body style={{ backgroundColor: '#dedede' }} />
 
+            {loading && (
+                <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', zIndex: 1000 }}>
+                    <LinearProgress />
+                </div>
+            )}
+
             <Navbar navigation={navigation} />
 
-            <Paper elevation={6} style={{ paddingTop: 200, paddingBottom: 200, margin: 30, ...paperStyle }}>
+            <Paper elevation={6} style={{ paddingTop: 200, paddingBottom: 200, marginBottom: 30, ...paperStyle }}>
                 <Container>
                     <Typography variant="h3">{title}</Typography>
                     <Typography variant="overline">{subtitle}</Typography>

@@ -32,6 +32,7 @@ export interface IThemeRenderProps {
     page: IPage;
     location: Location<{}>;
     navigation: IPageNavigation[];
+    loading: boolean;
 }
 
 export type IThemeRenderer = React.FC<IThemeRenderProps>;

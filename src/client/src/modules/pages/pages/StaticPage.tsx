@@ -1,4 +1,3 @@
-import { LinearProgress } from '@material-ui/core';
 import * as React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
@@ -34,9 +33,9 @@ const StaticPage: React.FC<RouteComponentProps> = ({
     if (error) {
         if (error === 404) {
             if (theme && theme.render404) {
-                return theme.render404({ page: null, location, navigation });
+                return theme.render404({ page: null, location, navigation, loading: false });
             } else {
-                return defaultTheme.render404({ page: null, location, navigation });
+                return defaultTheme.render404({ page: null, location, navigation, loading: false });
             }
         }
 
@@ -52,20 +51,17 @@ const StaticPage: React.FC<RouteComponentProps> = ({
             Component = theme.renderDefault;
         }
     } else {
-        Component = theme.renderDefault;
+        Component = defaultTheme.renderDefault;
     }
 
     return (
         <>
-            {(!fetchPageStatus || fetchPageStatus === 'fetching' || !page || !theme) && (
-                <LinearProgress />
-            )}
-
             {page && (
                 <Component
                     page={page}
                     location={location}
                     navigation={navigation}
+                    loading={!fetchPageStatus || fetchPageStatus === 'fetching' || !theme}
                 />
             )}
         </>
